@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["DB_USER", "DB_HOST", "DB_PASSWORD", "DB_PORT", "DB_NAME"],
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "build": {
