@@ -1,5 +1,5 @@
 {
-  "id": "95b7c0eb-33d8-4b3f-9276-3f45f29d0f61",
+  "id": "80925c75-1326-4cdd-84e5-5f04b472139f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
@@ -44,6 +44,209 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.fetch_jobs_task": {
+      "name": "fetch_jobs_task",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fetch_date": {
+          "name": "fetch_date",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fetch_job_start_date": {
+          "name": "fetch_job_start_date",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fetch_url": {
+          "name": "fetch_url",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "file_path": {
+          "name": "file_path",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "file_name": {
+          "name": "file_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "fetch_jobs_task_id_file_name_pk": {
+          "name": "fetch_jobs_task_id_file_name_pk",
+          "columns": [
+            "id",
+            "file_name"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.humidity": {
+      "name": "humidity",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "gen_random_uuid()"
+        },
+        "station_id": {
+          "name": "station_id",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "humidity_value": {
+          "name": "humidity_value",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_created": {
+          "name": "date_created",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "file_name": {
+          "name": "file_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "humidity_station_id_stations_station_id_fk": {
+          "name": "humidity_station_id_stations_station_id_fk",
+          "tableFrom": "humidity",
+          "tableTo": "stations",
+          "columnsFrom": [
+            "station_id"
+          ],
+          "columnsTo": [
+            "station_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "humidity_id_timestamp_station_id_pk": {
+          "name": "humidity_id_timestamp_station_id_pk",
+          "columns": [
+            "id",
+            "timestamp",
+            "station_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.rainfall": {
+      "name": "rainfall",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "gen_random_uuid()"
+        },
+        "station_id": {
+          "name": "station_id",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rainfall_value": {
+          "name": "rainfall_value",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_created": {
+          "name": "date_created",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "file_name": {
+          "name": "file_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "rainfall_station_id_stations_station_id_fk": {
+          "name": "rainfall_station_id_stations_station_id_fk",
+          "tableFrom": "rainfall",
+          "tableTo": "stations",
+          "columnsFrom": [
+            "station_id"
+          ],
+          "columnsTo": [
+            "station_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "rainfall_id_timestamp_station_id_pk": {
+          "name": "rainfall_id_timestamp_station_id_pk",
+          "columns": [
+            "id",
+            "timestamp",
+            "station_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "public.region": {
@@ -136,76 +339,16 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.temperature_readings_jobs": {
-      "name": "temperature_readings_jobs",
+    "public.temperature": {
+      "name": "temperature",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
           "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "fetch_date": {
-          "name": "fetch_date",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "fetch_url": {
-          "name": "fetch_url",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "jobs_start_date": {
-          "name": "jobs_start_date",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "file_path": {
-          "name": "file_path",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "file_name": {
-          "name": "file_name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "temperature_readings_jobs_id_file_name_pk": {
-          "name": "temperature_readings_jobs_id_file_name_pk",
-          "columns": [
-            "id",
-            "file_name"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
-    "public.temperature_readings": {
-      "name": "temperature_readings",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
+          "default": "gen_random_uuid()"
         },
         "station_id": {
           "name": "station_id",
@@ -241,9 +384,9 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "temperature_readings_station_id_stations_station_id_fk": {
-          "name": "temperature_readings_station_id_stations_station_id_fk",
-          "tableFrom": "temperature_readings",
+        "temperature_station_id_stations_station_id_fk": {
+          "name": "temperature_station_id_stations_station_id_fk",
+          "tableFrom": "temperature",
           "tableTo": "stations",
           "columnsFrom": [
             "station_id"
@@ -256,12 +399,57 @@
         }
       },
       "compositePrimaryKeys": {
-        "temperature_readings_id_timestamp_station_id_pk": {
-          "name": "temperature_readings_id_timestamp_station_id_pk",
+        "temperature_id_timestamp_station_id_pk": {
+          "name": "temperature_id_timestamp_station_id_pk",
           "columns": [
             "id",
             "timestamp",
             "station_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.uv": {
+      "name": "uv",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "gen_random_uuid()"
+        },
+        "uv_index": {
+          "name": "uv_index",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_created": {
+          "name": "date_created",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "uv_id_timestamp_uv_index_pk": {
+          "name": "uv_id_timestamp_uv_index_pk",
+          "columns": [
+            "id",
+            "timestamp",
+            "uv_index"
           ]
         }
       },
