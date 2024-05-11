@@ -1,12 +1,13 @@
 {
   "name": "weathercore",
   "module": "index.ts",
-  "type": "module",
   "scripts": {
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "push": "drizzle-kit push",
-    "drop": "drizzle-kit drop"
+    "drop": "drizzle-kit drop",
+    "dev": "bun run --watch ./index.ts",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "@ouroboros/eslint-config": "workspace:^",
+    "@ouroboros/typescript-config": "workspace:^",
     "drizzle-orm": "^0.30.10",
     "drizzle-zod": "^0.5.1",
     "postgres": "^3.4.4",
