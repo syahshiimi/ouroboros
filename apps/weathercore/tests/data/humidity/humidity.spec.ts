@@ -1,3 +1,4 @@
+import { exitDbConnection } from "../../../src/data-access/connections/connection"
 import { deleteAllHumidityReadings, findHumidityReadingsByStationId, upsertHumidityReadings } from "../../../src/data-access/repositories/humidity"
 import { deleteAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations"
 import { sampleHumidity, sampleStations } from "../../sample/samples"
@@ -12,6 +13,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await deleteAllHumidityReadings();
   await deleteAllStations();
+  await exitDbConnection();
 })
 
 describe("humidity records", () => {
