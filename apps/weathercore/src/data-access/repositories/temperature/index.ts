@@ -1,13 +1,16 @@
-import  * as schema  from "../../models/temperature";
 import type { Temperature } from "../../models/types";
-import { eq, sql } from "drizzle-orm";
-import {  tempeatureConnection } from "../connections";
+import { eq } from "drizzle-orm";
+import {  dbConnection  } from "../connections";
+import { temperature } from "../../models/temperature";
+import { drizzle } from "drizzle-orm/postgres-js";
+
+const connection = drizzle(dbConnection, { schema: { temperature}})
 
 export async function findLatestTemperatureReadingByStationId(
   station_id: Exclude<Temperature["station_id"], undefined | null>
 ): Promise<Temperature | undefined> {
-  return await tempeatureConnection.query.temperature.findFirst({
-    where: eq(schema.temperature.station_id, station_id)
+  return await connection.query.temperature.findFirst({
+    where: eq(temperature.station_id, station_id)
   })
 }
 
@@ -18,17 +21,17 @@ export async function findLatestTemperatureReadingByStationId(
 export async function findTemperatureReadingsByStationId(
   station_id: Exclude<Temperature["station_id"], undefined | null>
 ): Promise<Temperature[]> {
-  return await tempeatureConnection.query.temperature.findMany({
-    where: eq(schema.temperature.station_id, station_id)
+  return await connection.query.temperature.findMany({
+    where: eq(temperature.station_id, station_id)
   })
 }
 
 export async function upsertTemperatureReading(
   record: Temperature[]
 ): Promise<Temperature[]> {
-  return await tempeatureConnection.transaction(async (tx) => {
+  return await connection.transaction(async (tx) => {
     return await tx
-      .insert(schema.temperature)
+      .insert(temperature)
       .values(record)
       .onConflictDoNothing()
       .returning()
@@ -38,10 +41,10 @@ export async function upsertTemperatureReading(
 export async function deleteTemperatureReadingById(
   uuid: Exclude<Temperature["id"], undefined | null>
 ): Promise<Temperature[] | undefined> {
-  return await tempeatureConnection.delete(schema.temperature)
-    .where((eq(schema.temperature.id, uuid)))
+  return await connection.delete(temperature)
+    .where((eq(temperature.id, uuid))).returning()
 }
 
 export async function deleteAllTemperatureReadings(): Promise<Temperature[]> {
-  return tempeatureConnection.delete(schema.temperature).returning();
+  return connection.delete(temperature).returning();
 }
