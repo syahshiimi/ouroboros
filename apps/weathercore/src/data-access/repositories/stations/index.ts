@@ -4,13 +4,17 @@ import { stations } from "../../models/station";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { dbConnection } from "../connections";
 
-const connection = drizzle(dbConnection, { schema: { stations }})
+const connection = drizzle(dbConnection, { schema: { stations } })
 
 export async function findStationByStationId(station_id: Exclude<Stations["station_id"], undefined | null>)
   : Promise<Stations | undefined> {
   return await connection.query.stations.findFirst({
     where: eq(stations.station_id, station_id)
   })
+}
+
+export async function getAllStations(): Promise<Stations[]> {
+  return await connection.query.stations.findMany()
 }
 
 export async function upsertStationDetails(
