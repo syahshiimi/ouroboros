@@ -26,6 +26,9 @@ importers:
       '@ouroboros/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
+      '@ouroboros/typescript-config':
+        specifier: workspace:^
+        version: link:../../packages/typescript-config
       drizzle-orm:
         specifier: ^0.30.10
         version: 0.30.10(postgres@3.4.4)
