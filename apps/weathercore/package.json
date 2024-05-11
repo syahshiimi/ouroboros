@@ -16,6 +16,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@ouroboros/eslint-config": "workspace:^",
     "drizzle-orm": "^0.30.10",
     "drizzle-zod": "^0.5.1",
     "postgres": "^3.4.4",
