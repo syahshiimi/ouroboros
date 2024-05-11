@@ -1,7 +1,7 @@
 import { decimal, pgTable, primaryKey, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 import { stations } from "./station";
 
-export const temperatureReadings = pgTable('temperature_readings', {
+export const temperature = pgTable('temperature', {
   id: uuid("id").defaultRandom(),
   station_id: varchar("station_id", { length: 20 }).references(() => stations.station_id),
   timestamp: timestamp("timestamp", { withTimezone: true }),
@@ -13,3 +13,4 @@ export const temperatureReadings = pgTable('temperature_readings', {
     pk: primaryKey({ columns: [table.id, table.timestamp, table.station_id] })
   }
 })
+

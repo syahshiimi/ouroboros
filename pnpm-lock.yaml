@@ -69,9 +69,15 @@ importers:
       drizzle-orm:
         specifier: ^0.30.10
         version: 0.30.10(postgres@3.4.4)
+      drizzle-zod:
+        specifier: ^0.5.1
+        version: 0.5.1(drizzle-orm@0.30.10)(zod@3.23.8)
       postgres:
         specifier: ^3.4.4
         version: 3.4.4
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@types/bun':
         specifier: latest
@@ -2429,6 +2435,16 @@ packages:
         optional: true
     dependencies:
       postgres: 3.4.4
+    dev: false
+
+  /drizzle-zod@0.5.1(drizzle-orm@0.30.10)(zod@3.23.8):
+    resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
+    peerDependencies:
+      drizzle-orm: '>=0.23.13'
+      zod: '*'
+    dependencies:
+      drizzle-orm: 0.30.10(postgres@3.4.4)
+      zod: 3.23.8
     dev: false
 
   /eastasianwidth@0.2.0:
@@ -5766,4 +5782,3 @@ packages:
 
   /zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
-    dev: true
