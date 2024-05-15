@@ -1,5 +1,4 @@
-import { timestamp } from "drizzle-orm/mysql-core";
-import { doublePrecision, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
+import { doublePrecision, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const areaForecast = pgTable('area_forecast', {
   id: uuid("id").defaultRandom(),
