@@ -1,10 +1,10 @@
 import type { Temperature } from "../../models/types";
 import { eq } from "drizzle-orm";
-import {  dbConnection  } from "../connections";
-import { temperature } from "../../models/temperature";
+import { dbConnection } from "../connections";
+import { temperature } from "../../models/db/temperature";
 import { drizzle } from "drizzle-orm/postgres-js";
 
-const connection = drizzle(dbConnection, { schema: { temperature}})
+const connection = drizzle(dbConnection, { schema: { temperature } })
 
 export async function findLatestTemperatureReadingByStationId(
   station_id: Exclude<Temperature["station_id"], undefined | null>

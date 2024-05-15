@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import { dbConnection } from "../connections";
-import { humidity } from "../../models/humidity";
+import { humidity } from "../../models/db/humidity";
 import type { Humidity } from "../../models/types";
 import { eq } from "drizzle-orm";
 

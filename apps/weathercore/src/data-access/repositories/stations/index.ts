@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import type { Stations } from "../../models/types";
-import { stations } from "../../models/station";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { dbConnection } from "../connections";
+import { stations } from "../../models/db/station";
 
 const connection = drizzle(dbConnection, { schema: { stations } })
 
