@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS "area_forecast" (
 	"area_name" varchar(40) PRIMARY KEY NOT NULL,
 	"latitude" double precision,
 	"longitude" double precision,
-	"date_created" timestamp DEFAULT (now())
+	"date_created" timestamp DEFAULT now()
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "fetch_jobs_task" (
