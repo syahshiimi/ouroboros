@@ -1,5 +1,5 @@
 import { exitDbConnection } from "../../../src/data-access/connections/connection";
-import { deleteAllStations, findStationByStationId, getAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations"
+import { deleteAllStations, findStationByStationId, getAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations/stations-repository"
 import { sampleStations } from "../../sample/samples";
 import { beforeAll, afterAll, describe, test, expect } from "bun:test"
 

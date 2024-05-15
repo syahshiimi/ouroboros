@@ -1,6 +1,6 @@
 import { beforeAll, afterAll, describe, test, expect } from "bun:test"
-import { deleteAllTemperatureReadings, deleteTemperatureReadingById, findLatestTemperatureReadingByStationId, upsertTemperatureReading } from "../../../src/data-access/repositories/temperature"
-import { deleteAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations"
+import { deleteAllTemperatureReadings, deleteTemperatureReadingById, findLatestTemperatureReadingByStationId, upsertTemperatureReading } from "../../../src/data-access/repositories/temperature/temperature-repository"
+import { deleteAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations/stations-repository"
 import { sampleStations, sampleTemperatures } from "../../sample/samples"
 import { exitDbConnection } from "../../../src/data-access/connections/connection"
 

@@ -1,6 +1,6 @@
 import { exitDbConnection } from "../../../src/data-access/connections/connection"
-import { deleteAllHumidityReadings, findHumidityReadingsByStationId, upsertHumidityReadings } from "../../../src/data-access/repositories/humidity"
-import { deleteAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations"
+import { deleteAllHumidityReadings, findHumidityReadingsByStationId, upsertHumidityReadings } from "../../../src/data-access/repositories/humidity/humidity-repository"
+import { deleteAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations/stations-repository"
 import { sampleHumidity, sampleStations } from "../../sample/samples"
 import { beforeAll, afterAll, describe, expect, test } from "bun:test"
 
