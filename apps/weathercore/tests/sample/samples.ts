@@ -13,9 +13,9 @@ export const sampleTemperatures: Temperature[] = sample.items.flatMap(item =>
 
 export const sampleStations: Stations[] = sample.metadata.stations.map(station => {
   return {
-    station_id: station.device_id,
-    location_name: station.name,
     latitude: station.location.latitude,
+    location_name: station.name,
+    station_id: station.device_id,
     longitude: station.location.longitude
   }
 })
