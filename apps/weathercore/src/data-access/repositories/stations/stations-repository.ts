@@ -25,11 +25,11 @@ export async function upsertStationDetails(
       .insert(stations)
       .values(record)
       .onConflictDoNothing()
-      .returning()
+      .returning();
   })
 }
 
 export async function deleteAllStations(): Promise<Stations[]> {
-  return connection.delete(stations).returning()
+  return await connection.delete(stations).returning()
 }
 

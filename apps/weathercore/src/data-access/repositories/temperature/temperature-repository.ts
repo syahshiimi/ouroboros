@@ -40,7 +40,7 @@ export async function upsertTemperatureReading(
 
 export async function deleteTemperatureReadingById(
   uuid: Exclude<Temperature["id"], undefined | null>
-): Promise<Temperature[] | undefined> {
+): Promise<Temperature | undefined> {
   return await connection.delete(temperature)
     .where((eq(temperature.id, uuid))).returning()
 }
