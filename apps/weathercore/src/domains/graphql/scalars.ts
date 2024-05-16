@@ -6,5 +6,6 @@ export type DateScalar = {
 }
 
 export type SchemaType = {
-  Scalars: DateScalar
+  Scalars: DateScalar;
+  DefaultFieldNullability: true
 }
