@@ -7,7 +7,7 @@ import { stations } from "../../models/db/station";
 const connection = drizzle(dbConnection, { schema: { stations } })
 
 export async function findStationByStationId(station_id: Exclude<Stations["station_id"], undefined | null>)
-  : Promise<Stations | undefined> {
+  : Promise<Stations | undefined | null> {
   return await connection.query.stations.findFirst({
     where: eq(stations.station_id, station_id)
   })
