@@ -20,8 +20,13 @@
   "dependencies": {
     "@ouroboros/eslint-config": "workspace:^",
     "@ouroboros/typescript-config": "workspace:^",
+    "@pothos/core": "^3.41.1",
+    "@pothos/plugin-add-graphql": "^3.2.0",
     "drizzle-orm": "^0.30.10",
     "drizzle-zod": "^0.5.1",
+    "graphql": "^16.8.1",
+    "graphql-scalars": "^1.23.0",
+    "graphql-yoga": "^5.3.1",
     "postgres": "^3.4.4",
     "zod": "^3.23.8"
   }
