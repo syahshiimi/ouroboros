@@ -3,7 +3,6 @@ import { deleteAllStations, findStationByStationId, getAllStations, upsertStatio
 import { sampleStations } from "../../sample/samples";
 import { beforeAll, afterAll, describe, test, expect } from "bun:test"
 
-const stationId = "S117"
 
 beforeAll(async () => {
   await deleteAllStations();
@@ -15,6 +14,8 @@ afterAll(async () => {
 })
 
 describe("station records", () => {
+  const stationId = "S117"
+
   test("should upsert station records into the database", async () => {
     const addStations = await upsertStationDetails(sampleStations)
 

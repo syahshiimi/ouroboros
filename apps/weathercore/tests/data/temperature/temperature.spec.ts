@@ -4,7 +4,6 @@ import { deleteAllStations, upsertStationDetails } from "../../../src/data-acces
 import { sampleStations, sampleTemperatures } from "../../sample/samples"
 import { exitDbConnection } from "../../../src/data-access/connections/connection"
 
-const stationId = "S117"
 
 beforeAll(async () => {
   await upsertStationDetails(sampleStations)
@@ -17,6 +16,8 @@ afterAll(async () => {
 })
 
 describe("temperature readings", () => {
+  const stationId = "S117"
+
   test("should upsert records into the database", async () => {
     const addRecords = await upsertTemperatureReading(sampleTemperatures)
     expect(addRecords.length).toBe(sampleTemperatures.length)

@@ -4,7 +4,6 @@ import { deleteAllStations, upsertStationDetails } from "../../../src/data-acces
 import { sampleHumidity, sampleStations } from "../../sample/samples"
 import { beforeAll, afterAll, describe, expect, test } from "bun:test"
 
-const stationId = "S117"
 
 beforeAll(async () => {
   await upsertStationDetails(sampleStations)
@@ -17,6 +16,8 @@ afterAll(async () => {
 })
 
 describe("humidity records", () => {
+  const stationId = "S117"
+
   test("should upsert humidity records into the database", async () => {
     const addHumidityRecords = await upsertHumidityReadings(sampleHumidity)
 
