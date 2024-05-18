@@ -1,4 +1,5 @@
-import { type TemperatureSchema, type Temperature } from "../../models/types";
+import { type Temperature } from "../../models/types";
+import type { TemperatureSchema } from "../../models/schema";
 import { eq } from "drizzle-orm";
 import { temperature } from "../../models/db/temperature";
 import { drizzleConnection } from "../connections";

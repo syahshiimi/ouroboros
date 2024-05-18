@@ -2,8 +2,9 @@ import { eq } from "drizzle-orm";
 import { stations } from "../../models/db/station";
 import { drizzleConnection } from "../connections";
 import type { Stations } from "../../models/types";
+import type { StationSchema } from "../../models/schema";
 
-const connection = drizzleConnection(stations)
+const connection = drizzleConnection<StationSchema>(stations)
 
 export async function findStationByStationId(
   station_id: Exclude<Stations["station_id"], undefined | null>): Promise<Stations | undefined | null> {

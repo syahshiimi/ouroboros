@@ -1,10 +1,10 @@
-import { drizzle } from "drizzle-orm/postgres-js";
 import { humidity } from "../../models/db/humidity";
 import type { Humidity } from "../../models/types";
+import { type HumiditySchema } from "../../models/schema";
 import { eq } from "drizzle-orm";
 import { drizzleConnection } from "../connections";
 
-const connection = drizzleConnection(humidity)
+const connection = drizzleConnection<HumiditySchema>(humidity)
 
 export async function findHumidityReadingsByStationId(
   station_id: Exclude<Humidity["station_id"], undefined | null>

@@ -3,8 +3,9 @@ import type { Rainfall } from "../../models/types";
 import { stations } from "../../models/db/station";
 import { eq } from "drizzle-orm";
 import { drizzleConnection } from "../connections";
+import { type RainfallSchema } from "../../models/schema";
 
-const connection = drizzleConnection(rainfall)
+const connection = drizzleConnection<RainfallSchema>(rainfall)
 
 export async function findLatestRainfallByStationId(
   station_id: Exclude<Rainfall["station_id"], undefined | null>
