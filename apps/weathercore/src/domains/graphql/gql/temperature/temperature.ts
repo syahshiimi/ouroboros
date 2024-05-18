@@ -1,7 +1,16 @@
 import { deleteAllStations } from "../../../../data-access/repositories/stations/stations-repository";
-import { deleteTemperatureReadingById, findLatestTemperatureReadingByStationId, findTemperatureReadingsByStationId } from "../../../../data-access/repositories/temperature/temperature-repository";
+import { deleteTemperatureReadingById, findLatestTemperatureReadingByStationId, findTemperatureReadingsByStationId, upsertTemperatureReading } from "../../../../data-access/repositories/temperature/temperature-repository";
 import { builder } from "../../builder";
 import { TemperatureType } from "../../types";
+
+const TemperatureInput = builder.inputType("TemperatureInput", {
+  fields: (t) => ({
+    station_id: t.string({ required: true }),
+    reading: t.string(),
+    file_name: t.string(),
+    timestamp: t.field({ type: 'Date', required: true })
+  })
+})
 
 TemperatureType.implement({
   fields: (t) => ({
@@ -44,13 +53,10 @@ builder.mutationField("upsertTemperatureReadings", (t) =>
     type: [TemperatureType],
     nullable: true,
     args: {
-      station_id: t.arg.string({ required: true }),
-      reading: t.arg.string(),
-      file_name: t.arg.string(),
-      timestamp: t.arg({ type: 'Date', required: true })
+      input: t.arg({ type: [TemperatureInput], required: true })
     },
     resolve: async (_, args) => {
-      return await findTemperatureReadingsByStationId(args.station_id)
+      return await upsertTemperatureReading([...args.input])
     }
   })
 )
