@@ -2,6 +2,15 @@ import { deleteAllStations, findStationByStationId, getAllStations, upsertStatio
 import { builder } from "../../builder";
 import { StationsType } from "../../types";
 
+const StationsInput = builder.inputType('StationsInput', {
+  fields: (t) => ({
+    station_id: t.string({ required: true }),
+    location_name: t.string(),
+    longitude: t.float(),
+    latitude: t.float()
+  })
+})
+
 StationsType.implement({
   fields: (t) => ({
     station_id: t.exposeString("station_id"),
@@ -37,13 +46,10 @@ builder.mutationField("upsertStation", (t) =>
   t.field({
     type: [StationsType],
     args: {
-      station_id: t.arg.string({ required: true }),
-      location_name: t.arg.string(),
-      longitude: t.arg.float(),
-      latitude: t.arg.float()
+      input: t.arg({ type: [StationsInput], required: true })
     },
     resolve: (_, args) => {
-      return upsertStationDetails([{ ...args }])
+      return upsertStationDetails([...args.input])
     }
   })
 )
