@@ -1,15 +1,18 @@
-# weathercore
+# Weathercore
 
-To install dependencies:
+Weathercore is an ETL pipeline and the DAO layer that sits around a TimeScale database.
 
-```bash
-bun install
+It is part of a larger, system called "Ouroboros"; that generates artworks through events. Ouroboros is part of _a relational study into weather_ an artistic investigation into  
+the relationship we have with weather.
+
+## Start
+
+```shell
+pnpm install
 ```
 
-To run:
+After installing,
 
-```bash
-bun run index.ts
+```shell
+pnpm dev
 ```
-
-This project was created using `bun init` in bun v1.0.25. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
