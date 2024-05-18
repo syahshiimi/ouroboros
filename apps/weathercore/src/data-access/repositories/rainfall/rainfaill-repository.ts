@@ -1,16 +1,15 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-import { dbConnection } from "../connections";
 import { rainfall } from "../../models/db/rainfall";
 import type { Rainfall } from "../../models/types";
 import { stations } from "../../models/db/station";
 import { eq } from "drizzle-orm";
+import { drizzleConnection } from "../connections";
 
-const connection = drizzle(dbConnection, { schema: { rainfall } })
+const connection = drizzleConnection(rainfall)
 
 export async function findLatestRainfallByStationId(
   station_id: Exclude<Rainfall["station_id"], undefined | null>
 ): Promise<Rainfall | undefined> {
-  return await connection.query.rainfall.findFirst({
+  return await connection.query.schema.findFirst({
     where: eq(stations.station_id, station_id)
   })
 }
@@ -18,7 +17,7 @@ export async function findLatestRainfallByStationId(
 export async function findRainfallReadingsByStationId(
   station_id: Exclude<Rainfall["station_id"], undefined | null>
 ): Promise<Rainfall[]> {
-  return await connection.query.rainfall.findMany({
+  return await connection.query.schema.findMany({
     where: eq(rainfall.station_id, station_id)
   })
 }

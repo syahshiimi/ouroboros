@@ -1,15 +1,14 @@
-import type { Temperature } from "../../models/types";
+import { type TemperatureSchema, type Temperature } from "../../models/types";
 import { eq } from "drizzle-orm";
-import { dbConnection } from "../connections";
 import { temperature } from "../../models/db/temperature";
-import { drizzle } from "drizzle-orm/postgres-js";
+import { drizzleConnection } from "../connections";
 
-const connection = drizzle(dbConnection, { schema: { temperature } })
+const connection = drizzleConnection<TemperatureSchema>(temperature)
 
 export async function findLatestTemperatureReadingByStationId(
   station_id: Exclude<Temperature["station_id"], undefined | null>
 ): Promise<Temperature | undefined> {
-  return await connection.query.temperature.findFirst({
+  return await connection.query.schema.findFirst({
     where: eq(temperature.station_id, station_id)
   })
 }
@@ -21,7 +20,7 @@ export async function findLatestTemperatureReadingByStationId(
 export async function findTemperatureReadingsByStationId(
   station_id: Exclude<Temperature["station_id"], undefined | null>
 ): Promise<Temperature[]> {
-  return await connection.query.temperature.findMany({
+  return await connection.query.schema.findMany({
     where: eq(temperature.station_id, station_id)
   })
 }
