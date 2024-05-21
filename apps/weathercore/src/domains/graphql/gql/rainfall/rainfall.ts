@@ -13,6 +13,7 @@ const RainfallInput = builder.inputType("RainfallInput", {
 
 RainfallType.implement({
   fields: (t) => ({
+    id: t.exposeString("id"),
     station_id: t.exposeString("station_id"),
     file_name: t.exposeString("file_name"),
     timestamp: t.expose("timestamp", { type: "Date" }),

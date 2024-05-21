@@ -13,6 +13,7 @@ const StationsInput = builder.inputType('StationsInput', {
 
 StationsType.implement({
   fields: (t) => ({
+    id: t.exposeString("id"),
     station_id: t.exposeString("station_id"),
     location_name: t.exposeString("location_name"),
     longitude: t.exposeFloat("longitude"),

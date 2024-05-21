@@ -13,6 +13,7 @@ const HumidityInput = builder.inputType("HumidityInput", {
 
 HumidityType.implement({
   fields: (t) => ({
+    id: t.exposeString("id"),
     station_id: t.exposeString("station_id"),
     timestamp: t.expose("timestamp", { type: "Date" }),
     humidity_value: t.exposeString("humidity_value"),
