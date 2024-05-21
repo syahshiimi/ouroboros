@@ -66,11 +66,10 @@ CREATE TABLE IF NOT EXISTS "temperature" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "uv" (
-	"id" uuid DEFAULT gen_random_uuid(),
-	"uv_index" numeric,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"uv_index" integer,
 	"timestamp" timestamp,
-	"date_created" timestamp DEFAULT now(),
-	CONSTRAINT "uv_id_timestamp_uv_index_pk" PRIMARY KEY("id","timestamp","uv_index")
+	"date_created" timestamp DEFAULT now()
 );
 --> statement-breakpoint
 DO $$ BEGIN

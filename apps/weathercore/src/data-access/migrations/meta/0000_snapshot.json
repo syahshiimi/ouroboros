@@ -1,5 +1,5 @@
 {
-  "id": "52e738fa-4404-49e2-aa4a-33cde04e1a17",
+  "id": "f1cb385c-8635-42cb-8edc-4cab5717d77c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
@@ -423,13 +423,13 @@
         "id": {
           "name": "id",
           "type": "uuid",
-          "primaryKey": false,
-          "notNull": false,
+          "primaryKey": true,
+          "notNull": true,
           "default": "gen_random_uuid()"
         },
         "uv_index": {
           "name": "uv_index",
-          "type": "numeric",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
@@ -449,16 +449,7 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "uv_id_timestamp_uv_index_pk": {
-          "name": "uv_id_timestamp_uv_index_pk",
-          "columns": [
-            "id",
-            "timestamp",
-            "uv_index"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }
   },
