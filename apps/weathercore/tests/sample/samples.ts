@@ -1,8 +1,15 @@
-import type { Humidity, Rainfall, Stations, Temperature } from "../../src/data-access/models/types";
+import type { Humidity, Rainfall, Stations, Temperature, UV } from "../../src/data-access/models/types";
 import sample from "./temperature.json"
 import humidity from "./humidity.json"
 import rainfall from "./rainfall.json"
-import { timestamp } from "drizzle-orm/mysql-core";
+import uv from "./uv.json"
+
+export const sampleUv: UV[] = uv.items.flatMap(item =>
+  item.index.map(uv => ({
+    uv_index: uv.value,
+    timestamp: new Date(uv.timestamp)
+  }))
+)
 
 export const sampleTemperatures: Temperature[] = sample.items.flatMap(item =>
   item.readings.map(reading => ({
