@@ -21,9 +21,12 @@ export async function findFetchJobsTaskByFetchJobsTypeId(
   })
 }
 
-export async function updateFetchJobsTask(
+export async function upsertFetchJobsTask(
   fetch_task: FetchJobs[]
 ): Promise<FetchJobs[]> {
   return await connection.insert(fetchJobs).values(fetch_task).returning()
 }
 
+export async function deleteFetchJobsTask(): Promise<FetchJobs[]> {
+  return await connection.delete(fetchJobs)
+}

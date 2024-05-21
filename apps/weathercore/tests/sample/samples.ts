@@ -1,8 +1,17 @@
-import type { Humidity, Rainfall, Stations, Temperature, UV } from "../../src/data-access/models/types";
+import type { FetchJobs, Humidity, Rainfall, Stations, Temperature, UV } from "../../src/data-access/models/types";
 import sample from "./temperature.json"
 import humidity from "./humidity.json"
 import rainfall from "./rainfall.json"
 import uv from "./uv.json"
+
+export const sampleFetchJob: FetchJobs = {
+  fetch_job_type_id: "9b530a5e-48dd-4714-8f93-9e49bc8f8604",
+  fetch_url: "sample.url.sg",
+  fetch_date: new Date(),
+  fetch_job_start_date: new Date(),
+  file_name: "sample_file.json",
+  workflow_id: "41f196bd-31f2-4935-a863-a72e74107807"
+}
 
 export const sampleUv: UV[] = uv.items.flatMap(item =>
   item.index.map(uv => ({
