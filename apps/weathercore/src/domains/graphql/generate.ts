@@ -3,7 +3,6 @@ import { schema } from "./schema";
 import { writeFileSync } from "fs";
 import path from 'path';
 
-
 export const generateSchemaGraphql = async () => {
   const schemaAsString = printSchema(lexicographicSortSchema(schema))
   const cwd = process.cwd();
