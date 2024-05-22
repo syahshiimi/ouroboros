@@ -24,6 +24,7 @@ RainfallType.implement({
 builder.queryField("findLatestRainfallByStationId", (t) =>
   t.field(({
     type: RainfallType,
+    description: "Finds the latest rainfall reading by station_id.",
     args: {
       station_id: t.arg.string({ required: true })
     },
@@ -36,6 +37,7 @@ builder.queryField("findLatestRainfallByStationId", (t) =>
 builder.queryField("findRainfallByStationId", (t) =>
   t.field(({
     type: [RainfallType],
+    description: "Finds the rainfall readings by station_id.",
     args: {
       station_id: t.arg.string({ required: true })
     },
@@ -48,6 +50,7 @@ builder.queryField("findRainfallByStationId", (t) =>
 builder.mutationField("upsertRainfallReadings", (t) =>
   t.field({
     type: [RainfallType],
+    description: "Inserts the rainfall readings into the table.",
     nullable: false,
     args: {
       input: t.arg({ type: [RainfallInput], required: true })
@@ -61,6 +64,7 @@ builder.mutationField("upsertRainfallReadings", (t) =>
 builder.mutationField("deleteRainfallReadingStationId", (t) =>
   t.field({
     type: [RainfallType],
+    description: "Deletes the rainfall readings by station_id.",
     nullable: false,
     args: {
       station_id: t.arg.string({ required: true })
@@ -74,6 +78,7 @@ builder.mutationField("deleteRainfallReadingStationId", (t) =>
 builder.mutationField("deleteRainfallReadings", (t) =>
   t.field({
     type: [RainfallType],
+    description: "Deletes all rainfall readings.",
     resolve: async () => {
       return await deleteAllRainfaillReadings();
     }

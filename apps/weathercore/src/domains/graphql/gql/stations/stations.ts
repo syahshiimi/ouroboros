@@ -24,6 +24,7 @@ StationsType.implement({
 builder.queryField("findStationsByStationId", (t) =>
   t.field({
     type: StationsType,
+    description: "Finds a station by station_id.",
     nullable: true,
     args: {
       station_id: t.arg.string({ required: true })
@@ -37,6 +38,7 @@ builder.queryField("findStationsByStationId", (t) =>
 builder.queryField("getAllStations", (t) =>
   t.field({
     type: [StationsType],
+    description: "Finds all stations.",
     resolve: () => {
       return getAllStations();
     }
@@ -46,6 +48,7 @@ builder.queryField("getAllStations", (t) =>
 builder.mutationField("upsertStation", (t) =>
   t.field({
     type: [StationsType],
+    description: "Inserts a station record into the stations table.",
     args: {
       input: t.arg({ type: [StationsInput], required: true })
     },
@@ -58,6 +61,7 @@ builder.mutationField("upsertStation", (t) =>
 builder.mutationField("deleteAllStations", (t) =>
   t.field({
     type: [StationsType],
+    description: "Deletes all station record.",
     resolve: () => {
       return deleteAllStations();
     }

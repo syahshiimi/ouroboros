@@ -25,6 +25,7 @@ TemperatureType.implement({
 builder.queryField("findLatestTemperatureReadingByStationid", (t) =>
   t.field({
     type: TemperatureType,
+    description: "Finds the latest temperature reading by the station_id.",
     nullable: true,
     args: {
       station_id: t.arg.string({ required: true })
@@ -38,6 +39,7 @@ builder.queryField("findLatestTemperatureReadingByStationid", (t) =>
 builder.queryField("findTemperatureReadingByStationid", (t) =>
   t.field({
     type: [TemperatureType],
+    description: "Finds the temperature reading by the station_id.",
     nullable: true,
     args: {
       station_id: t.arg.string({ required: true })
@@ -51,6 +53,7 @@ builder.queryField("findTemperatureReadingByStationid", (t) =>
 builder.mutationField("upsertTemperatureReadings", (t) =>
   t.field({
     type: [TemperatureType],
+    description: "Inserts the temperature readings into the temperature table.",
     nullable: true,
     args: {
       input: t.arg({ type: [TemperatureInput], required: true })
@@ -64,6 +67,7 @@ builder.mutationField("upsertTemperatureReadings", (t) =>
 builder.mutationField("deleteTemperatureReadingById", (t) =>
   t.field({
     type: TemperatureType,
+    description: "Deletes the temperature readings by id.",
     args: {
       id: t.arg.string({ required: true })
     },
@@ -76,6 +80,7 @@ builder.mutationField("deleteTemperatureReadingById", (t) =>
 builder.mutationField("deleteAllTemperatureReadings", (t) =>
   t.field({
     type: [TemperatureType],
+    description: "Deletes all temperature readings.",
     resolve: async () => {
       return await deleteAllStations();
     }

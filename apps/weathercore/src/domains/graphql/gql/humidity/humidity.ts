@@ -25,6 +25,7 @@ HumidityType.implement({
 builder.queryField("findHumidityReadingsByStationId", (t) =>
   t.field({
     type: [HumidityType],
+    description: "Finds the humidity reading by the station_id.",
     args: {
       station_id: t.arg.string({ required: true })
     },
@@ -37,6 +38,7 @@ builder.queryField("findHumidityReadingsByStationId", (t) =>
 builder.mutationField("upsertHumidityReadings", (t) =>
   t.field({
     type: [HumidityType],
+    description: "Upserts the humidity reading into the table.",
     nullable: false,
     args: {
       input: t.arg({ type: [HumidityInput], required: true })
@@ -50,6 +52,7 @@ builder.mutationField("upsertHumidityReadings", (t) =>
 builder.mutationField("deleteHumidityReadings", (t) =>
   t.field({
     type: [HumidityType],
+    description: "Deletes all humidity readings.",
     resolve: async () => {
       return await deleteAllHumidityReadings();
     }

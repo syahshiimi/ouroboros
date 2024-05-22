@@ -38,10 +38,10 @@ builder.queryField("findFetchJobsTaskById", (t) =>
   })
 )
 
-builder.queryField("findFetchJobsByFetchJobsId", (t) =>
+builder.queryField("findFetchJobsByTopicId", (t) =>
   t.field({
     type: FetchJobsType,
-    description: "Fetches the job tasks by the fetch_job id of the topic.",
+    description: "Fetches the job tasks by the topic id",
     args: {
       topic_id: t.arg.string({ required: true })
     },
@@ -54,6 +54,7 @@ builder.queryField("findFetchJobsByFetchJobsId", (t) =>
 builder.mutationField("upsertFetchJobsTask", (t) =>
   t.field({
     type: [FetchJobsType],
+    description: "Upserts the fetch job task table.",
     args: {
       input: t.arg({ type: [FetchJobsInput], required: true })
     },
