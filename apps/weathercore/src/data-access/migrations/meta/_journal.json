@@ -8,6 +8,13 @@
       "when": 1716302992003,
       "tag": "0000_puzzling_salo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1716362985499,
+      "tag": "0001_condemned_stardust",
+      "breakpoints": true
     }
   ]
 }
