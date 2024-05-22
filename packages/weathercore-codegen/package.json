@@ -1,7 +1,7 @@
 {
   "name": "@ouroboros/weathercore-codegen",
   "version": "1.0.0",
-  "description": "",
+  "description": "weathercore-codegen is a code generator for graphql schema to TypeScripts etc.",
   "main": "index.js",
   "scripts": {
     "generate": "graphql-codegen"
