@@ -1,0 +1,13 @@
+{
+  "name": "@ouroboros/weathercore-gql",
+  "version": "1.0.0",
+  "description": "weathercore-gql is a client-side TypeScript types generated via codegen for use across client interfaces",
+  "main": "./src/index.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.4.5"
+  }
+}
