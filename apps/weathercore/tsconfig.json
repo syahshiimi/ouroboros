@@ -1,4 +1,5 @@
 {
+  "extends": "@ouroboros/typescript-config/base.json",
   "compilerOptions": {
     "lib": ["ESNext"],
     "target": "ESNext",
