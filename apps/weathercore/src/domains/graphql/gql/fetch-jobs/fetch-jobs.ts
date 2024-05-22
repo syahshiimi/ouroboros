@@ -1,10 +1,10 @@
-import { findFetchJobsTaskByFetchJobsTypeId, findFetchJobsTaskById, upsertFetchJobsTask } from "../../../../data-access/repositories/fetch-jobs/fetch-jobs-repository";
+import { findFetchJobsByTopicId, findFetchJobsTaskById, upsertFetchJobsTask } from "../../../../data-access/repositories/fetch-jobs/fetch-jobs-repository";
 import { builder } from "../../builder";
 import { FetchJobsType } from "../../types";
 
 const FetchJobsInput = builder.inputType("FetchJobsInput", {
   fields: (t) => ({
-    fetch_jobs_type_id: t.string({ required: true }),
+    topic_id: t.string({ required: true }),
     fetch_date: t.field({ type: "Date", required: true }),
     fetch_job_start_date: t.field({ type: "Date", required: true }),
     fetch_url: t.string({ required: true }),
@@ -16,7 +16,7 @@ const FetchJobsInput = builder.inputType("FetchJobsInput", {
 FetchJobsType.implement({
   fields: (t) => ({
     id: t.exposeID("id"),
-    fetch_jobs_type_id: t.exposeID("fetch_job_type_id"),
+    fetch_jobs_type_id: t.exposeID("topic_id"),
     fetch_date: t.expose("fetch_date", { type: "Date" }),
     fetch_job_start_date: t.expose("fetch_job_start_date", { type: "Date" }),
     fetch_url: t.exposeString("fetch_url"),
@@ -28,6 +28,7 @@ FetchJobsType.implement({
 builder.queryField("findFetchJobsTaskById", (t) =>
   t.field({
     type: FetchJobsType,
+    description: "Fetches the job tasks by id.",
     args: {
       id: t.arg.string({ required: true })
     },
@@ -37,14 +38,15 @@ builder.queryField("findFetchJobsTaskById", (t) =>
   })
 )
 
-builder.queryField("findFetchJObsByFetchJobsId", (t) =>
+builder.queryField("findFetchJobsByFetchJobsId", (t) =>
   t.field({
     type: FetchJobsType,
+    description: "Fetches the job tasks by the fetch_job id of the topic.",
     args: {
-      fetch_jobs_type_id: t.arg.string({ required: true })
+      topic_id: t.arg.string({ required: true })
     },
     resolve: async (_, args) => {
-      return await findFetchJobsTaskByFetchJobsTypeId(args.fetch_jobs_type_id)
+      return await findFetchJobsByTopicId(args.topic_id)
     }
   })
 )

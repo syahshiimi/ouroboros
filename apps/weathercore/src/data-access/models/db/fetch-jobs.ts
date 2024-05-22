@@ -5,12 +5,11 @@ import { rainfall } from "./rainfall";
 import { temperature } from "./temperature";
 import { uv } from "./uv";
 
-
 export const fetchJobs = pgTable('fetch_jobs_task', {
-  id: uuid('id').defaultRandom(),
-  fetch_job_type_id: varchar('fetch_job_type_id', { length: 256 }),
-  fetch_date: timestamp('fetch_date', { withTimezone: true }),
-  fetch_job_start_date: timestamp('fetch_job_start_date', { withTimezone: true }),
+  id: uuid('id').defaultRandom().notNull(),
+  topic_id: varchar('topic_id', { length: 256 }).notNull(),
+  fetch_date: timestamp('fetch_date', { withTimezone: true }).notNull(),
+  fetch_job_start_date: timestamp('fetch_job_start_date', { withTimezone: true }).notNull(),
   fetch_url: varchar('fetch_url', { length: 256 }),
   file_name: varchar('file_name', { length: 256 }),
   workflow_id: varchar('workflow_id', { length: 256 }),
@@ -30,20 +29,19 @@ export const fetchJobs = pgTable('fetch_jobs_task', {
 **/
 export const fetchJobRelations = relations(fetchJobs, ({ one }) => ({
   humidity_fetch_task: one(humidity, {
-    fields: [fetchJobs.fetch_job_type_id],
+    fields: [fetchJobs.topic_id],
     references: [humidity.id]
   }),
   rainfall_fetch_task: one(rainfall, {
-    fields: [fetchJobs.fetch_job_type_id],
+    fields: [fetchJobs.topic_id],
     references: [rainfall.id]
   }),
   temperature_fetch_task: one(temperature, {
-    fields: [fetchJobs.fetch_job_type_id],
+    fields: [fetchJobs.topic_id],
     references: [temperature.id]
   }),
   uv_fetch_task: one(uv, {
-    fields: [fetchJobs.fetch_job_type_id],
+    fields: [fetchJobs.topic_id],
     references: [uv.id]
   })
 }))
-

@@ -13,11 +13,11 @@ export async function findFetchJobsTaskById(
   })
 }
 
-export async function findFetchJobsTaskByFetchJobsTypeId(
-  fetch_job_type_id: Exclude<FetchJobs["fetch_job_type_id"], undefined | null>
+export async function findFetchJobsByTopicId(
+  fetch_job_type_id: Exclude<FetchJobs["topic_id"], undefined | null>
 ) {
   return await connection.query.schema.findFirst({
-    where: eq(fetchJobs.fetch_job_type_id, fetch_job_type_id)
+    where: eq(fetchJobs.topic_id, fetch_job_type_id)
   })
 }
 

@@ -5,7 +5,7 @@ import rainfall from "./rainfall.json"
 import uv from "./uv.json"
 
 export const sampleFetchJob: FetchJobs = {
-  fetch_job_type_id: "9b530a5e-48dd-4714-8f93-9e49bc8f8604",
+  topic_id: "9b530a5e-48dd-4714-8f93-9e49bc8f8604",
   fetch_url: "sample.url.sg",
   fetch_date: new Date(),
   fetch_job_start_date: new Date(),
