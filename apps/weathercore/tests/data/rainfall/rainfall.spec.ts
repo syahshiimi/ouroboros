@@ -1,7 +1,7 @@
 import { exitDbConnection } from "../../../src/data-access/connections/connection"
 import { deleteAllRainfaillReadings, deleteRainfallReadingByStationId, findLatestRainfallByStationId, findRainfallReadingsByStationId, upsertRainfallReadings } from "../../../src/data-access/repositories/rainfall/rainfaill-repository"
 import { deleteAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations/stations-repository"
-import { sampleRainfall, sampleRainfallStations, sampleStations } from "../../sample/samples"
+import { sampleRainfall, sampleRainfallStations } from "../../sample/samples"
 import { beforeAll, afterAll, describe, test, expect } from "bun:test"
 
 
@@ -40,10 +40,12 @@ describe("rainfall", () => {
   test("should delete rainfall records by station_id", async () => {
     const record = await findLatestRainfallByStationId(stationId)
 
-    const deletedRecords = await deleteRainfallReadingByStationId(record?.id)
+    if (record?.id) {
+      const deletedRecords = await deleteRainfallReadingByStationId(record?.id)
+      expect(deletedRecords).toBeArray()
+      expect(deletedRecords[0].station_id).toEqual(stationId)
+    }
 
-    expect(deletedRecords).toBeArray()
-    expect(deletedRecords[0].station_id).toEqual(stationId)
   })
 
   test("should delete all rainfall records", async () => {

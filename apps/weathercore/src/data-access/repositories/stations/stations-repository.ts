@@ -14,6 +14,10 @@ export async function findStationByStationId(
     })
 }
 
+export function testSomething() {
+
+}
+
 export async function getAllStations(): Promise<Stations[]> {
   return await connection.query.schema.findMany()
 }

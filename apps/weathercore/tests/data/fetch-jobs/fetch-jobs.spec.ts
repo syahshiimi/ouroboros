@@ -1,7 +1,6 @@
 import { beforeAll, afterAll, describe, test, expect } from "bun:test"
 import { deleteFetchJobsTask, findFetchJobsTaskByFetchJobsTypeId, findFetchJobsTaskById, upsertFetchJobsTask } from "../../../src/data-access/repositories/fetch-jobs/fetch-jobs-repository"
 import { sampleFetchJob } from "../../sample/samples"
-import { fetchJobs } from "../../../src/data-access/models/db/fetch-jobs"
 
 beforeAll(async () => {
 

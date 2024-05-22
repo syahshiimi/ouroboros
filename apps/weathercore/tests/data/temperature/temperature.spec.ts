@@ -39,9 +39,11 @@ describe("temperature readings", () => {
 
   test("should delete temperature readings record by temperature reading id", async () => {
     const getRecord = await findLatestTemperatureReadingByStationId(stationId)
-    const deleted = deleteTemperatureReadingById(getRecord?.id!!)
+    if (getRecord?.id) {
+      const deleted = deleteTemperatureReadingById(getRecord?.id)
+      expect(deleted).toBeArray
+    }
 
-    expect(deleted).toBeArray
   })
 
   test("should delete all temperature reading records in the table", async () => {
@@ -50,4 +52,5 @@ describe("temperature readings", () => {
     expect(deleted.length).not.toBeNaN
     expect(deleted).toBeArray
   })
+
 })

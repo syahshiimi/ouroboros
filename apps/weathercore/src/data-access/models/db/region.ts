@@ -1,4 +1,4 @@
-import { doublePrecision, pgTable, primaryKey, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { doublePrecision, pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const region = pgTable('region', {
   id: uuid("id").defaultRandom(),
