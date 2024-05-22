@@ -6,7 +6,8 @@ const config: CodegenConfig = {
   generates: {
     '../weathercore-gql/src/': {
       preset: 'client',
-      plugins: []
+      plugins: ['typescript', 'typescript-resolvers'],
+
     },
   },
   config: {
