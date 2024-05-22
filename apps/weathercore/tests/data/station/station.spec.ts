@@ -41,5 +41,4 @@ describe("station records", () => {
 
     expect(station.length).toBe(sampleStations.length)
   })
-
 })
