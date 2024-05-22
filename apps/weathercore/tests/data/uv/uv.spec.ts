@@ -1,12 +1,16 @@
 import { beforeAll, afterAll, describe, test, expect } from "bun:test"
 import { deleteAllUvReadings, deleteUvReadingById, findLatestUvReadingById, upsertUvReading } from "../../../src/data-access/repositories/uv/uv-repository"
 import { sampleUv } from "../../sample/samples"
+import { deleteAllStations } from "../../../src/data-access/repositories/stations/stations-repository"
+import { exitDbConnection } from "../../../src/data-access/connections/connection"
 
 beforeAll(async () => {
 })
 
 afterAll(async () => {
-  deleteAllUvReadings()
+  await deleteAllUvReadings();
+  await deleteAllStations();
+  await exitDbConnection();
 })
 
 describe("uv readings", () => {

@@ -12,7 +12,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await deleteAllRainfaillReadings();
   await deleteAllStations();
-  exitDbConnection();
+  await exitDbConnection();
 })
 
 describe("rainfall", () => {
