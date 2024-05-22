@@ -1,0 +1,147 @@
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+type FetchJobs {
+  fetch_date: Date
+  fetch_job_start_date: Date
+  fetch_jobs_type_id: ID
+  fetch_url: String
+  file_name: String
+  id: ID
+  workflow_id: String
+}
+
+input FetchJobsInput {
+  fetch_date: Date!
+  fetch_job_start_date: Date!
+  fetch_url: String!
+  file_name: String
+  topic_id: String!
+  workflow_id: String!
+}
+
+type Humidity {
+  file_name: String
+  humidity_value: String
+  id: String
+  station_id: String
+  timestamp: Date
+}
+
+input HumidityInput {
+  file_name: String
+  humidity_value: String
+  station_id: String!
+  timestamp: Date!
+}
+
+type Mutation {
+  """Deletes all station record."""
+  deleteAllStations: [Stations!]
+
+  """Deletes all temperature readings."""
+  deleteAllTemperatureReadings: [Temperature!]
+
+  """Deletes all humidity readings."""
+  deleteHumidityReadings: [Humidity!]
+
+  """Deletes the rainfall readings by station_id."""
+  deleteRainfallReadingStationId(station_id: String!): [Rainfall!]!
+
+  """Deletes all rainfall readings."""
+  deleteRainfallReadings: [Rainfall!]
+
+  """Deletes the temperature readings by id."""
+  deleteTemperatureReadingById(id: String!): Temperature
+
+  """Upserts the fetch job task table."""
+  upsertFetchJobsTask(input: [FetchJobsInput!]!): [FetchJobs!]
+
+  """Upserts the humidity reading into the table."""
+  upsertHumidityReadings(input: [HumidityInput!]!): [Humidity!]!
+
+  """Inserts the rainfall readings into the table."""
+  upsertRainfallReadings(input: [RainfallInput!]!): [Rainfall!]!
+
+  """Inserts a station record into the stations table."""
+  upsertStation(input: [StationsInput!]!): [Stations!]
+
+  """Inserts the temperature readings into the temperature table."""
+  upsertTemperatureReadings(input: [TemperatureInput!]!): [Temperature!]
+}
+
+type Query {
+  """Fetches the job tasks by the topic id"""
+  findFetchJobsByTopicId(topic_id: String!): FetchJobs
+
+  """Fetches the job tasks by id."""
+  findFetchJobsTaskById(id: String!): FetchJobs
+
+  """Finds the humidity reading by the station_id."""
+  findHumidityReadingsByStationId(station_id: String!): [Humidity!]
+
+  """Finds the latest rainfall reading by station_id."""
+  findLatestRainfallByStationId(station_id: String!): Rainfall
+
+  """Finds the latest temperature reading by the station_id."""
+  findLatestTemperatureReadingByStationid(station_id: String!): Temperature
+
+  """Finds the rainfall readings by station_id."""
+  findRainfallByStationId(station_id: String!): [Rainfall!]
+
+  """Finds a station by station_id."""
+  findStationsByStationId(station_id: String!): Stations
+
+  """Finds the temperature reading by the station_id."""
+  findTemperatureReadingByStationid(station_id: String!): [Temperature!]
+
+  """Finds all stations."""
+  getAllStations: [Stations!]
+}
+
+type Rainfall {
+  file_name: String
+  id: String
+  rainfall_value: String
+  station_id: String
+  timestamp: Date
+}
+
+input RainfallInput {
+  file_name: String
+  rainfall_value: String
+  station_id: String!
+  timestamp: Date!
+}
+
+type Stations {
+  id: String
+  latitude: Float
+  location_name: String
+  longitude: Float
+  station_id: String
+}
+
+input StationsInput {
+  latitude: Float
+  location_name: String
+  longitude: Float
+  station_id: String!
+}
+
+type Temperature {
+  file_name: String
+  id: String
+  reading: String
+  station_id: String
+  timestamp: Date
+}
+
+input TemperatureInput {
+  file_name: String
+  reading: String
+  station_id: String!
+  timestamp: Date!
+}

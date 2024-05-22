@@ -8,7 +8,8 @@
     "drop": "drizzle-kit drop",
     "dev": "bun run --watch ./index.ts",
     "lint": "eslint .",
-    "test": "bun test"
+    "test": "bun test",
+    "generate-gql": "bun run ./src/domains/graphql/generate.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
