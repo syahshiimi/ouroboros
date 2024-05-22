@@ -22,11 +22,13 @@
     ]
   },
   "dependencies": {
+    "@js-joda/core": "^5.6.2",
     "@temporalio/activity": "^1.9.0",
     "@temporalio/client": "^1.9.0",
     "@temporalio/worker": "^1.9.0",
     "@temporalio/workflow": "^1.9.0",
-    "nanoid": "3.x"
+    "nanoid": "3.x",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:^",
