@@ -72,6 +72,9 @@ importers:
       '@js-joda/core':
         specifier: ^5.6.2
         version: 5.6.2
+      '@ouroboros/weathercore-gql':
+        specifier: workspace:^
+        version: link:../../packages/weathercore-gql
       '@temporalio/activity':
         specifier: ^1.9.0
         version: 1.10.0
@@ -160,15 +163,18 @@ importers:
       '@graphql-codegen/client-preset':
         specifier: ^4.2.6
         version: 4.2.6(graphql@16.8.1)
-      '@graphql-codegen/schema-ast':
-        specifier: ^4.0.2
-        version: 4.0.2(graphql@16.8.1)
       '@graphql-codegen/typescript':
         specifier: ^4.0.7
         version: 4.0.7(graphql@16.8.1)
       '@graphql-codegen/typescript-resolvers':
         specifier: ^4.1.0
         version: 4.1.0(graphql@16.8.1)
+
+  packages/weathercore-gql:
+    dependencies:
+      typescript:
+        specifier: ^5.4.5
+        version: 5.4.5
 
 packages:
 
@@ -7634,6 +7640,12 @@ packages:
   /typescript@5.3.3:
     resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
     engines: {node: '>=14.17'}
+
+  /typescript@5.4.5:
+    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: false
 
   /ua-parser-js@1.0.37:
     resolution: {integrity: sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==}
