@@ -4,7 +4,7 @@ const config: CodegenConfig = {
   schema: "../weathercore-schema/schema.graphql",
   // documents: "../../apps/**/!(*.d).{ts,tsx}",
   generates: {
-    '../weathercore-gql/src/': {
+    '../weathercore-representations/src/': {
       preset: 'client',
       plugins: ['typescript', 'typescript-resolvers'],
 

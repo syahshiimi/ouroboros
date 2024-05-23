@@ -72,9 +72,9 @@ importers:
       '@js-joda/core':
         specifier: ^5.6.2
         version: 5.6.2
-      '@ouroboros/weathercore-gql':
+      '@ouroboros/weathercore-representations':
         specifier: workspace:^
-        version: link:../../packages/weathercore-gql
+        version: link:../../packages/weathercore-representations
       '@temporalio/activity':
         specifier: ^1.9.0
         version: 1.10.0
@@ -171,6 +171,8 @@ importers:
         version: 4.1.0(graphql@16.8.1)
 
   packages/weathercore-gql: {}
+
+  packages/weathercore-representations: {}
 
 packages:
 
