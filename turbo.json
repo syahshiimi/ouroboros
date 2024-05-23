@@ -13,6 +13,11 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "codegen": {
+      "dependsOn": ["^codegen"],
+      "cache": false,
+      "persistent": true
     }
   }
 }
