@@ -2,7 +2,9 @@
   "name": "@ouroboros/weathercore-representations",
   "version": "1.0.0",
   "description": "weathercore-representations is a client-side TypeScript types generated via codegen for use across client interfaces",
-  "main": "./src/index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
   "scripts": {},
   "keywords": [],
   "author": "",
