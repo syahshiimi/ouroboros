@@ -1,4 +1,4 @@
-import { type Stations, type Humidity, type Temperature, type UV, type Rainfall, FetchJobs } from "../../data-access/models/types";
+import { type Stations, type Humidity, type Temperature, type UV, type Rainfall, type FetchJobs } from "../../data-access/models/types";
 import { builder } from "./builder";
 
 export const FetchJobsType = builder.objectRef<FetchJobs>("FetchJobs")
