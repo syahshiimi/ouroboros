@@ -7,7 +7,10 @@ const config: CodegenConfig = {
     '../weathercore-representations/src/': {
       preset: 'client',
       plugins: ['typescript', 'typescript-resolvers'],
-
+      config: {
+        useTypeImports: true,
+        enumsAsConst: true,
+      },
     },
   },
   config: {
