@@ -29,7 +29,7 @@
     "@temporalio/worker": "^1.9.0",
     "@temporalio/workflow": "^1.9.0",
     "nanoid": "3.x",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "2"
   },
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:^",
