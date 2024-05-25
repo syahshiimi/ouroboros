@@ -2,7 +2,6 @@ import { serve } from '@hono/node-server'
 import { WorkflowClient } from '@temporalio/client'
 import { Hono } from 'hono'
 import { feederFlow } from './domains/temporal/workflow/workflow'
-import { FeederDetails } from './domains/temporal/workflow/input'
 import { nanoid } from 'nanoid'
 import { z } from "zod"
 import { validator } from 'hono/validator'
@@ -15,6 +14,7 @@ const inputSchema = z.object({
   topic: z.string()
 })
 
+// CRUD reference: https://www.npmjs.com/package/temporal-rest
 app.post(
   '/workflow',
   validator('json', (value, c) => {

@@ -5,6 +5,7 @@
  */
 
 const topicsStore = {
+    // Ordereed by topic: api-topic. So please use the key.
     temperature: "air-temperature",
     rainfall: "rainfall",
     humidity: "relative-humidity",
