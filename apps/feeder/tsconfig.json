@@ -1,0 +1,18 @@
+{
+  "extends": "@ouroboros/typescript-config/base.json",
+  "compilerOptions": {
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
+    "sourceMap": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
