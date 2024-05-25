@@ -1,22 +1,15 @@
-import { NativeConnection, Worker } from "@temporalio/worker";
+import { Worker } from "@temporalio/worker";
 import * as activities from "./activities"
+import { taskQueueName } from "./shared/topics";
 
 async function worker() {
-  // // Create connection.
-  const connection = await NativeConnection.connect({
-    address: 'localhost:7233',
-  });
-
-  // Create worker.
   const worker = await Worker.create({
-    connection,
     namespace: 'default',
-    taskQueue: 'feeder-test',
+    taskQueue: taskQueueName,
     workflowsPath: require.resolve('./workflow/workflow'),
     activities,
   })
 
-  // Start accepting tasks on the task queue called 'hello-world'.
   await worker.run();
 }
 
