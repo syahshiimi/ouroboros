@@ -1,6 +1,6 @@
 import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
 import type * as activites from "../activities/activites";
-import { taskQueueStore } from "./queue";
+import {  topics } from "./queue";
 import { WorkflowInput } from "./type";
 
 
@@ -9,22 +9,23 @@ export async function workflow(input: WorkflowInput) {
     startToCloseTimeout: '1 minute'
   })
   
-  const apiTopic = taskQueueStore.topic(input.topic)
+  const apiParam = topics[input.topic]
 
-  const url = `https://api.data.gov.sg/v1/environment/${apiTopic}`
+  const url = `https://api.data.gov.sg/v1/environment/${apiParam}`
 
   let json;
   try {
+    console.log(`Fetching from ${url}...`)
     json = await fetchData(url, input.date)
   } catch(error) {
-    throw new ApplicationFailure(`Fetching of JSON data for API topic: ${apiTopic} failed.`)
+    throw new ApplicationFailure(`Fetching of JSON data for API topic: ${apiParam} failed.`)
   }
   
   try {
     await storeJson(input.date, json, input.topic)
   } catch (error) {
-    throw new ApplicationFailure(`Storing of JSON data for API topic: ${apiTopic} failed.`)
+    throw new ApplicationFailure(`Storing of JSON data for API topic: ${apiParam} failed.`)
   }
   
-  return `Successfully fetched from ${url} for the ${input.date}`
+  return `Successfully fetched for the topic: ${input.topic} at ${input.date}`
 }

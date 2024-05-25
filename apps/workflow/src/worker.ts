@@ -1,7 +1,6 @@
 import { NativeConnection, Worker } from "@temporalio/worker";
 import * as activities from "./activities/activites"
-import { taskQueueStore } from "./workflows/queue";
-import { workflowDetails } from "./client";
+import { taskQueueName } from "./workflows/queue";
 
 async function worker() {
   // Create connection.
@@ -13,7 +12,7 @@ async function worker() {
   const worker = await Worker.create({
     connection,
     namespace: 'default',
-    taskQueue: taskQueueStore.queue(workflowDetails.topic),
+    taskQueue: taskQueueName,
     workflowsPath: require.resolve('./workflows/workflows'),
     activities,
   })

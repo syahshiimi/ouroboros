@@ -1,13 +1,10 @@
 import { Client, Connection } from "@temporalio/client";
 import { nanoid } from 'nanoid'
 import { workflow } from "./workflows/workflows";
-import { taskQueueStore } from "./workflows/queue";
+import { taskQueueName } from "./workflows/queue";
 import { WorkflowInput } from "./workflows/type";
 
-export const workflowDetails: WorkflowInput = {
-  date: "2024-01-02",
-  topic: "humidity"
-}
+
 
 async function client() {
 
@@ -17,15 +14,20 @@ async function client() {
   const client = new Client({
     connection
   })
+  
+  const workflowDetails: WorkflowInput = {
+  date: "2024-02-04",
+  topic:  "temperature"
+}
 
   // Start the workflow.
   const handle = await client.workflow.start(workflow, {
-    taskQueue: taskQueueStore.queue(workflowDetails.topic),
+    taskQueue: taskQueueName,
     args: [workflowDetails],
-    workflowId: 'workflow-' + nanoid()
+    workflowId: workflowDetails.topic + '-' + taskQueueName + '-' + nanoid()
   });
 
-  console.log(`Started workflow ${handle.workflowId}`)
+  console.log(`Started workflow "${handle.workflowId}" for taskQueue ${taskQueueName}`)
 
   console.log(await handle.result());
 };

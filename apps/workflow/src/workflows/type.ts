@@ -1,6 +1,6 @@
-import { topicsStore } from "./queue"
+import { topics } from "./queue"
 
 export type WorkflowInput = {
     date: string
-    topic:  keyof typeof topicsStore
+    topic:  keyof typeof topics
   }
