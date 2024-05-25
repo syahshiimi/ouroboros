@@ -24,7 +24,7 @@ describe("uv readings", () => {
     const addRecords = await upsertUvReading(sampleUv.slice(-1))
     expect(addRecords.length).toBe(1)
 
-    if (addRecords[0].id) {
+    if (addRecords[0]?.id) {
       const findRecord = await findLatestUvReadingById(addRecords[0].id)
       expect(findRecord?.id).toBe(addRecords[0]?.id)
 
@@ -35,7 +35,7 @@ describe("uv readings", () => {
     const addRecords = await upsertUvReading(sampleUv.slice(-1))
     expect(addRecords.length).toBe(1)
 
-    if (addRecords[0].id) {
+    if (addRecords[0]?.id) {
       const deleteRecord = await deleteUvReadingById(addRecords[0].id!)
       expect(deleteRecord).not.toBeNaN();
       expect(deleteRecord?.id).toBe(addRecords[0].id);

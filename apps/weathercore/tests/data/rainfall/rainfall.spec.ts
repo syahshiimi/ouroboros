@@ -26,8 +26,7 @@ describe("rainfall", () => {
 
   test("should get rainfall reasdings by station_id", async () => {
     const records = await findRainfallReadingsByStationId(stationId)
-
-    expect(records[0].station_id).toEqual(stationId)
+    expect(records[0]?.station_id).toEqual(stationId)
   })
 
   test("should get latest rainfall reading by stationId", async () => {
@@ -43,7 +42,7 @@ describe("rainfall", () => {
     if (record?.id) {
       const deletedRecords = await deleteRainfallReadingByStationId(record?.id)
       expect(deletedRecords).toBeArray()
-      expect(deletedRecords[0].station_id).toEqual(stationId)
+      expect(deletedRecords[0]?.station_id).toEqual(stationId)
     }
 
   })
