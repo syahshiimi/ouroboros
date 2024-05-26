@@ -5,19 +5,15 @@ import { nanoid } from "nanoid";
 import { z } from "zod";
 import { taskQueueName } from "../domains/temporal/shared/topics";
 import { feederFlow } from "../domains/temporal/workflow/workflow";
+import { inputSchema } from "../domains/temporal/workflow/input";
 
 const workflow = new Hono()
 
-const inputSchema = z.object({
-    date: z.string(),
-    topic: z.string()
-  })
-
+// CRUD reference: https://www.npmjs.com/package/temporal-rest
 workflow.get('/', (c) => {
     return c.json(200)
 })
 
-// CRUD reference: https://www.npmjs.com/package/temporal-rest
 workflow.post(
     '/',
     validator('json', (value, c) => {
