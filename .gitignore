@@ -39,3 +39,6 @@ yarn-error.log*
 
 # ignore docker volume
 timescaledb-data/
+
+# ignore data json folder 
+apps/feeder/src/domains/temporal/data
