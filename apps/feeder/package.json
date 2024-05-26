@@ -1,7 +1,7 @@
 {
   "name": "feeder",
   "private": "true",
-  "description": "HonoJS monolith for temporalio workflow.",
+  "description": "HonoJs + temporalio application that orchestras the services.",
   "scripts": {
     "dev": "dotenv -e ../../.env tsx watch src/index.ts",
     "lint": "eslint .",
