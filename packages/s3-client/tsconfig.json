@@ -1,0 +1,3 @@
+{
+  "extends": "@ouroboros/typescript-config/base.json"
+}
