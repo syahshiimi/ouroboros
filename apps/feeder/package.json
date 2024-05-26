@@ -1,16 +1,22 @@
 {
+  "name": "feeder",
+  "private": "true",
+  "description": "HonoJS monolith for temporalio workflow.",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "dotenv -e ../../.env tsx watch src/index.ts",
     "lint": "eslint .",
     "start:worker": "tsx --watch src/domains/temporal/worker.ts"
   },
   "dependencies": {
+    "@aws-sdk/s3-request-presigner": "^3.583.0",
     "@hono/node-server": "^1.11.1",
+    "@ouroboros/s3-client": "workspace:^",
     "@ouroboros/weathercore-representations": "workspace:^",
     "@temporalio/activity": "^1.9.0",
     "@temporalio/client": "^1.9.0",
     "@temporalio/worker": "^1.9.0",
     "@temporalio/workflow": "^1.9.0",
+    "dotenv-cli": "^7.4.2",
     "hono": "^4.3.11",
     "nanoid": "3.x",
     "node-fetch": "^2.7.0",

@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid'
 import { z } from "zod"
 import { validator } from 'hono/validator'
 import { taskQueueName } from './domains/temporal/shared/topics'
+import { R2, ListBucketsCommand } from '@ouroboros/s3-client'
 
 const app = new Hono()
 
@@ -40,6 +41,16 @@ app.post(
     return c.json({workflowId: handle.workflowId})
   }
 )
+
+app.get('/', async (c) => {
+
+  const data = await R2.send(new ListBucketsCommand({ Bucket: 'test-bucket' }))
+  
+  return c.json({
+    bucket: data.Buckets
+  })
+})
+
 
 const port = 3000
 console.log(`Server is running on port ${port}`)
