@@ -1,0 +1,108 @@
+{
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "stations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "device_id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "location": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "number"
+                  },
+                  "longitude": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "device_id",
+              "name",
+              "location"
+            ]
+          }
+        },
+        "reading_type": {
+          "type": "string"
+        },
+        "reading_unit": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "stations",
+        "reading_type",
+        "reading_unit"
+      ]
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "readings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "station_id": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "station_id",
+                "value"
+              ]
+            }
+          }
+        },
+        "required": [
+          "timestamp",
+          "readings"
+        ]
+      }
+    },
+    "api_info": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    }
+  },
+  "required": [
+    "metadata",
+    "items",
+    "api_info"
+  ]
+}

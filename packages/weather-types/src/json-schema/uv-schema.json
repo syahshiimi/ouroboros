@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "update_timestamp": {
+            "type": "string"
+          },
+          "index": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "integer"
+                },
+                "timestamp": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value",
+                "timestamp"
+              ]
+            }
+          }
+        },
+        "required": [
+          "timestamp",
+          "update_timestamp",
+          "index"
+        ]
+      }
+    },
+    "api_info": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    }
+  },
+  "required": [
+    "items",
+    "api_info"
+  ]
+}

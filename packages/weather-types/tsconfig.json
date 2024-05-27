@@ -1,0 +1,9 @@
+{
+  "extends": "@ouroboros/typescript-config/base.json",
+  "version": "4.4.2",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts", "./index.ts"],
+  "exlude": ["node_modules"]
+}

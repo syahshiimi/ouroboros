@@ -1,0 +1,27 @@
+{
+  "name": "@ouroboros/weather-types",
+  "version": "1.0.0",
+  "description": "Weather-types exports reusable types for the composition of a type-safe API for various clients",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate:schema": "tsx ./src/generate-schema.ts"
+  },
+  "keywords": [],
+  "author": "Syahrul ANuar",
+  "license": "ISC",
+  "devDependencies": {
+    "@ouroboros/eslint-config": "workspace:^",
+    "@ouroboros/typescript-config": "workspace:^",
+    "@types/node": "^20.12.12",
+    "genson-js": "^0.0.8",
+    "json-schema-to-zod": "^2.1.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
