@@ -1,13 +1,14 @@
 {
   "name": "@ouroboros/weather-types",
   "version": "1.0.0",
-  "description": "Weather-types exports reusable types for the composition of a type-safe API for various clients",
+  "description": "Weather-types generates and exports reusable types for the composition of a type-safe API for various clients",
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate:schema": "tsx ./src/generate-schema.ts"
+    "generate:schema": "tsx ./src/utils/generate-schema.ts",
+    "generate:zod": "tsx ./src/utils/generate-zod.ts"
   },
   "keywords": [],
   "author": "Syahrul ANuar",
