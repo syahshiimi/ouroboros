@@ -4,6 +4,9 @@
   "description": "AWS S3 compatible client for use when serviing with any s3-compatible services.",
   "type": "module",
   "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
