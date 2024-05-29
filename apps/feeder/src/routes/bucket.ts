@@ -4,7 +4,7 @@ import { Hono } from "hono"
 const buckets = new Hono()
 
 buckets.get('/', async (c) => {
-    const data = await R2.send(new ListBucketsCommand({ Bucket: 'test-bucket' }))
+    const data = await R2.send(new ListBucketsCommand())
     console.log(data)
     return c.json({
       bucket: data.Buckets
