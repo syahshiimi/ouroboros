@@ -1,33 +1,24 @@
 import path from 'path';
 import fs from 'fs';
 import {createZodFetcher} from "zod-fetch";
-import {ZHumiditySchema, ZUvSchema} from "@ouroboros/weather-types"
 import {z} from "zod";
-import {use} from "hono/dist/types/jsx";
+import {zodSchema} from "./shared/zod-schema";
 
 export async function fetchData<T extends z.ZodTypeAny>(
   endpoint: string,
   topic: string,
 ): Promise<z.infer<T> | undefined> {
   const zodFetcher = createZodFetcher();
+  const schema = zodSchema.schemer(topic) as z.infer<T>
 
-  const zodSchemaStore = {
-    uv: ZUvSchema.default,
-    humidity: ZHumiditySchema.default
+  if (!schema) {
+    console.error(`No schema found for topic: ${topic}`);
+    return undefined;
   }
 
-  const zodSchema= {
-    ...zodSchemaStore,
-    schemer: function (input: string) {
-      return this[input as keyof typeof zodSchemaStore]
-    }
-  }
-
-  const useThis = zodSchema.schemer(topic) as z.infer<T>
-
-  console.log(`Fetching from the endpoint: ${endpoint}`)
   try {
-    return zodFetcher(useThis, endpoint);
+    console.log(`Fetching from the endpoint: ${endpoint}`)
+    return zodFetcher(schema, endpoint);
   } catch (error) {
     console.error(error)
   }
