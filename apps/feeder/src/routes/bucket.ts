@@ -4,11 +4,11 @@ import { Hono } from "hono"
 const buckets = new Hono()
 
 buckets.get('/', async (c) => {
-    const data = await R2.send(new ListBucketsCommand())
-    console.log(data)
-    return c.json({
-      bucket: data.Buckets
-    })
+  const data = await R2.send(new ListBucketsCommand())
+  console.log(data)
+  return c.json({
+    bucket: data.Buckets
   })
+})
 
 export default buckets;
