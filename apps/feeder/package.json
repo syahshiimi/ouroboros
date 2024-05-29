@@ -3,6 +3,7 @@
   "private": "true",
   "description": "HonoJs + temporalio application that orchestras the services.",
   "scripts": {
+    "build": "tsc",
     "dev": "dotenv -e ../../.env tsx watch src/index.ts",
     "lint": "eslint .",
     "start:worker": "tsx --watch src/domains/temporal/worker.ts"
