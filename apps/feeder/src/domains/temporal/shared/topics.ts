@@ -17,6 +17,9 @@ export const topics = {
     ...topicsStore,
     api: function (input: string) {
         return topicsStore[input as keyof typeof topicsStore]
+    },
+    store: function (input: string) {
+        return this[input as keyof typeof topicsStore]
     }
 }
 
