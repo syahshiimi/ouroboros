@@ -1,16 +1,19 @@
 import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
-import type * as activities from "../activities";
 import { FeederDetails } from "./input";
 import { validateTopic } from "../utils/topics-validation";
 import {composer} from "../utils/url-composer";
 import {ZHumiditySchema} from "@ouroboros/weather-types"
+import {createActivities} from "../activities";
 
 export async function feederFlow(input: FeederDetails) {
-  const { fetchData, storeJson } = proxyActivities<typeof activities>({
-    startToCloseTimeout: '1 minute'
+  const { fetchData, uploadR2 } = proxyActivities<ReturnType<typeof createActivities>>({
+    startToCloseTimeout: '1 minute',
+    retry: {
+      maximumAttempts: 1,
+    }
   })
 
-  const { url, topic } = await validateTopic(input.topic)
+  const { url } = await validateTopic(input.topic)
   const endpoint = await composer(url, input.date)
 
   try {
@@ -24,10 +27,10 @@ export async function feederFlow(input: FeederDetails) {
 
     // Store in S3
     try {
-      await storeJson(input.date, response, input.topic)
+      // await storeJson(input.date, response, input.topic)
+      await uploadR2(response)
     } catch (error) {
-      throw new ApplicationFailure(`Storing of JSON data for topic: ${topic}
-        at ${input.date} with workflowId <addIdHere> failed.`)
+      throw new ApplicationFailure(error as string)
     }
 
     // TODO: Do DTO mapping
