@@ -1,6 +1,10 @@
 import { Worker } from "@temporalio/worker";
 import { taskQueueName } from "./shared/topics";
 import {createActivities} from "./activities";
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+
 async function worker() {
   const worker = await Worker.create({
     namespace: 'default',
