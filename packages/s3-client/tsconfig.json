@@ -1,6 +1,6 @@
 {
   "extends": "@ouroboros/typescript-config/base.json",
   "compilerOptions": {
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
   }
 }
