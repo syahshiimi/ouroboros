@@ -2,8 +2,8 @@ import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
 import { FeederDetails } from "./input";
 import { validateTopic } from "../utils/topics-validation";
 import {composer} from "../utils/url-composer";
-import {ZHumiditySchema} from "@ouroboros/weather-types"
 import {createActivities} from "../activities";
+import {zodSchemaStore} from "../shared/zod-schema";
 
 export async function feederFlow(input: FeederDetails) {
   const { fetchData, uploadR2 } = proxyActivities<ReturnType<typeof createActivities>>({
@@ -17,18 +17,15 @@ export async function feederFlow(input: FeederDetails) {
   const endpoint = await composer(url, input.date)
 
   try {
-    // Fetch the response.
-    console.log('About to fetch data...')
-    const response = await fetchData<typeof ZHumiditySchema.default>(endpoint, input.topic)
+    console.log(`About to fetch data for the date: ${input.date} and for the topic: ${input.topic}`)
+    const response = await fetchData<typeof zodSchemaStore.humidity>(endpoint, input.topic)
 
     if (response == undefined) {
       throw new ApplicationFailure(`Response is undefined. Please check if input topic: ${input.topic} is a valid topic with a mapped schema`)
     }
 
-    // Store in S3
     try {
-      // await storeJson(input.date, response, input.topic)
-      await uploadR2(response)
+      await uploadR2(response, input.date, input.topic)
     } catch (error) {
       throw new ApplicationFailure(error as string)
     }

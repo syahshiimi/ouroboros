@@ -1,10 +1,10 @@
-import { ZUvSchema, ZHumiditySchema } from "@ouroboros/weather-types";
+import  * as schema  from "@ouroboros/weather-types";
 
-/**
- */
 export const zodSchemaStore = {
-    uv: ZUvSchema.default,
-    humidity: ZHumiditySchema.default
+    uv: schema.ZUvSchema.default,
+    humidity: schema.ZHumiditySchema.default,
+    rainfall: schema.ZRainfallSchema.default,
+    temperature: schema.ZTemperatureSchema.default
 }
 
 /**

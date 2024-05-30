@@ -1,9 +1,7 @@
-import path from 'path';
-import fs from 'fs';
 import {createZodFetcher} from "zod-fetch";
 import {z} from "zod";
 import {zodSchema} from "./shared/zod-schema";
-import {ListBucketsCommand, R2} from "@ouroboros/s3-client";
+import {PutObjectCommand, R2} from "@ouroboros/s3-client";
 
 export const createActivities = () => ({
   async fetchData<T extends z.ZodTypeAny>(
@@ -25,30 +23,15 @@ export const createActivities = () => ({
       console.error(error)
     }
   },
-  async storeJson(
-      date: string,
-      json: unknown,
-      topic: string
-  ) {
-    console.log('Storing the JSON')
-
-    const dataDir = path.join(__dirname, 'data');
-    if (!fs.existsSync(dataDir)) {
-      console.log(`dir does not exist! Creating directory...`)
-      fs.mkdirSync(dataDir)
-      console.log(`${dataDir} directory made!`)
-    }
-    const filePath = path.join(dataDir, `${topic}-${date}.json`)
-    console.log(`Storing JSON in dir: ${filePath}`)
-    fs.writeFileSync(filePath, JSON.stringify(json, null, 2))
-
-    return `JSON successfully stored!`
-  },
-  async uploadR2(input: any) {
+  async uploadR2(input: unknown, date: string, topic: string) {
     const buf = Buffer.from(JSON.stringify(input))
-    console.log(buf)
-    const response = await R2.send(new ListBucketsCommand({}))
-    console.log(response)
+    const response = await R2.send(new PutObjectCommand({
+      Bucket: `${process.env.R2_BUCKET_NAME}`,
+      Body: buf,
+      Key: `${date}-${topic}.json`,
+      ContentType: "application/json"
+    }))
+    console.log(`Responded with code: ${response.$metadata.httpStatusCode}`)
   }
 })
 
