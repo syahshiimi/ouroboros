@@ -1,5 +1,5 @@
-import { ListBucketsCommand, R2 } from "@ouroboros/s3-client"
 import { Hono } from "hono"
+import {R2, ListBucketsCommand} from "@ouroboros/s3-client";
 
 const buckets = new Hono()
 
