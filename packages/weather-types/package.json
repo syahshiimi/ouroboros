@@ -5,6 +5,7 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "main": "./src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate:schema": "tsx ./src/utils/generate-schema.ts",
@@ -13,9 +14,10 @@
   "keywords": [],
   "author": "Syahrul ANuar",
   "license": "ISC",
+  "type": "module",
   "devDependencies": {
-    "@ouroboros/eslint-config": "workspace:^",
-    "@ouroboros/typescript-config": "workspace:^",
+    "@ouroboros/eslint-config": "workspace:*",
+    "@ouroboros/typescript-config": "workspace:*",
     "@types/node": "^20.12.12",
     "genson-js": "^0.0.8",
     "json-schema-to-zod": "^2.1.0",
