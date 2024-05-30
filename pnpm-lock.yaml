@@ -183,10 +183,10 @@ importers:
         version: 3.23.8
     devDependencies:
       '@ouroboros/eslint-config':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../eslint-config
       '@ouroboros/typescript-config':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../typescript-config
       '@types/node':
         specifier: ^20.12.12
