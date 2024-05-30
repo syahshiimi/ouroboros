@@ -8,6 +8,7 @@
     "lint": "eslint .",
     "start:worker": "dotenv -e ../../.env tsx watch src/domains/temporal/worker.ts"
   },
+  "type": "module",
   "dependencies": {
     "@aws-sdk/s3-request-presigner": "^3.583.0",
     "@hono/node-server": "^1.11.1",
@@ -20,7 +21,6 @@
     "dotenv-cli": "^7.4.2",
     "hono": "^4.3.11",
     "nanoid": "3.x",
-    "node-fetch": "^2.7.0",
     "zod": "^3.23.8",
     "zod-fetch": "^0.1.1"
   },
