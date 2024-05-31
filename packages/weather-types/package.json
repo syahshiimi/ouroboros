@@ -7,7 +7,7 @@
   },
   "main": "./src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
     "generate:schema": "tsx ./src/utils/generate-schema.ts",
     "generate:zod": "tsx ./src/utils/generate-zod.ts"
   },

@@ -2,6 +2,7 @@
   "extends": "@ouroboros/typescript-config/base.json",
   "version": "4.4.2",
   "compilerOptions": {
+    "moduleResolution": "nodenext",
     "noEmit": true
   },
   "include": ["src/**/*.ts", "./index.ts"],
