@@ -1,6 +1,6 @@
 import { Worker } from "@temporalio/worker";
 import { taskQueueName } from "./shared/topics";
-import {createActivities} from "./activities";
+import * as activities from "./activities";
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
@@ -10,7 +10,7 @@ async function worker() {
     namespace: 'default',
     taskQueue: taskQueueName,
     workflowsPath: require.resolve('./workflow/workflow'),
-    activities: createActivities()
+    activities
   })
 
   await worker.run();
