@@ -2,11 +2,12 @@ import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
 import { FeederDetails } from "./input";
 import { validateTopic } from "../utils/topics-validation";
 import {composer} from "../utils/url-composer";
-import {createActivities} from "../activities";
-import {zodSchemaStore} from "../shared/zod-schema";
+import * as activities from "../activities";
+import {zodSchema} from "../shared/zod-schema";
+
 
 export async function feederFlow(input: FeederDetails) {
-  const { fetchData, uploadR2 } = proxyActivities<ReturnType<typeof createActivities>>({
+  const { fetchData, uploadR2  } = proxyActivities<typeof activities>({
     startToCloseTimeout: '1 minute',
     retry: {
       maximumAttempts: 1,
@@ -18,7 +19,8 @@ export async function feederFlow(input: FeederDetails) {
 
   try {
     console.log(`About to fetch data for the date: ${input.date} and for the topic: ${input.topic}`)
-    const response = await fetchData<typeof zodSchemaStore.humidity>(endpoint, input.topic)
+    const zSchema = zodSchema.schemer(input.topic)
+    const response = await fetchData(endpoint, input.topic, zSchema)
 
     if (response == undefined) {
       throw new ApplicationFailure(`Response is undefined. Please check if input topic: ${input.topic} is a valid topic with a mapped schema`)
