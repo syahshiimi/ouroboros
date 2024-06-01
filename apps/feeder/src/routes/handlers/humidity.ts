@@ -4,7 +4,9 @@ import { feederFlow } from "../../domains/temporal/workflow/workflow";
 import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input";
 import { workflowBinding } from "../binder/workflowBinding";
 import { splitter } from "../utils/splitter";
-import { zodRequestValidator } from "../utils/validator";
+import {  z } from "zod";
+import { availableTopics } from "../../domains/temporal/shared/topics";
+import { parse } from "../utils/validator";
 
 const humidity = new Hono()
 
@@ -19,19 +21,27 @@ humidity.post(
   '/',
   validator('json', async (value, c) => {
     // Validate request JSON.
-    return await zodRequestValidator(value, requestSchema, c)
-  }),
+    const parsed = await parse(value, requestSchema)
+    if (!parsed.success) {
+      c.status(400)
+      return c.text(`Invalid value of ${parsed.error}`)    
+    }
+    return parsed.data
+   }),
   async (c) => {
     // Get route path to form topic.
     const path = await splitter(c.req.path)
 
-    // Get validated data.
+    // Validate the path.
+    const parsed = await parse(path, z.enum(availableTopics))
+
+    // Get validated date from context.
     const { date } = c.req.valid('json')
 
     if (path) {
       const handle = await workflowBinding<FeederDetails>({
         workflowCallback: feederFlow,
-        workflowParameters: { date: date, topic: path }
+        workflowParameters: { date: date, topic: parsed.data }
       })
       c.status(200)
       console.log(await handle.result())

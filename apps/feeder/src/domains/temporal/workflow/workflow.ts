@@ -1,6 +1,6 @@
 import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
 import { FeederDetails } from "./input";
-import { validateTopic } from "../utils/topics-validation";
+import { apiTopicProducer } from "../utils/topics-validation";
 import {composer} from "../utils/url-composer";
 import * as activities from "../activities";
 import {zodSchema} from "../shared/zod-schema";
@@ -14,7 +14,7 @@ export async function feederFlow(input: FeederDetails) {
     }
   })
 
-  const { url } = await validateTopic(input.topic)
+  const { url } = await apiTopicProducer(input.topic)
   const endpoint = await composer(url, input.date)
 
   try {
@@ -33,6 +33,15 @@ export async function feederFlow(input: FeederDetails) {
     }
 
     // TODO: Do DTO mapping
+    // 1. First map the topic to the correct DTO.
+    switch (input.topic) {
+      case "humidity" :
+        // 2. Then do the mapping here (flat or flatMap).
+        break;
+    
+      default:
+        break;
+    }
 
     // TODO: Call mutation to the topic table.
 
