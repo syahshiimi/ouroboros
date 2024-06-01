@@ -1,6 +1,6 @@
 import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
 import { FeederDetails } from "./input";
-import { apiTopicProducer } from "../utils/topics-validation";
+import { apiTopicProducer } from "../utils/topic-producer";
 import {composer} from "../utils/url-composer";
 import * as activities from "../activities";
 import {zodSchema} from "../shared/zod-schema";
