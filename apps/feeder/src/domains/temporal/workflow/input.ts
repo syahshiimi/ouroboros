@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const requestSchema = z.object({
-    date: z.string(),
+    date: z.string().date()
 })
 
 export const inputSchema = z.object({
