@@ -1,7 +1,7 @@
 {
-  "name": "@ouroboros/weather-types",
+  "name": "@ouroboros/weather-schema",
   "version": "1.0.0",
-  "description": "Weather-types generates and exports reusable types for the composition of a type-safe API for various clients",
+  "description": "weather-schema generates JSON-Schema and exports reusable Zod Schema for runtime validation, servicing the development of a type-safe external-facing API",
   "exports": {
     ".": "./src/index.ts"
   },

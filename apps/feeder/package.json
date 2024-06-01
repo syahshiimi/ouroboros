@@ -14,6 +14,7 @@
     "@hono/node-server": "^1.11.1",
     "@ouroboros/s3-client": "workspace:*",
     "@ouroboros/weathercore-representations": "workspace:^",
+    "@ouroboros/weather-schema": "workspace:*",
     "@temporalio/activity": "^1.9.0",
     "@temporalio/client": "^1.9.0",
     "@temporalio/worker": "^1.9.0",
@@ -21,13 +22,13 @@
     "dotenv-cli": "^7.4.2",
     "hono": "^4.3.11",
     "nanoid": "3.x",
+    "node-fetch": "^3.3.2",
     "zod": "^3.23.8",
     "zod-fetch": "^0.1.1"
   },
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:*",
     "@ouroboros/typescript-config": "workspace:*",
-    "@ouroboros/weather-types": "workspace:*",
     "@types/node": "^20.11.17",
     "@types/node-fetch": "^2.6.11",
     "ts-to-zod": "^3.8.5",

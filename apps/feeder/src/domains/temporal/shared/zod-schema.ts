@@ -1,11 +1,11 @@
-import {ZHumiditySchema, ZRainfallSchema, ZTemperatureSchema, ZUvSchema} from "@ouroboros/weather-types";
+import {ZHumiditySchema, ZRainfallSchema, ZTemperatureSchema, ZUvSchema} from "@ouroboros/weather-schema";
 
 export const zodSchemaStore = {
     uv: ZUvSchema.default,
     humidity: ZHumiditySchema.default,
     rainfall: ZRainfallSchema.default,
     temperature: ZTemperatureSchema.default
-}
+};
 
 /**
  * Returns a zodSchema object containing both [zodSchemaStore] and a method
@@ -13,7 +13,7 @@ export const zodSchemaStore = {
  *
  * @method schemer
  */
-export const zodSchema= {
+export const zodSchema = {
     ...zodSchemaStore,
     /**
      * Returns a valid Zod Schema object.
@@ -22,4 +22,4 @@ export const zodSchema= {
     schemer: function (input: string) {
         return zodSchemaStore[input as keyof typeof zodSchemaStore]
     }
-}
+};
