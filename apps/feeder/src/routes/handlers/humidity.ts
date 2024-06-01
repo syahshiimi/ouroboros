@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { validator } from "hono/validator";
 import { feederFlow } from "../../domains/temporal/workflow/workflow";
 import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input";
-import { createWorkflowHandler } from "../binder/createWorkflowHandler";
+import { workflowBinding } from "../binder/workflowBinding";
 import { splitter } from "../utils/splitter";
 import { zodRequestValidator } from "../utils/validator";
 
@@ -29,7 +29,7 @@ humidity.post(
     const { date } = c.req.valid('json')
 
     if (path) {
-      const handle = await createWorkflowHandler<FeederDetails>({
+      const handle = await workflowBinding<FeederDetails>({
         workflowCallback: feederFlow,
         workflowParameters: { date: date, topic: path }
       })

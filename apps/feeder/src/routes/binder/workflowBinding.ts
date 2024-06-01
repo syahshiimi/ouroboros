@@ -7,7 +7,7 @@ interface CreateWorkflowHandler<T extends FeederDetails> {
   workflowCallback: Workflow,
   workflowParameters: T
 }
-export async function createWorkflowHandler<T extends FeederDetails>({ workflowCallback, workflowParameters }: CreateWorkflowHandler<T>) {
+export async function workflowBinding<T extends FeederDetails>({ workflowCallback, workflowParameters }: CreateWorkflowHandler<T>) {
   return new WorkflowClient().start(workflowCallback, {
     workflowId: workflowParameters?.topic + "-" + nanoid(),
     taskQueue: taskQueueName,

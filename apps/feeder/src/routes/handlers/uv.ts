@@ -3,7 +3,7 @@ import { validator } from "hono/validator";
 import { feederFlow } from "../../domains/temporal/workflow/workflow";
 import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input";
 import { splitter } from "../utils/splitter";
-import { createWorkflowHandler } from "../binder/createWorkflowHandler";
+import { workflowBinding } from "../binder/workflowBinding";
 import { zodRequestValidator } from "../utils/validator";
 
 const uv = new Hono()
@@ -26,7 +26,7 @@ uv.post(
     const { date } = c.req.valid('json')
 
     if (path) {
-      const handle = await createWorkflowHandler<FeederDetails>({
+      const handle = await workflowBinding<FeederDetails>({
         workflowCallback: feederFlow,
         workflowParameters: { date: date, topic: path }
       })
