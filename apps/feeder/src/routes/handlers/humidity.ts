@@ -17,9 +17,9 @@ humidity.get('/', (c) => {
 
 humidity.post(
   '/',
-  validator('json', async (value, _) => {
+  validator('json', async (value, c) => {
     // Validate request JSON.
-    return await zodRequestValidator(value, requestSchema)
+    return await zodRequestValidator(value, requestSchema, c)
   }),
   async (c) => {
     // Get route path to form topic.

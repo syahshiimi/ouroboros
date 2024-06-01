@@ -14,9 +14,9 @@ uv.get('/', (c) => {
 
 uv.post(
   '/',
-  validator('json', async (value, _) => {
+  validator('json', async (value, c) => {
     // Validate the incoming JSON.
-    return await zodRequestValidator(value, requestSchema)
+    return await zodRequestValidator(value, requestSchema, c)
   }),
   async (c) => {
     // Get route path to form topic.
