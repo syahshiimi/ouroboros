@@ -6,13 +6,13 @@ import { taskQueueName } from "../../domains/temporal/shared/topics";
 import { feederFlow } from "../../domains/temporal/workflow/workflow";
 import { inputSchema } from "../../domains/temporal/workflow/input";
 
-const workflow = new Hono()
+const uv = new Hono()
 
-workflow.get('/', (c) => {
+uv.get('/', (c) => {
   return c.json(200)
 })
 
-workflow.post(
+uv.post(
   '/',
   validator('json', (value, c) => {
       // Validate the incoming JSON.
@@ -39,4 +39,4 @@ workflow.post(
   }
 )
 
-export default workflow
+export default uv

@@ -1,14 +1,14 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import buckets from './routes/bucket'
-import workflowRouter from './routes/workflow/workflow'
 import upload from "./routes/upload";
-import humidity from "./routes/workflow/humidity";
+import humidity from "./routes/handlers/humidity";
+import uv from './routes/handlers/uv';
 
 const app = new Hono()
 
 // Please add the routes from ./routes here.
-app.route('/workflow', workflowRouter)
+app.route('/uv', uv)
 app.route('/workflow/humidity', humidity)
 app.route('/buckets', buckets)
 app.route('/upload', upload)
