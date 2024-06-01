@@ -2,8 +2,9 @@ import { Hono } from "hono";
 import { validator } from "hono/validator";
 import { feederFlow } from "../../domains/temporal/workflow/workflow";
 import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input";
-import { createWorkflowHandler } from "../utils/createWorkflowHandler";
-import { splitter } from "../utils/validator";
+import { createWorkflowHandler } from "../binder/createWorkflowHandler";
+import { splitter } from "../utils/splitter";
+import { zodRequestValidator } from "../utils/validator";
 
 const humidity = new Hono()
 
@@ -16,14 +17,9 @@ humidity.get('/', (c) => {
 
 humidity.post(
   '/',
-  validator('json', (value, c) => {
+  validator('json', async (value, _) => {
     // Validate request JSON.
-    const parsed = requestSchema.safeParse(value)
-    if (!parsed.success) {
-      c.status(400)
-      return c.text(`Invalid value of ${parsed.error}`)
-    }
-    return parsed.data
+    return await zodRequestValidator(value, requestSchema)
   }),
   async (c) => {
     // Get route path to form topic.

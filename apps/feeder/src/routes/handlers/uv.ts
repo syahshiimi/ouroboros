@@ -1,10 +1,10 @@
-import { WorkflowClient } from "@temporalio/client";
 import { Hono } from "hono";
 import { validator } from "hono/validator";
-import { nanoid } from "nanoid";
-import { taskQueueName } from "../../domains/temporal/shared/topics";
 import { feederFlow } from "../../domains/temporal/workflow/workflow";
-import { inputSchema } from "../../domains/temporal/workflow/input";
+import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input";
+import { splitter } from "../utils/splitter";
+import { createWorkflowHandler } from "../binder/createWorkflowHandler";
+import { zodRequestValidator } from "../utils/validator";
 
 const uv = new Hono()
 
@@ -14,29 +14,28 @@ uv.get('/', (c) => {
 
 uv.post(
   '/',
-  validator('json', (value, c) => {
+  validator('json', async (value, _) => {
     // Validate the incoming JSON.
-    const parsed = inputSchema.safeParse(value)
-    if (!parsed.success) {
-      c.status(400)
-      return c.text(`Invalid value of ${parsed.error}`)
-    }
-    return parsed.data
+    return await zodRequestValidator(value, requestSchema)
   }),
   async (c) => {
-    const { date, topic } = c.req.valid('json')
+    // Get route path to form topic.
+    const path = await splitter(c.req.path)
 
-    const client = new WorkflowClient()
-    const handle = await client.start(feederFlow, {
-      workflowId: topic + '-' + nanoid(),
-      taskQueue: taskQueueName,
-      args: [{ date, topic }]
-    })
+    // Get validated data.
+    const { date } = c.req.valid('json')
 
-    c.status(200)
-    console.log(await handle.result())
-    return c.json({ workflowId: handle.workflowId })
+    if (path) {
+      const handle = await createWorkflowHandler<FeederDetails>({
+        workflowCallback: feederFlow,
+        workflowParameters: { date: date, topic: path }
+      })
+      c.status(200)
+      console.log(await handle.result())
+      return c.json({ workflowId: handle.workflowId })
+    }
   }
 )
+
 
 export default uv

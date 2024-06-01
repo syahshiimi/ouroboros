@@ -8,7 +8,7 @@ import uv from './routes/handlers/uv';
 const app = new Hono()
 
 // Please add the routes from ./routes here.
-app.route('/uv', uv)
+app.route('/workflow/uv', uv)
 app.route('/workflow/humidity', humidity)
 app.route('/buckets', buckets)
 app.route('/upload', upload)
