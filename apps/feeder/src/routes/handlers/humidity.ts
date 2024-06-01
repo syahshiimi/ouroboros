@@ -28,18 +28,18 @@ humidity.post(
   async (c) => {
     // Get route path to form topic.
     const path = await splitter(c.req.path)
-    
+
     // Get validated data.
     const { date } = c.req.valid('json')
 
     if (path) {
       const handle = await createWorkflowHandler<FeederDetails>({
-      workflowCallback: feederFlow,
-      workflowParameters: { date: date, topic: path}
-    })
-    c.status(200)
-    console.log(await handle.result())
-    return c.json({ workflowId: handle.workflowId })
+        workflowCallback: feederFlow,
+        workflowParameters: { date: date, topic: path }
+      })
+      c.status(200)
+      console.log(await handle.result())
+      return c.json({ workflowId: handle.workflowId })
     }
   }
 )

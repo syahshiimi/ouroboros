@@ -15,7 +15,7 @@ uv.get('/', (c) => {
 uv.post(
   '/',
   validator('json', (value, c) => {
-      // Validate the incoming JSON.
+    // Validate the incoming JSON.
     const parsed = inputSchema.safeParse(value)
     if (!parsed.success) {
       c.status(400)
