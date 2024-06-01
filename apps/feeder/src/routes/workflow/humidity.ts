@@ -1,16 +1,16 @@
-import { WorkflowClient } from "@temporalio/client";
 import { Hono } from "hono";
 import { validator } from "hono/validator";
-import { nanoid } from "nanoid";
-import { taskQueueName } from "../../domains/temporal/shared/topics";
 import { feederFlow } from "../../domains/temporal/workflow/workflow";
-import { inputSchema } from "../../domains/temporal/workflow/input";
+import { FeederDetails, inputSchema } from "../../domains/temporal/workflow/input";
+import { createWorkflowHandler } from "../handlers/createWorkflowHandler";
 
 const humidity = new Hono()
 
-// CRUD reference: https://www.npmjs.com/package/temporal-rest
 humidity.get('/', (c) => {
-  return c.json(200)
+  return c.json({
+    status: 200,
+    path: c.req.path
+  })
 })
 
 humidity.post(
@@ -25,17 +25,16 @@ humidity.post(
   }),
   async (c) => {
     const { date, topic } = c.req.valid('json')
+    console.log(c.req.path)
 
-    const client = new WorkflowClient()
-    const handle = await client.start(feederFlow, {
-      workflowId: topic + '-' + nanoid(),
-      taskQueue: taskQueueName,
-      args: [{ date, topic }]
+    const handle = await createWorkflowHandler<FeederDetails>({
+      workflowCallback: feederFlow,
+      workflowParameters: { date, topic}
     })
 
-      c.status(200)
-      console.log(await handle.result())
-      return c.json({ workflowId: handle.workflowId })
+    c.status(200)
+    console.log(await handle.result())
+    return c.json({ workflowId: handle.workflowId })
   }
 )
 
