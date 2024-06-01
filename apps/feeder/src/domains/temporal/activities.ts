@@ -1,7 +1,7 @@
 import {createZodFetcher} from "zod-fetch";
 import {z, ZodTypeAny} from "zod";
-import {PutObjectCommand, R2} from "@ouroboros/s3-client";
 import {zodSchema} from "./shared/zod-schema";
+import {R2, S3Service} from "@ouroboros/s3-client";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -44,7 +44,7 @@ export async function fetchData<T extends ZodTypeAny>(
  */
 export async function uploadR2(input: unknown, date: string, topic: string) {
   const buf = Buffer.from(JSON.stringify(input))
-  const response = await R2.send(new PutObjectCommand({
+  const response = await R2.send(new S3Service.PutObjectCommand({
     Bucket: `${process.env.R2_BUCKET_NAME}`,
     Body: buf,
     Key: `${date}-${topic}.json`,

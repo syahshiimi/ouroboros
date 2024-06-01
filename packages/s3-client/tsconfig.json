@@ -2,5 +2,7 @@
   "extends": "@ouroboros/typescript-config/base.json",
   "compilerOptions": {
     "moduleResolution": "bundler",
-  }
+  },
+  "include": ["src/**/*.ts", "./index.ts"],
+  "exlude": ["node_modules"]
 }
