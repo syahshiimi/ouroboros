@@ -2,6 +2,7 @@ import {createZodFetcher} from "zod-fetch";
 import {z, ZodTypeAny} from "zod";
 import {zodSchema} from "./shared/zod-schema";
 import {R2, S3Service} from "@ouroboros/s3-client";
+import {availableTopics} from "./shared/topics";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -53,4 +54,3 @@ export async function uploadR2(input: unknown, date: string, topic: string) {
   console.log(`Responded with code: ${response.$metadata.httpStatusCode}`)
   return response.$metadata.httpStatusCode
 }
-
