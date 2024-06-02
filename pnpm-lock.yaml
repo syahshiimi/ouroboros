@@ -39,7 +39,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/weather-schema
       '@ouroboros/weathercore-representations':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/weathercore-representations
       '@temporalio/activity':
         specifier: ^1.9.0
@@ -97,10 +97,10 @@ importers:
   apps/weathercore:
     dependencies:
       '@ouroboros/eslint-config':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/eslint-config
       '@ouroboros/typescript-config':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/typescript-config
       '@pothos/core':
         specifier: ^3.41.1
