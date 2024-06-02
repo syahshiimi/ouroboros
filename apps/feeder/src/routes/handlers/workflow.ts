@@ -3,7 +3,7 @@ import { validator } from "hono/validator";
 import { feederFlow } from "../../domains/temporal/workflow/workflow";
 import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input";
 import { workflowBinding } from "../binder/workflowBinding";
-import { parse } from "../utils/validator";
+import { parse } from "../utils/parse";
 
 const workflow = new Hono()
 
@@ -28,13 +28,20 @@ workflow.post(
     // Get validated date from context.
     const { date, topic } = c.req.valid('json')
 
-      const handle = await workflowBinding<FeederDetails>({
-        workflowCallback: feederFlow,
-        workflowParameters: { date: date, topic: topic }
-      })
-      c.status(200)
-      console.log(await handle.result())
-      return c.json({ workflowId: handle.workflowId })
+    const handle = await workflowBinding<FeederDetails>({
+      workflowCallback: feederFlow,
+      workflowParameters: { date: date, topic: topic }
+    })
+    c.status(200)
+    console.log(await handle.result())
+    return c.json({
+        executionRunId: handle.firstExecutionRunId,
+        workflowId: handle.workflowId,
+        parameters: {
+            date: date,
+            topic: topic
+        },
+    })
   }
 )
 

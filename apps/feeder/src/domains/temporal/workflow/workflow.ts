@@ -52,7 +52,7 @@ export async function feederFlow(input: FeederDetails) {
           break;
       }
     }
-    console.log("The mapped obj:", typeof mapped(input.topic));
+
     // TODO: Call mutation to the topic table.
 
     // TODO: Update fetch_jobs table
