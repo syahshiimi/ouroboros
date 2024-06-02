@@ -11,7 +11,6 @@ export type AvailableTopics = typeof availableTopics
  * Topics store, sorted in alphabetical order.
  * Key-value pair stores in a mapping of topic:api.
  */
-
 const apiTopics = {
   // Ordered by topic: api-topic. So please use the key.
   temperature: "air-temperature",

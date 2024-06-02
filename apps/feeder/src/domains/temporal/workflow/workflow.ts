@@ -4,7 +4,7 @@ import { apiTopicProducer } from "../utils/topic-producer";
 import { composer } from "../utils/url-composer";
 import * as activities from "../activities";
 import { zodSchema } from "../shared/zod-schema";
-
+import {ZHumidityType, ZRainfallType, ZTemperatureType, ZUvType} from "@ouroboros/weather-schema";
 
 export async function feederFlow(input: FeederDetails) {
   const { fetchData, uploadR2 } = proxyActivities<typeof activities>({
@@ -33,17 +33,26 @@ export async function feederFlow(input: FeederDetails) {
     }
 
     // TODO: Do DTO mapping
-    // 1. First map the topic to the correct DTO.
-    switch (input.topic) {
-      case "humidity":
-        // 2. Then do the mapping here (flat or flatMap).
-        break;
-      case "uv":
-        break;
-      default:
-        break;
+    // Cast humidity obj. No reason not to cast here, we already validated previously.
+    const mapped = (topic: FeederDetails["topic"]) => {
+      switch (topic) {
+          // 2. Then do the mapping here (flat or flatMap).
+        case "humidity": {
+          return response as ZHumidityType
+        }
+        case "rainfall": {
+          return response as ZRainfallType
+        }
+        case "uv":
+          return response as ZUvType;
+        case "temperature": {
+          return response as ZTemperatureType
+        }
+        default:
+          break;
+      }
     }
-
+    console.log("The mapped obj:", typeof mapped(input.topic));
     // TODO: Call mutation to the topic table.
 
     // TODO: Update fetch_jobs table
