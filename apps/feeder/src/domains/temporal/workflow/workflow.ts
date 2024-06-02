@@ -1,13 +1,13 @@
 import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
 import { FeederDetails } from "./input";
 import { apiTopicProducer } from "../utils/topic-producer";
-import {composer} from "../utils/url-composer";
+import { composer } from "../utils/url-composer";
 import * as activities from "../activities";
-import {zodSchema} from "../shared/zod-schema";
+import { zodSchema } from "../shared/zod-schema";
 
 
 export async function feederFlow(input: FeederDetails) {
-  const { fetchData, uploadR2  } = proxyActivities<typeof activities>({
+  const { fetchData, uploadR2 } = proxyActivities<typeof activities>({
     startToCloseTimeout: '1 minute',
     retry: {
       maximumAttempts: 1,
@@ -35,10 +35,11 @@ export async function feederFlow(input: FeederDetails) {
     // TODO: Do DTO mapping
     // 1. First map the topic to the correct DTO.
     switch (input.topic) {
-      case "humidity" :
+      case "humidity":
         // 2. Then do the mapping here (flat or flatMap).
         break;
-    
+      case "uv":
+        break;
       default:
         break;
     }

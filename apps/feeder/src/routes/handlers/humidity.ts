@@ -38,10 +38,11 @@ humidity.post(
     // Get validated date from context.
     const { date } = c.req.valid('json')
 
-    if (path) {
+    if (parsed.success) {
+      const parsedTopic = parsed.data as typeof inferParsed
       const handle = await workflowBinding<FeederDetails>({
         workflowCallback: feederFlow,
-        workflowParameters: { date: date, topic: parsed.data as typeof inferParsed }
+        workflowParameters: { date: date, topic: parsedTopic }
       })
       c.status(200)
       console.log(await handle.result())

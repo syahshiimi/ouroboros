@@ -18,27 +18,28 @@ uv.post(
   '/',
   validator('json', async (value, c) => {
     // Validate the incoming JSON.
-    const parsed = await parse(value, requestSchema)
+    const { parsed } = await parse(value, requestSchema)
     if (!parsed.success) {
       c.status(400)
-      return c.text(`Invalid value of ${parsed.error}`)    
+      return c.text(`Invalid value of ${parsed.error}`)
     }
-    return parsed.data 
-   }),
+    return parsed.data
+  }),
   async (c) => {
     // Get route path to form topic.
     const path = await splitter(c.req.path)
 
     // Validate the path.
-    const parsedPath = await parse(path, z.enum(availableTopics))
+    const { parsed, inferParsed } = await parse(path, z.enum(availableTopics))
 
     // Get validated date from context.
     const { date } = c.req.valid('json')
 
     if (path) {
+      const parsedTopic = parsed.data as typeof inferParsed
       const handle = await workflowBinding<FeederDetails>({
         workflowCallback: feederFlow,
-        workflowParameters: { date: date, topic: parsedPath.data }
+        workflowParameters: { date: date, topic: parsedTopic }
       })
       c.status(200)
       console.log(await handle.result())
