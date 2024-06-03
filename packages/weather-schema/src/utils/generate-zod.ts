@@ -2,6 +2,15 @@ import { jsonSchemaToZod } from "json-schema-to-zod";
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * Generates the Zod schema from the generated JSON schema  file located in the /_generated_/ folder.
+ *
+ * The JSON schema simply defines a contract between the client interface and the external endpoint.
+ *
+ * With the JSON schema, we could explicitly create a zod schema that allows us to understand
+ * how the API is expected to behave; effectively creating a type-safe endpoint.
+ */
+
 const schemaDir = path.join(__dirname, '../_generated_/json-schema');
 const generatedFolder = path.join(__dirname, '../_generated_');
 const outputDir = path.join(generatedFolder, 'zod');

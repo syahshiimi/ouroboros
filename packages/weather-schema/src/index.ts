@@ -5,4 +5,3 @@ import * as ZUvSchema from "./_generated_/zod/uv.zod.js";
 
 export * from "./types/index.js";
 export { ZTemperatureSchema, ZHumiditySchema, ZUvSchema, ZRainfallSchema }
-

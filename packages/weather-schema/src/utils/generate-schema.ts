@@ -2,6 +2,16 @@ import { createSchema } from 'genson-js';
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * Generates the schema from the JSON file located in the ../json/ folder.
+ *
+ * The JSON simply defines what we should expect and by that, it allows us to redefine
+ * the scope of what we should be expecting as an API endpoint.
+ *
+ * With the JSON, we could explicitly create a schema that allows us to understand
+ * how the API is expected to behave; effectively creating a type-safe endpoint.
+ */
+
 const rootFolder = path.join(__dirname, '../json');
 const generatedFolder = path.join(__dirname, '../_generated_');
 const jsonSchemaFolder = path.join(generatedFolder, 'json-schema');
