@@ -9,6 +9,8 @@ import {StationDTO, unwrapStationDTO,} from "../../dto/stations";
 import {TemperatureDTO, unwrapTemperatureDTO} from "../../dto/temperature";
 import {HumidityDTO, unwrapHumidityDTO} from "../../dto/humidity";
 import {RainfallDTO, unwrapRainfallDTO} from "../../dto/rainfall";
+import { request } from "graphql-request";
+import { GetStationsDocument } from "@ouroboros/weathercore-representations";
 
 export async function feederFlow(input: FeederDetails) {
   const { fetchData, uploadR2 } = proxyActivities<typeof activities>({
@@ -44,57 +46,65 @@ export async function feederFlow(input: FeederDetails) {
     // API Layer -> Domain Transfer Layer -> Persistence Layer
 
     // 1. Then, run the specific un-wrap function given a topic.
-    const unwrappedObject = (topic: FeederDetails["topic"]) => {
-      console.log(`Unwrapping the DTO for the topic of ${topic}`)
-      switch (topic) {
-        case "humidity": {
-          const res=  response as ZHumidityType
-
-          // Operate on the stations.
-          const stations = res.metadata.stations as StationDTO[]
-          const stationData =  stations.map(station => unwrapStationDTO(station))
-
-          const humidity = res.items as HumidityDTO[]
-          const humidityObj =  humidity.flatMap((timestamp =>
-              unwrapHumidityDTO(timestamp)
-              ))
-          return { stationData, humidityObj }
-        }
-        case "rainfall": {
-          const res=  response as ZRainfallType
-
-          // Operate on the stations.
-          const stations = res.metadata.stations as StationDTO[]
-          const stationData =  stations.map(station => unwrapStationDTO(station))
-
-          const humidity = res.items as RainfallDTO[]
-          const humidityObj =  humidity.flatMap((timestamp =>
-                  unwrapRainfallDTO(timestamp)
-          ))
-          return { stationData, humidityObj }
-        }
-        case "uv":
-          return null;
-        case "temperature": {
-          // Each operation should always map the stations.
-          const castRes =  response as ZTemperatureType
-
-          // Operate on the stations.
-          const stations = castRes.metadata.stations as StationDTO[]
-          const stationData =  stations.map(station => unwrapStationDTO(station))
-
-          // Operate on the temperature readings.
-          const temperatures = castRes.items as TemperatureDTO[]
-          const temperatureData  = temperatures.flatMap((timestamp =>
-                  unwrapTemperatureDTO(timestamp)
-          ))
-          return { stationData, temperatureData }
-        }
-        default:
-          break;
-      }
-    }
+    // const unwrappedObject = (topic: FeederDetails["topic"]) => {
+    //   console.log(`Unwrapping the DTO for the topic of ${topic}`)
+    //   switch (topic) {
+    //     case "humidity": {
+    //       const res=  response as ZHumidityType
+    //
+    //       // Operate on the stations.
+    //       const stations = res.metadata.stations as StationDTO[]
+    //       const stationData =  stations.map(station => unwrapStationDTO(station))
+    //
+    //       const humidity = res.items as HumidityDTO[]
+    //       const humidityObj =  humidity.flatMap((timestamp =>
+    //           unwrapHumidityDTO(timestamp)
+    //           ))
+    //       return { stationData, humidityObj }
+    //     }
+    //     case "rainfall": {
+    //       const res=  response as ZRainfallType
+    //
+    //       // Operate on the stations.
+    //       const stations = res.metadata.stations as StationDTO[]
+    //       const stationData =  stations.map(station => unwrapStationDTO(station))
+    //
+    //       const humidity = res.items as RainfallDTO[]
+    //       const humidityObj =  humidity.flatMap((timestamp =>
+    //               unwrapRainfallDTO(timestamp)
+    //       ))
+    //       return { stationData, humidityObj }
+    //     }
+    //     case "uv":
+    //       return null;
+    //     case "temperature": {
+    //       // Each operation should always map the stations.
+    //       const castRes =  response as ZTemperatureType
+    //
+    //       // Operate on the stations.
+    //       const stations = castRes.metadata.stations as StationDTO[]
+    //       const stationData =  stations.map(station => unwrapStationDTO(station))
+    //
+    //       // Operate on the temperature readings.
+    //       const temperatures = castRes.items as TemperatureDTO[]
+    //       const temperatureData  = temperatures.flatMap((timestamp =>
+    //               unwrapTemperatureDTO(timestamp)
+    //       ))
+    //       return { stationData, temperatureData }
+    //     }
+    //     default:
+    //       break;
+    //   }
+    // }
     // TODO: Call mutation to the topic table.
+    try {
+      const query = request('http://localhost:3000/graphql', GetStationsDocument)
+      console.log(query)
+
+    }catch (error) {
+      throw new Error(error as string)
+    }
+
 
     // TODO: Update fetch_jobs table
 
