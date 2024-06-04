@@ -42,3 +42,6 @@ timescaledb-data/
 
 # ignore data json folder 
 apps/feeder/src/domains/temporal/data
+
+# ignore temporal temporary .db file
+*.db
