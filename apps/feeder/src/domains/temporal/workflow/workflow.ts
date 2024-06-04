@@ -1,19 +1,18 @@
-import {ApplicationFailure, proxyActivities} from "@temporalio/workflow";
-import {FeederDetails} from "./input";
-import {apiTopicProducer} from "../utils/topic-producer";
-import {composer} from "../utils/url-composer";
+import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
+import { FeederDetails } from "./input";
+import { apiTopicProducer } from "../utils/topic-producer";
+import { composer } from "../utils/url-composer";
 import * as activities from "../activities";
-import {zodSchema} from "../shared/zod-schema";
-import {ZHumidityType, ZRainfallType, ZTemperatureType} from "@ouroboros/weather-schema";
-import {StationDTO, unwrapStationDTO,} from "../../dto/stations";
-import {TemperatureDTO, unwrapTemperatureDTO} from "../../dto/temperature";
-import {HumidityDTO, unwrapHumidityDTO} from "../../dto/humidity";
-import {RainfallDTO, unwrapRainfallDTO} from "../../dto/rainfall";
-import { request } from "graphql-request";
-import { GetStationsDocument } from "@ouroboros/weathercore-representations";
+import { zodSchema } from "../shared/zod-schema";
+import { ZHumidityType, ZRainfallType, ZTemperatureType } from "@ouroboros/weather-schema";
+import { StationDTO, unwrapStationDTO, } from "../../dto/stations";
+import { TemperatureDTO, unwrapTemperatureDTO } from "../../dto/temperature";
+import { HumidityDTO, unwrapHumidityDTO } from "../../dto/humidity";
+import { RainfallDTO, unwrapRainfallDTO } from "../../dto/rainfall";
+import { GraphQLClient, gql, request } from "graphql-request";
 
 export async function feederFlow(input: FeederDetails) {
-  const { fetchData, uploadR2 } = proxyActivities<typeof activities>({
+  const { fetchData, uploadR2, runMutation } = proxyActivities<typeof activities>({
     startToCloseTimeout: '1 minute',
     retry: {
       maximumAttempts: 1,
@@ -98,10 +97,10 @@ export async function feederFlow(input: FeederDetails) {
     // }
     // TODO: Call mutation to the topic table.
     try {
-      const query = request('http://localhost:3000/graphql', GetStationsDocument)
-      console.log(query)
+      const data = await runMutation()
+      console.log("graphql data:", data)
 
-    }catch (error) {
+    } catch (error) {
       throw new Error(error as string)
     }
 

@@ -1,7 +1,8 @@
-import {createZodFetcher} from "zod-fetch";
-import {z, ZodTypeAny} from "zod";
-import {zodSchema} from "./shared/zod-schema";
-import {R2, S3Service} from "@ouroboros/s3-client";
+import { createZodFetcher } from "zod-fetch";
+import { z, ZodTypeAny } from "zod";
+import { zodSchema } from "./shared/zod-schema";
+import { R2, S3Service } from "@ouroboros/s3-client";
+import { GraphQLClient } from "graphql-request";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -15,10 +16,10 @@ import {R2, S3Service} from "@ouroboros/s3-client";
  * @param _zSchema
  */
 export async function fetchData<T extends ZodTypeAny>(
-    endpoint: string,
-    topic: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _zSchema: T
+  endpoint: string,
+  topic: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _zSchema: T
 ): Promise<z.infer<T> | undefined> {
   const zodFetcher = createZodFetcher();
   const schema = zodSchema.schemer(topic) as unknown as z.infer<T>;
@@ -52,4 +53,17 @@ export async function uploadR2(input: unknown, date: string, topic: string) {
   }))
   console.log(`Responded with code: ${response.$metadata.httpStatusCode}`)
   return response.$metadata.httpStatusCode
+}
+
+export async function runMutation() {
+
+  const graphqlClient = new GraphQLClient("http://localhost:3000/graphql", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const GetStationsDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "query", "name": { "kind": "Name", "value": "GetStations" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "getAllStations" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "station_id" } }] } }] } }] } as unknown as DocumentNode<GetStationsQuery, GetStationsQueryVariables>;
+  return await graphqlClient.request(GetStationsDocument, {})
+
 }
