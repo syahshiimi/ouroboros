@@ -2,7 +2,8 @@ import type { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
   schema: "../weathercore-schema/schema.graphql",
-  // documents: "../../apps/**/!(*.d).{ts,tsx}",
+  documents: ["../../apps/**/*.graphql"],
+  emitLegacyCommonJSImports: false,
   generates: {
     '../weathercore-representations/src/': {
       preset: 'client',
@@ -16,7 +17,8 @@ const config: CodegenConfig = {
   config: {
     scalars: {
       DateTime: 'Date'
-    }
+    },
+    fetcher: "graphql-request"
   }
 };
 

@@ -4,7 +4,7 @@
   "description": "weathercore-codegen is a code generator for graphql schema to TypeScripts etc.",
   "main": "index.js",
   "scripts": {
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen-esm --config codegen.ts"
   },
   "keywords": [],
   "author": "",
