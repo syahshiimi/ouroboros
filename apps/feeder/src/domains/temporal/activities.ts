@@ -59,7 +59,9 @@ export async function uploadR2(input: unknown, date: string, topic: string) {
 export async function runMutation() {
   console.log('Running the mutation...')
 
-  const graphqlClient = new GraphQLClient("http://localhost:3000/graphql", {
+  const endpoint = `http://${process.env.GRAPHQL_ENDPOINT}`
+  console.log(`Fetching from the endpoint: ${endpoint}`)
+  const graphqlClient = new GraphQLClient(endpoint, {
     headers: {
       "Content-Type": "application/json",
     },
