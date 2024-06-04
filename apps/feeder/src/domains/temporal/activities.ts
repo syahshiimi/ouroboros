@@ -3,6 +3,7 @@ import { z, ZodTypeAny } from "zod";
 import { zodSchema } from "./shared/zod-schema";
 import { R2, S3Service } from "@ouroboros/s3-client";
 import { GraphQLClient } from "graphql-request";
+import {GetStationsDocument} from "@ouroboros/weathercore-representations";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -63,7 +64,6 @@ export async function runMutation() {
     },
   });
 
-  const GetStationsDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "query", "name": { "kind": "Name", "value": "GetStations" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "getAllStations" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "station_id" } }] } }] } }] } as unknown as DocumentNode<GetStationsQuery, GetStationsQueryVariables>;
   return await graphqlClient.request(GetStationsDocument, {})
 
 }
