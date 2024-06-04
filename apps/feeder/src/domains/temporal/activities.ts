@@ -57,6 +57,7 @@ export async function uploadR2(input: unknown, date: string, topic: string) {
 }
 
 export async function runMutation() {
+  console.log('Running the mutation...')
 
   const graphqlClient = new GraphQLClient("http://localhost:3000/graphql", {
     headers: {
@@ -65,5 +66,4 @@ export async function runMutation() {
   });
 
   return await graphqlClient.request(GetStationsDocument, {})
-
 }
