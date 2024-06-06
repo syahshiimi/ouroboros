@@ -13,6 +13,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "mutation BatchUpsertStations($stations: [StationsInput!]!) {\n  upsertStation(input: $stations) {\n    station_id\n    longitude\n    latitude\n    location_name\n  }\n}": types.BatchUpsertStationsDocument,
+    "mutation BatchUpsertTemperatureReadings($temperatureReadings: [TemperatureInput!]!) {\n  upsertTemperatureReadings(input: $temperatureReadings) {\n    station_id\n    id\n  }\n}": types.BatchUpsertTemperatureReadingsDocument,
     "query GetStations {\n  getAllStations {\n    station_id\n  }\n}": types.GetStationsDocument,
 };
 
@@ -30,6 +32,14 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation BatchUpsertStations($stations: [StationsInput!]!) {\n  upsertStation(input: $stations) {\n    station_id\n    longitude\n    latitude\n    location_name\n  }\n}"): (typeof documents)["mutation BatchUpsertStations($stations: [StationsInput!]!) {\n  upsertStation(input: $stations) {\n    station_id\n    longitude\n    latitude\n    location_name\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation BatchUpsertTemperatureReadings($temperatureReadings: [TemperatureInput!]!) {\n  upsertTemperatureReadings(input: $temperatureReadings) {\n    station_id\n    id\n  }\n}"): (typeof documents)["mutation BatchUpsertTemperatureReadings($temperatureReadings: [TemperatureInput!]!) {\n  upsertTemperatureReadings(input: $temperatureReadings) {\n    station_id\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
