@@ -18,7 +18,7 @@ export interface TemperatureDTO {
 export const unwrapTemperatureDTO = (dto: TemperatureDTO): Temperature[] => {
     return dto.readings.map(reading => ({
         station_id: reading.station_id,
-        timestamp: new Date(dto.timestamp),
+        timestamp: dto.timestamp,
         reading: reading.value.toString()
     }));
 };

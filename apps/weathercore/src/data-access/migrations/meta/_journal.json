@@ -15,6 +15,13 @@
       "when": 1716362985499,
       "tag": "0001_condemned_stardust",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1717689101124,
+      "tag": "0002_closed_wolverine",
+      "breakpoints": true
     }
   ]
 }

@@ -23,7 +23,7 @@ export const sampleUv: UV[] = uv.items.flatMap(item =>
 export const sampleTemperatures: Temperature[] = sample.items.flatMap(item =>
   item.readings.map(reading => ({
     station_id: reading.station_id,
-    timestamp: new Date(item.timestamp),
+    timestamp: item.timestamp,
     reading: reading.value.toString()
   })
   )

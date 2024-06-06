@@ -30,11 +30,11 @@ export async function upsertTemperatureReading(
   record: Temperature[]
 ): Promise<Temperature[]> {
   return await connection.transaction(async (tx) => {
-    return await tx
+    return tx
       .insert(temperature)
       .values(record)
       .onConflictDoNothing()
-      .returning()
+      .returning();
   })
 }
 

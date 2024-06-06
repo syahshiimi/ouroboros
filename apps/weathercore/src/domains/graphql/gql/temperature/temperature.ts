@@ -1,5 +1,10 @@
-import { deleteAllStations } from "../../../../data-access/repositories/stations/stations-repository";
-import { deleteTemperatureReadingById, findLatestTemperatureReadingByStationId, findTemperatureReadingsByStationId, upsertTemperatureReading } from "../../../../data-access/repositories/temperature/temperature-repository";
+import {
+  deleteAllTemperatureReadings,
+  deleteTemperatureReadingById,
+  findLatestTemperatureReadingByStationId,
+  findTemperatureReadingsByStationId,
+  upsertTemperatureReading
+} from "../../../../data-access/repositories/temperature/temperature-repository";
 import { builder } from "../../builder";
 import { TemperatureType } from "../../types";
 
@@ -8,7 +13,7 @@ const TemperatureInput = builder.inputType("TemperatureInput", {
     station_id: t.string({ required: true }),
     reading: t.string(),
     file_name: t.string(),
-    timestamp: t.field({ type: 'Date', required: true })
+    timestamp: t.string()
   })
 })
 
@@ -16,7 +21,7 @@ TemperatureType.implement({
   fields: (t) => ({
     id: t.exposeString("id"),
     station_id: t.exposeString("station_id"),
-    timestamp: t.expose("timestamp", { type: "Date" }),
+    timestamp: t.exposeString("timestamp"),
     reading: t.exposeString("reading"),
     file_name: t.exposeString("file_name")
   })
@@ -82,7 +87,7 @@ builder.mutationField("deleteAllTemperatureReadings", (t) =>
     type: [TemperatureType],
     description: "Deletes all temperature readings.",
     resolve: async () => {
-      return await deleteAllStations();
+      return await deleteAllTemperatureReadings();
     }
   })
 )
