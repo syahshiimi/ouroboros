@@ -1,0 +1,1 @@
+ALTER TABLE "temperature" ALTER COLUMN "timestamp" SET DATA TYPE varchar;
