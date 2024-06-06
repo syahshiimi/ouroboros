@@ -4,15 +4,11 @@ import { apiTopicProducer } from "../utils/topic-producer";
 import { composer } from "../utils/url-composer";
 import * as activities from "../activities";
 import { zodSchema } from "../shared/zod-schema";
-import { ZHumidityType, ZRainfallType, ZTemperatureType } from "@ouroboros/weather-schema";
-import { StationDTO, unwrapStationDTO, } from "../../dto/stations";
-import { TemperatureDTO, unwrapTemperatureDTO } from "../../dto/temperature";
-import { HumidityDTO, unwrapHumidityDTO } from "../../dto/humidity";
-import { RainfallDTO, unwrapRainfallDTO } from "../../dto/rainfall";
-import { GraphQLClient, gql, request } from "graphql-request";
+import { ZTemperatureType} from "@ouroboros/weather-schema";
+
 
 export async function feederFlow(input: FeederDetails) {
-  const { fetchData, uploadR2, runMutation } = proxyActivities<typeof activities>({
+  const { fetchData, uploadR2, temperatureMutation } = proxyActivities<typeof activities>({
     startToCloseTimeout: '1 minute',
     retry: {
       maximumAttempts: 1,
@@ -22,6 +18,7 @@ export async function feederFlow(input: FeederDetails) {
   const { url } = await apiTopicProducer(input.topic)
   const endpoint = await composer(url, input.date)
 
+  // fetch from data.gov.sg
   try {
     console.log(`About to fetch data for the date: ${input.date} and for the topic: ${input.topic}`)
     const zSchema = zodSchema.schemer(input.topic)
@@ -31,79 +28,21 @@ export async function feederFlow(input: FeederDetails) {
       throw new ApplicationFailure(`Response is undefined. Please check if input topic: ${input.topic} is a valid topic with a mapped schema`)
     }
 
+    // Upload the JSON to R2.
     try {
       await uploadR2(response, input.date, input.topic)
     } catch (error) {
       throw new ApplicationFailure(error as string)
     }
 
-    // TODO: Do DTO mapping
-    // Reference: https://profy.dev/article/react-architecture-domain-entities-and-dtos
-    // We want to abstract out the API layer and the domain layer and avoid them from being coupled.
-    // The benefit of this pattern is that it allows us to add/remove fields and do transformations, if ncessary.
-    // API -> DTO -> WeatherCore
-    // API Layer -> Domain Transfer Layer -> Persistence Layer
-
-    // 1. Then, run the specific un-wrap function given a topic.
-    // const unwrappedObject = (topic: FeederDetails["topic"]) => {
-    //   console.log(`Unwrapping the DTO for the topic of ${topic}`)
-    //   switch (topic) {
-    //     case "humidity": {
-    //       const res=  response as ZHumidityType
-    //
-    //       // Operate on the stations.
-    //       const stations = res.metadata.stations as StationDTO[]
-    //       const stationData =  stations.map(station => unwrapStationDTO(station))
-    //
-    //       const humidity = res.items as HumidityDTO[]
-    //       const humidityObj =  humidity.flatMap((timestamp =>
-    //           unwrapHumidityDTO(timestamp)
-    //           ))
-    //       return { stationData, humidityObj }
-    //     }
-    //     case "rainfall": {
-    //       const res=  response as ZRainfallType
-    //
-    //       // Operate on the stations.
-    //       const stations = res.metadata.stations as StationDTO[]
-    //       const stationData =  stations.map(station => unwrapStationDTO(station))
-    //
-    //       const humidity = res.items as RainfallDTO[]
-    //       const humidityObj =  humidity.flatMap((timestamp =>
-    //               unwrapRainfallDTO(timestamp)
-    //       ))
-    //       return { stationData, humidityObj }
-    //     }
-    //     case "uv":
-    //       return null;
-    //     case "temperature": {
-    //       // Each operation should always map the stations.
-    //       const castRes =  response as ZTemperatureType
-    //
-    //       // Operate on the stations.
-    //       const stations = castRes.metadata.stations as StationDTO[]
-    //       const stationData =  stations.map(station => unwrapStationDTO(station))
-    //
-    //       // Operate on the temperature readings.
-    //       const temperatures = castRes.items as TemperatureDTO[]
-    //       const temperatureData  = temperatures.flatMap((timestamp =>
-    //               unwrapTemperatureDTO(timestamp)
-    //       ))
-    //       return { stationData, temperatureData }
-    //     }
-    //     default:
-    //       break;
-    //   }
-    // }
-    // TODO: Call mutation to the topic table.
+    // Map the JSON DTO to objects and run mutations.
     try {
-      const data = await runMutation()
-      console.log("graphql data:", data)
-
+      if (input.topic === "temperature") {
+        await temperatureMutation(input.topic, response as ZTemperatureType)
+      }
     } catch (error) {
       throw new Error(error as string)
     }
-
 
     // TODO: Update fetch_jobs table
 

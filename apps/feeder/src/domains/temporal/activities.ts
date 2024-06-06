@@ -1,9 +1,16 @@
-import { createZodFetcher } from "zod-fetch";
-import { z, ZodTypeAny } from "zod";
-import { zodSchema } from "./shared/zod-schema";
-import { R2, S3Service } from "@ouroboros/s3-client";
-import { GraphQLClient } from "graphql-request";
-import {GetStationsDocument} from "@ouroboros/weathercore-representations";
+import {createZodFetcher} from "zod-fetch";
+import {z, ZodTypeAny} from "zod";
+import {zodSchema} from "./shared/zod-schema";
+import {R2, S3Service} from "@ouroboros/s3-client";
+import {
+  BatchUpsertStationsDocument,
+  BatchUpsertTemperatureReadingsDocument
+} from "@ouroboros/weathercore-representations";
+import {requestClient} from "./shared/request";
+import {FeederDetails} from "./workflow/input";
+import {ZTemperatureType} from "@ouroboros/weather-schema";
+import {unwrapStationDTO} from "../dto/stations";
+import {unwrapTemperatureDTO} from "../dto/temperature";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -52,20 +59,18 @@ export async function uploadR2(input: unknown, date: string, topic: string) {
     Key: `${date}-${topic}.json`,
     ContentType: "application/json"
   }))
-  console.log(`Responded with code: ${response.$metadata.httpStatusCode}`)
+  console.log(`R2 responded with code: ${response.$metadata.httpStatusCode}`)
   return response.$metadata.httpStatusCode
 }
 
-export async function runMutation() {
-  console.log('Running the mutation...')
+export async function temperatureMutation(topic: FeederDetails["topic"], response: ZTemperatureType) {
+  // Un-bundle the DTOs.
+  const stations = response.metadata.stations.map(station => unwrapStationDTO(station))
+  const temperature = response.items.flatMap(temperature => unwrapTemperatureDTO(temperature))
 
-  const endpoint = `http://${process.env.GRAPHQL_ENDPOINT}`
-  console.log(`Fetching from the endpoint: ${endpoint}`)
-  const graphqlClient = new GraphQLClient(endpoint, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  console.log('Running the batch upsert for stations...')
+  await requestClient(BatchUpsertStationsDocument,  { stations: [...stations]} )
 
-  return await graphqlClient.request(GetStationsDocument, {})
+  console.log(`Running the batch upsert for readings of topic: ${topic}`)
+  return await requestClient(BatchUpsertTemperatureReadingsDocument, {temperatureReadings: [...temperature]})
 }

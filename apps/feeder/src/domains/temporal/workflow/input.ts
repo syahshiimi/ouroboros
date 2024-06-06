@@ -9,7 +9,7 @@ export const requestSchema = z.object({
 export const inputSchema = z.object({
     date: z.string().date(),
     topic: z.enum(availableTopics)
-}).readonly()
+})
 
 export type RequestSchema = z.infer<typeof requestSchema>
 export type FeederDetails = z.infer<typeof inputSchema>
