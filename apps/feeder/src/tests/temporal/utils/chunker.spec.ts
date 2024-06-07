@@ -1,4 +1,4 @@
-import {chunker} from "../../domains/temporal/utils/chunker";
+import {chunker} from "../../../domains/temporal/utils/chunker";
 import {describe, expect, test} from "vitest";
 
 describe('test the chunking of a function', async () => {
