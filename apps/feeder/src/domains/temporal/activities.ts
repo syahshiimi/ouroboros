@@ -2,15 +2,16 @@ import {createZodFetcher} from "zod-fetch";
 import {z, ZodTypeAny} from "zod";
 import {zodSchema} from "./shared/zod-schema";
 import {R2, S3Service} from "@ouroboros/s3-client";
-import {
-  BatchUpsertStationsDocument,
-  BatchUpsertTemperatureReadingsDocument
-} from "@ouroboros/weathercore-representations";
-import {requestClient} from "./shared/request";
+import {Temperature} from "@ouroboros/weathercore-representations";
 import {FeederDetails} from "./workflow/input";
 import {ZTemperatureType} from "@ouroboros/weather-schema";
 import {unwrapStationDTO} from "../dto/stations";
 import {unwrapTemperatureDTO} from "../dto/temperature";
+import {
+  weatherCoreServiceBatchUpsertStations,
+  weatherCoreServiceBatchUpsertTemperatureReadings
+} from "../weathercore/mutations/temperature-service";
+import {chunker} from "./utils/chunker";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -51,26 +52,40 @@ export async function fetchData<T extends ZodTypeAny>(
  * @param date
  * @param topic
  */
-export async function uploadR2(input: unknown, date: string, topic: string) {
-  const buf = Buffer.from(JSON.stringify(input))
+export async function uploadR2(input: unknown, date: string, topic: string): Promise<string>{
+  const buf = Buffer.from(JSON.stringify(input));
+  const fileKey = `${date}-${topic}.json`;
   const response = await R2.send(new S3Service.PutObjectCommand({
     Bucket: `${process.env.R2_BUCKET_NAME}`,
     Body: buf,
-    Key: `${date}-${topic}.json`,
+    Key: fileKey,
     ContentType: "application/json"
-  }))
-  console.log(`R2 responded with code: ${response.$metadata.httpStatusCode}`)
-  return response.$metadata.httpStatusCode
+  }));
+  console.log(`R2 responded with code: ${response.$metadata.httpStatusCode}`);
+  return fileKey;
 }
 
-export async function temperatureMutation(topic: FeederDetails["topic"], response: ZTemperatureType) {
+export async function temperatureMutation(topic: FeederDetails["topic"], response: ZTemperatureType, fileName: string) {
   // Un-bundle the DTOs.
   const stations = response.metadata.stations.map(station => unwrapStationDTO(station))
-  const temperature = response.items.flatMap(temperature => unwrapTemperatureDTO(temperature))
+  const temperature = response.items.flatMap(temperature => unwrapTemperatureDTO(temperature, fileName))
+  const chunked = await chunker(temperature, 100)
 
-  console.log('Running the batch upsert for stations...')
-  await requestClient(BatchUpsertStationsDocument,  { stations: [...stations]} )
+  try {
+    await weatherCoreServiceBatchUpsertStations(stations)
+  } catch (error) {
+    throw new Error(error as string)
+  }
 
-  console.log(`Running the batch upsert for readings of topic: ${topic}`)
-  return await requestClient(BatchUpsertTemperatureReadingsDocument, {temperatureReadings: [...temperature]})
+  try {
+    const promises = chunked.map(async (chunk, index) => {
+      return new Promise((resolve) => {
+        console.log(`Upserting for the chunk of ${index}`)
+        resolve(weatherCoreServiceBatchUpsertTemperatureReadings(chunk))
+      });
+    })
+    await Promise.all(promises)
+  } catch (error) {
+    throw new Error(error as string)
+  }
 }

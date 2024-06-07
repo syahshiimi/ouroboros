@@ -1,4 +1,4 @@
-import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
+import {ApplicationFailure, proxyActivities, ServerFailure} from "@temporalio/workflow";
 import { FeederDetails } from "./input";
 import { apiTopicProducer } from "../utils/topic-producer";
 import { composer } from "../utils/url-composer";
@@ -15,6 +15,9 @@ export async function feederFlow(input: FeederDetails) {
     }
   })
 
+  // Global variables
+  let fileName: string;
+
   const { url } = await apiTopicProducer(input.topic)
   const endpoint = await composer(url, input.date)
 
@@ -30,7 +33,7 @@ export async function feederFlow(input: FeederDetails) {
 
     // Upload the JSON to R2.
     try {
-      await uploadR2(response, input.date, input.topic)
+      fileName = await uploadR2(response, input.date, input.topic)
     } catch (error) {
       throw new ApplicationFailure(error as string)
     }
@@ -38,14 +41,14 @@ export async function feederFlow(input: FeederDetails) {
     // Map the JSON DTO to objects and run mutations.
     try {
       if (input.topic === "temperature") {
-        await temperatureMutation(input.topic, response as ZTemperatureType)
+        console.log(`Running mutation for filename: ${fileName}`)
+        await temperatureMutation(input.topic, response as ZTemperatureType, fileName)
       }
     } catch (error) {
       throw new Error(error as string)
     }
 
     // TODO: Update fetch_jobs table
-
   } catch (error) {
     throw new ApplicationFailure(error as string)
   }
