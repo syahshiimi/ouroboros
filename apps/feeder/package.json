@@ -6,7 +6,8 @@
     "build": "tsc --build",
     "dev": "dotenv -e ../../.env tsx watch src/index.ts",
     "lint": "eslint .",
-    "start:worker": "dotenv -e ../../.env tsx watch src/domains/temporal/worker.ts"
+    "start:worker": "dotenv -e ../../.env tsx watch src/domains/temporal/worker.ts",
+    "test": "vitest"
   },
   "type": "module",
   "dependencies": {
@@ -35,6 +36,7 @@
     "@types/node-fetch": "^2.6.11",
     "ts-to-zod": "^3.8.5",
     "tsx": "^4.7.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   }
 }
