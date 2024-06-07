@@ -1,7 +1,6 @@
 import {ApplicationFailure, proxyActivities } from "@temporalio/workflow";
 import { FeederDetails } from "./input";
-import { apiTopicProducer } from "../utils/topic-producer";
-import { composer } from "../utils/url-composer";
+import { composer } from "../utils/composer";
 import * as activities from "../activities";
 import { zodSchema } from "../shared/zod-schema";
 import { ZTemperatureType} from "@ouroboros/weather-schema";
@@ -18,8 +17,7 @@ export async function feederFlow(input: FeederDetails) {
   // Global variables
   let fileName: string;
 
-  const { url } = await apiTopicProducer(input.topic)
-  const endpoint = await composer(url, input.date)
+  const endpoint = await composer({ date: input.date, topic: input.topic})
 
   // fetch from data.gov.sg
   try {
