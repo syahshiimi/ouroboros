@@ -21,6 +21,7 @@ describe("temperature readings", () => {
   test("should upsert records into the database", async () => {
     const addRecords = await upsertTemperatureReading(sampleTemperatures)
     expect(addRecords.length).toBe(sampleTemperatures.length)
+    expect(addRecords[0]?.file_name).toBe('2024-01-21-temperature.json')
   })
 
   test("should get latest temperature reading by station_id", async () => {

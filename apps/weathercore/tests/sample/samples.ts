@@ -24,7 +24,8 @@ export const sampleTemperatures: Temperature[] = sample.items.flatMap(item =>
   item.readings.map(reading => ({
     station_id: reading.station_id,
     timestamp: item.timestamp,
-    reading: reading.value.toString()
+    reading: reading.value.toString(),
+    file_name: '2024-01-21-temperature.json'
   })
   )
 ).slice(0, (sample.items.length * 0.9))

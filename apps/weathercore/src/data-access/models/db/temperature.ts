@@ -10,7 +10,7 @@ export const temperature = pgTable('temperature', {
   file_name: varchar("file_name", { length: 256 })
 }, (table) => {
   return {
-    pk: primaryKey({ columns: [table.id, table.timestamp, table.station_id] })
+    pk: primaryKey({ columns: [table.timestamp, table.station_id] })
   }
 })
 
