@@ -87,4 +87,5 @@ export async function temperatureMutation(topic: FeederDetails["topic"], respons
   } catch (error) {
     throw new Error(error as string)
   }
+  return fileName
 }
