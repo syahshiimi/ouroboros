@@ -1,11 +1,8 @@
 import { GraphQLClient } from "graphql-request";
 import { Hono } from "hono";
+import {GetStationsDocument} from "@ouroboros/weathercore-representations";
 
 const graphql = new Hono();
-
-export const GetStationsDocument = { "kind": "Document", "definitions": [{ "kind": "OperationDefinition", "operation": "query", "name": { "kind": "Name", "value": "GetStations" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "getAllStations" }, "selectionSet": { "kind": "SelectionSet", "selections": [{ "kind": "Field", "name": { "kind": "Name", "value": "station_id" } }] } }] } }] } as unknown as DocumentNode<GetStationsQuery, GetStationsQueryVariables>;
-
-
 graphql.get('/', async (c) => {
   const graphqlClient = new GraphQLClient("http://localhost:3000/graphql", {
     headers: {

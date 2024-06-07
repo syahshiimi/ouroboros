@@ -38,9 +38,15 @@ export async function feederFlow(input: FeederDetails) {
 
     // Map the JSON DTO to objects and run mutations.
     try {
-      if (input.topic === "temperature") {
-        console.log(`Running mutation for filename: ${fileName}`)
-        await temperatureMutation(input.topic, response as ZTemperatureType, fileName)
+      switch (input.topic) {
+        case "humidity":
+          return;
+        case "rainfall":
+          return;
+        case "temperature":
+          return await temperatureMutation(input.topic, response as ZTemperatureType, fileName)
+        case "uv":
+          return
       }
     } catch (error) {
       throw new Error(error as string)
