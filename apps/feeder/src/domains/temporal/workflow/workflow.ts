@@ -1,4 +1,4 @@
-import {ApplicationFailure, proxyActivities, ServerFailure} from "@temporalio/workflow";
+import {ApplicationFailure, proxyActivities } from "@temporalio/workflow";
 import { FeederDetails } from "./input";
 import { apiTopicProducer } from "../utils/topic-producer";
 import { composer } from "../utils/url-composer";

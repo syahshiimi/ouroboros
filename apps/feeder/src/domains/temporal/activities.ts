@@ -2,7 +2,6 @@ import {createZodFetcher} from "zod-fetch";
 import {z, ZodTypeAny} from "zod";
 import {zodSchema} from "./shared/zod-schema";
 import {R2, S3Service} from "@ouroboros/s3-client";
-import {Temperature} from "@ouroboros/weathercore-representations";
 import {FeederDetails} from "./workflow/input";
 import {ZTemperatureType} from "@ouroboros/weather-schema";
 import {unwrapStationDTO} from "../dto/stations";
