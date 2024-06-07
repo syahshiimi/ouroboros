@@ -14,11 +14,13 @@ export interface TemperatureDTO {
 /**
  * Converts the DTO to the weathercore domain object.
  * @param dto
+ * @param fileName The filename of the json stored in the bucket.
  */
-export const unwrapTemperatureDTO = (dto: TemperatureDTO): Temperature[] => {
+export const unwrapTemperatureDTO = (dto: TemperatureDTO, fileName: string): Temperature[] => {
     return dto.readings.map(reading => ({
         station_id: reading.station_id,
         timestamp: dto.timestamp,
-        reading: reading.value.toString()
+        reading: reading.value.toString(),
+        file_name: fileName
     }));
 };
