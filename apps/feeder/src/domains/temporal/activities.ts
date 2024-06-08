@@ -1,16 +1,18 @@
-import {createZodFetcher} from "zod-fetch";
-import {z, ZodTypeAny} from "zod";
-import {zodSchema} from "./shared/zod-schema";
-import {R2, S3Service} from "@ouroboros/s3-client";
-import {FeederDetails} from "./workflow/input";
-import {ZTemperatureType} from "@ouroboros/weather-schema";
-import {unwrapStationDTO} from "../dto/stations";
-import {unwrapTemperatureDTO} from "../dto/temperature";
+import { createZodFetcher } from "zod-fetch";
+import { z, ZodTypeAny } from "zod";
+import { zodSchema } from "./shared/zod-schema";
+import { R2, S3Service } from "@ouroboros/s3-client";
+import { FeederDetails, inputSchema } from "./workflow/input";
+import { ZTemperatureType } from "@ouroboros/weather-schema";
+import { unwrapStationDTO } from "../dto/stations";
+import { unwrapTemperatureDTO } from "../dto/temperature";
 import {
   weatherCoreServiceBatchUpsertStations,
-  weatherCoreServiceBatchUpsertTemperatureReadings
+  weatherCoreServiceBatchUpsertTemperatureReadings,
 } from "../weathercore/mutations/temperature-service";
-import {chunker} from "./utils/chunker";
+import { chunker } from "./utils/chunker";
+import { availableTopics } from "./shared/topics";
+import { createMutations } from "./activities/mutations";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -27,7 +29,7 @@ export async function fetchData<T extends ZodTypeAny>(
   endpoint: string,
   topic: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _zSchema: T
+  _zSchema: T,
 ): Promise<z.infer<T> | undefined> {
   const zodFetcher = createZodFetcher();
   const schema = zodSchema.schemer(topic) as unknown as z.infer<T>;
@@ -38,10 +40,10 @@ export async function fetchData<T extends ZodTypeAny>(
   }
 
   try {
-    console.log(`Fetching from the endpoint: ${endpoint}`)
+    console.log(`Fetching from the endpoint: ${endpoint}`);
     return zodFetcher(schema, endpoint);
   } catch (error) {
-    throw new Error(error as string)
+    throw new Error(error as string);
   }
 }
 
@@ -51,41 +53,46 @@ export async function fetchData<T extends ZodTypeAny>(
  * @param date
  * @param topic
  */
-export async function uploadR2(input: unknown, date: string, topic: string): Promise<string>{
+export async function uploadR2(
+  input: unknown,
+  date: string,
+  topic: string,
+): Promise<string> {
   const buf = Buffer.from(JSON.stringify(input));
   const fileKey = `${date}-${topic}.json`;
-  const response = await R2.send(new S3Service.PutObjectCommand({
-    Bucket: `${process.env.R2_BUCKET_NAME}`,
-    Body: buf,
-    Key: fileKey,
-    ContentType: "application/json"
-  }));
+  const response = await R2.send(
+    new S3Service.PutObjectCommand({
+      Bucket: `${process.env.R2_BUCKET_NAME}`,
+      Body: buf,
+      Key: fileKey,
+      ContentType: "application/json",
+    }),
+  );
   console.log(`R2 responded with code: ${response.$metadata.httpStatusCode}`);
   return fileKey;
 }
 
-export async function temperatureMutation(topic: FeederDetails["topic"], response: ZTemperatureType, fileName: string) {
-  // Un-bundle the DTOs.
-  const stations = response.metadata.stations.map(station => unwrapStationDTO(station))
-  const temperature = response.items.flatMap(temperature => unwrapTemperatureDTO(temperature, fileName))
-  const chunked = await chunker(temperature, 100)
-
+export async function runMutation<TObj>(
+  fileName: string,
+  topic: FeederDetails["topic"],
+  response: TObj,
+) {
+  // Instantiate a singleton object and inject filename.
+  const mutations = createMutations(fileName);
   try {
-    await weatherCoreServiceBatchUpsertStations(stations)
+    switch (topic) {
+      case "humidity":
+        return;
+      case "rainfall":
+        return;
+      case "temperature":
+        return await mutations.temperatureMutation(
+          response as ZTemperatureType,
+        );
+      case "uv":
+        return;
+    }
   } catch (error) {
-    throw new Error(error as string)
+    throw new Error(error as string);
   }
-
-  try {
-    const promises = chunked.map(async (chunk, index) => {
-      return new Promise((resolve) => {
-        console.log(`Upserting for the chunk of ${index}`)
-        resolve(weatherCoreServiceBatchUpsertTemperatureReadings(chunk))
-      });
-    })
-    await Promise.all(promises)
-  } catch (error) {
-    throw new Error(error as string)
-  }
-  return fileName
 }
