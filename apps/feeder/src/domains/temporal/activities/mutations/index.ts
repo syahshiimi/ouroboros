@@ -1,4 +1,3 @@
-import { FeederDetails } from "../../workflow/input";
 import { ZTemperatureType } from "@ouroboros/weather-schema";
 import { unwrapStationDTO } from "../../../dto/stations";
 import { unwrapTemperatureDTO } from "../../../dto/temperature";
@@ -10,7 +9,6 @@ import {
 
 export const createMutations = (fileName: string) => ({
   async temperatureMutation(response: ZTemperatureType) {
-    // Un-bundle the DTOs.
     const stations = response.metadata.stations.map((station) =>
       unwrapStationDTO(station),
     );
