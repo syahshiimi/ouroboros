@@ -74,7 +74,7 @@ export const sampleRainfall: Rainfall[] = rainfall.items
   .flatMap((item) =>
     item.readings.map((reading) => ({
       station_id: reading.station_id,
-      timestamp: new Date(item.timestamp),
+      timestamp: item.timestamp,
       file_name: "sampleRainfall.json",
       rainfall_value: reading.value.toString(),
     })),

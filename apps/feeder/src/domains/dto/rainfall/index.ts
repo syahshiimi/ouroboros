@@ -20,7 +20,7 @@ export const unwrapRainfallDTO = (
 ): Rainfall[] => {
   return dto.readings.map((reading) => ({
     station_id: reading.station_id,
-    timestamp: new Date(dto.timestamp),
+    timestamp: dto.timestamp,
     rainfall_value: reading.value.toString(),
     file_name: fileName,
   }));

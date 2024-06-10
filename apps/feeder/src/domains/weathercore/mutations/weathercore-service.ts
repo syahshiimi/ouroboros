@@ -40,7 +40,7 @@ export async function weatherCoreServiceBatchUpsertHumidityReadings(
 export async function weatherCoreServiceBatchUpsertRainfallReadings(
   variables: Rainfall[],
 ) {
-  console.log(`Running the batch upsert for humidity readings...`);
+  console.log(`Running the batch upsert for rainfall readings...`);
   return await requestClient(BatchUpsertRainfallReadingsDocument, {
     rainfallReadings: [...variables],
   });
