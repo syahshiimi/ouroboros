@@ -12,45 +12,35 @@ import {
   Uv,
 } from "@ouroboros/weathercore-representations";
 
-export async function weatherCoreServiceBatchUpsertStations(
-  variables: Stations[],
-) {
-  console.log("Running the batch upsert for stations...");
-  return await requestClient(BatchUpsertStationsDocument, {
-    stations: [...variables],
-  });
-}
-
-export async function weatherCoreServiceBatchUpsertTemperatureReadings(
-  variables: Temperature[],
-) {
-  console.log(`Running the batch upsert for temperature readings...`);
-  return await requestClient(BatchUpsertTemperatureReadingsDocument, {
-    temperatureReadings: [...variables],
-  });
-}
-
-export async function weatherCoreServiceBatchUpsertHumidityReadings(
-  variables: Humidity[],
-) {
-  console.log(`Running the batch upsert for humidity readings...`);
-  return await requestClient(BatchUpsertHumidityReadingsDocument, {
-    humidityReadings: [...variables],
-  });
-}
-
-export async function weatherCoreServiceBatchUpsertRainfallReadings(
-  variables: Rainfall[],
-) {
-  console.log(`Running the batch upsert for rainfall readings...`);
-  return await requestClient(BatchUpsertRainfallReadingsDocument, {
-    rainfallReadings: [...variables],
-  });
-}
-
-export async function weatherCoreServiceBatchUpsertUvReadings(variables: Uv[]) {
-  console.log(`Running the batch upsert for uv readings...`);
-  return await requestClient(BatchUpsertUvReadingsDocument, {
-    uvReadings: [...variables],
-  });
-}
+export const weatherCoreService = (logger: () => void) => {
+  logger();
+  return {
+    async weatherCoreServiceBatchUpsertStations(variables: Stations[]) {
+      return await requestClient(BatchUpsertStationsDocument, {
+        stations: [...variables],
+      });
+    },
+    async weatherCoreServiceBatchUpsertTemperatureReadings(
+      variables: Temperature[],
+    ) {
+      return await requestClient(BatchUpsertTemperatureReadingsDocument, {
+        temperatureReadings: [...variables],
+      });
+    },
+    async weatherCoreServiceBatchUpsertHumidityReadings(variables: Humidity[]) {
+      return await requestClient(BatchUpsertHumidityReadingsDocument, {
+        humidityReadings: [...variables],
+      });
+    },
+    async weatherCoreServiceBatchUpsertRainfallReadings(variables: Rainfall[]) {
+      return await requestClient(BatchUpsertRainfallReadingsDocument, {
+        rainfallReadings: [...variables],
+      });
+    },
+    async weatherCoreServiceBatchUpsertUvReadings(variables: Uv[]) {
+      return await requestClient(BatchUpsertUvReadingsDocument, {
+        uvReadings: [...variables],
+      });
+    },
+  };
+};

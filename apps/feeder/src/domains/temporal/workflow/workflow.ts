@@ -35,14 +35,18 @@ export async function feederFlow(input: FeederDetails) {
 
     // Upload the JSON to R2.
     try {
+      console.log(`Uploading the JSON for the topic of ${input.topic}...`);
       fileName = await uploadR2(response, input.date, input.topic);
+      console.log(`Uploading the JSON for the topic of ${input.topic} done.`);
     } catch (error) {
       throw new ApplicationFailure(error as string);
     }
 
     // Map the JSON DTO to objects and run mutations.
     try {
+      console.log(`Starting batch upserts for the topic of ${input.topic}...`);
       await runMutation(fileName, input.topic, response);
+      console.log(`Batch upserts for the topic of ${input.topic} done.`);
     } catch (error) {
       throw new Error(error as string);
     }
