@@ -23,7 +23,9 @@ export const sampleFetchJob: FetchJobs = {
 export const sampleUv: UV[] = uv.items.flatMap((item) =>
   item.index.map((uv) => ({
     uv_index: uv.value,
-    timestamp: new Date(uv.timestamp),
+    timestamp: uv.timestamp,
+    updated_timestamp: item.update_timestamp,
+    file_name: "2024-01-21-uv.json",
   })),
 );
 

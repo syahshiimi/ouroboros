@@ -50,6 +50,13 @@
       "when": 1718026972683,
       "tag": "0006_loud_toad_men",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1718030002883,
+      "tag": "0007_wooden_wendigo",
+      "breakpoints": true
     }
   ]
 }

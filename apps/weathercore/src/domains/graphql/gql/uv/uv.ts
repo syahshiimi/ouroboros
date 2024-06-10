@@ -10,6 +10,7 @@ const UvInput = builder.inputType("UvInput", {
     uv_index: t.int({ required: true }),
     timestamp: t.string(),
     updated_timestamp: t.string(),
+    file_name: t.string({ required: true }),
   }),
 });
 

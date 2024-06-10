@@ -15,6 +15,7 @@ export const uv = pgTable(
     timestamp: varchar("timestamp"),
     update_timestamp: varchar("updated_timestamp"),
     date_created: timestamp("date_created").defaultNow(),
+    file_name: varchar("file_name", { length: 256 }),
   },
   (table) => {
     return {
