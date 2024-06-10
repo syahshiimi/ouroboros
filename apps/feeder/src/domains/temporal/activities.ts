@@ -78,6 +78,10 @@ export async function runMutation<TObj>(
       case "rainfall":
         return;
       case "temperature":
+        // TODO: We might want to abstract out the stations object in the DTO and
+        // do the mutation here instead. THis means temperature mutation no longer needs to
+        // do the mapping and insertion, being single responsible in nature. This also ensures that
+        // for each incoming data topic, the stations will be added first.
         return await mutations.temperatureMutation(
           response as ZTemperatureType,
         );
