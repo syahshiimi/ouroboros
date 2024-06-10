@@ -1,7 +1,5 @@
 mutation BatchUpsertTemperatureReadings($temperatureReadings: [TemperatureInput!]!) {
-    upsertTemperatureReadings(
-        input: $temperatureReadings
-    )
+    upsertTemperatureReadings(input: $temperatureReadings)
     {
         station_id
         id
