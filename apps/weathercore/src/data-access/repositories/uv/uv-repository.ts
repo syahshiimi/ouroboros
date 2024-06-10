@@ -2,31 +2,26 @@ import { eq } from "drizzle-orm";
 import { uv } from "../../models/db/uv";
 import type { UV } from "../../models/types";
 import { drizzleConnection } from "../connections";
+import type { UvSchema } from "../../models/schema.ts";
 
-const connection = drizzleConnection(uv)
+const connection = drizzleConnection<UvSchema>(uv);
 
 export async function findLatestUvReadingById(
-  id: Exclude<UV["id"], undefined | null>
+  id: Exclude<UV["id"], undefined | null>,
 ): Promise<UV | undefined | null> {
   return await connection.query.schema.findFirst({
-    where: eq(uv.id, id)
+    where: eq(uv.id, id),
   });
-};
+}
 
-export async function upsertUvReading(
-  record: UV[]
-): Promise<UV[]> {
+export async function upsertUvReading(record: UV[]): Promise<UV[]> {
   return await connection.transaction(async (tx) => {
-    return await tx
-      .insert(uv)
-      .values(record)
-      .onConflictDoNothing()
-      .returning();
+    return tx.insert(uv).values(record).onConflictDoNothing().returning();
   });
-};
+}
 
 export async function deleteUvReadingById(
-  id: Exclude<UV["id"], undefined | null>
+  id: Exclude<UV["id"], undefined | null>,
 ) {
   const deletedRow = await connection
     .delete(uv)
@@ -34,10 +29,8 @@ export async function deleteUvReadingById(
     .returning();
 
   return deletedRow.length > 1 ? null : deletedRow[0];
-};
+}
 
 export async function deleteAllUvReadings(): Promise<UV[]> {
   return connection.delete(uv).returning();
-};
-
-
+}
