@@ -7,6 +7,7 @@ import {
   ZHumidityType,
   ZRainfallType,
   ZTemperatureType,
+  ZUvType,
 } from "@ouroboros/weather-schema";
 import { createMutations } from "./activities/mutations";
 
@@ -82,15 +83,11 @@ export async function runMutation<TObj>(
       case "rainfall":
         return await mutations.rainfallMutation(response as ZRainfallType);
       case "temperature":
-        // TODO: We might want to abstract out the stations object in the DTO and
-        // do the mutation here instead. THis means temperature mutation no longer needs to
-        // do the mapping and insertion, being single responsible in nature. This also ensures that
-        // for each incoming data topic, the stations will be added first.
         return await mutations.temperatureMutation(
           response as ZTemperatureType,
         );
       case "uv":
-        return;
+        return await mutations.UvMutation(response as ZUvType);
     }
   } catch (error) {
     throw new Error(error as string);

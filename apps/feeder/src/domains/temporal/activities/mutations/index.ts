@@ -2,6 +2,7 @@ import {
   ZHumidityType,
   ZRainfallType,
   ZTemperatureType,
+  ZUvType,
 } from "@ouroboros/weather-schema";
 import { unwrapStationDTO } from "../../../dto/stations";
 import { unwrapTemperatureDTO } from "../../../dto/temperature";
@@ -11,9 +12,11 @@ import {
   weatherCoreServiceBatchUpsertRainfallReadings,
   weatherCoreServiceBatchUpsertStations,
   weatherCoreServiceBatchUpsertTemperatureReadings,
+  weatherCoreServiceBatchUpsertUvReadings,
 } from "../../../weathercore/mutations/weathercore-service";
 import { unwrapHumidityDTO } from "../../../dto/humidity";
 import { unwrapRainfallDTO } from "../../../dto/rainfall";
+import { unwrapUvDTO } from "../../../dto/uv/uv.dto";
 
 export const createMutations = (fileName: string) => ({
   /**
@@ -21,6 +24,10 @@ export const createMutations = (fileName: string) => ({
    * @param response
    */
   async temperatureMutation(response: ZTemperatureType) {
+    // TODO: We might want to abstract out the stations object in the DTO and
+    // do the mutation here instead. THis means temperature mutation no longer needs to
+    // do the mapping and insertion, being single responsible in nature. This also ensures that
+    // for each incoming data topic, the stations will be added first.
     const stations = response.metadata.stations.map((station) =>
       unwrapStationDTO(station),
     );
@@ -100,6 +107,28 @@ export const createMutations = (fileName: string) => ({
         return new Promise((resolve) => {
           console.log(`Upserting for the chunk of ${index}`);
           resolve(weatherCoreServiceBatchUpsertRainfallReadings(chunk));
+        });
+      });
+      await Promise.all(promises);
+    } catch (error) {
+      throw new Error(error as string);
+    }
+    return fileName;
+  },
+  async UvMutation(response: ZUvType) {
+    const lastUvElement = response.items.at(-1);
+    if (!lastUvElement) {
+      throw new Error("Empty array");
+    }
+
+    const result = unwrapUvDTO(lastUvElement, fileName);
+    const chunked = await chunker(result, 100);
+
+    try {
+      const promises = chunked.map(async (chunk, index) => {
+        return new Promise((resolve) => {
+          console.log(`Upserting for the chunk of ${index}`);
+          resolve(weatherCoreServiceBatchUpsertUvReadings(chunk));
         });
       });
       await Promise.all(promises);

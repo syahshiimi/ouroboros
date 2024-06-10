@@ -1,0 +1,7 @@
+mutation BatchUpsertUvReadings($uvReadings: [UvInput!]!) {
+    upsertUvReadings(input: $uvReadings) {
+        timestamp
+        update_timestamp
+        uv_index
+    }
+}

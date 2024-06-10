@@ -4,10 +4,12 @@ import {
   BatchUpsertRainfallReadingsDocument,
   BatchUpsertStationsDocument,
   BatchUpsertTemperatureReadingsDocument,
+  BatchUpsertUvReadingsDocument,
   Humidity,
   Rainfall,
   Stations,
   Temperature,
+  Uv,
 } from "@ouroboros/weathercore-representations";
 
 export async function weatherCoreServiceBatchUpsertStations(
@@ -43,5 +45,12 @@ export async function weatherCoreServiceBatchUpsertRainfallReadings(
   console.log(`Running the batch upsert for rainfall readings...`);
   return await requestClient(BatchUpsertRainfallReadingsDocument, {
     rainfallReadings: [...variables],
+  });
+}
+
+export async function weatherCoreServiceBatchUpsertUvReadings(variables: Uv[]) {
+  console.log(`Running the batch upsert for uv readings...`);
+  return await requestClient(BatchUpsertUvReadingsDocument, {
+    uvReadings: [...variables],
   });
 }
