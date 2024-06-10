@@ -9,9 +9,9 @@ import { HumidityType } from "../../types";
 const HumidityInput = builder.inputType("HumidityInput", {
   fields: (t) => ({
     station_id: t.string({ required: true }),
-    humidity_value: t.string(),
-    file_name: t.string(),
-    timestamp: t.string(),
+    humidity_value: t.string({ required: true }),
+    file_name: t.string({ required: true }),
+    timestamp: t.string({ required: true }),
   }),
 });
 

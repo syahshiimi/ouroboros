@@ -1,15 +1,20 @@
-import { deleteAllStations, findStationByStationId, getAllStations, upsertStationDetails } from "../../../../data-access/repositories/stations/stations-repository";
+import {
+  deleteAllStations,
+  findStationByStationId,
+  getAllStations,
+  upsertStationDetails,
+} from "../../../../data-access/repositories/stations/stations-repository";
 import { builder } from "../../builder";
 import { StationsType } from "../../types";
 
-const StationsInput = builder.inputType('StationsInput', {
+const StationsInput = builder.inputType("StationsInput", {
   fields: (t) => ({
     station_id: t.string({ required: true }),
-    location_name: t.string(),
-    longitude: t.float(),
-    latitude: t.float()
-  })
-})
+    location_name: t.string({ required: true }),
+    longitude: t.float({ required: true }),
+    latitude: t.float({ required: true }),
+  }),
+});
 
 StationsType.implement({
   fields: (t) => ({
@@ -18,8 +23,8 @@ StationsType.implement({
     location_name: t.exposeString("location_name"),
     longitude: t.exposeFloat("longitude"),
     latitude: t.exposeFloat("latitude"),
-  })
-})
+  }),
+});
 
 builder.queryField("findStationsByStationId", (t) =>
   t.field({
@@ -27,13 +32,13 @@ builder.queryField("findStationsByStationId", (t) =>
     description: "Finds a station by station_id.",
     nullable: true,
     args: {
-      station_id: t.arg.string({ required: true })
+      station_id: t.arg.string({ required: true }),
     },
     resolve: (_, args) => {
-      return findStationByStationId(args.station_id)
-    }
-  })
-)
+      return findStationByStationId(args.station_id);
+    },
+  }),
+);
 
 builder.queryField("getAllStations", (t) =>
   t.field({
@@ -41,22 +46,22 @@ builder.queryField("getAllStations", (t) =>
     description: "Finds all stations.",
     resolve: () => {
       return getAllStations();
-    }
-  })
-)
+    },
+  }),
+);
 
 builder.mutationField("upsertStation", (t) =>
   t.field({
     type: [StationsType],
     description: "Inserts a station record into the stations table.",
     args: {
-      input: t.arg({ type: [StationsInput], required: true })
+      input: t.arg({ type: [StationsInput], required: true }),
     },
     resolve: (_, args) => {
-      return upsertStationDetails([...args.input])
-    }
-  })
-)
+      return upsertStationDetails([...args.input]);
+    },
+  }),
+);
 
 builder.mutationField("deleteAllStations", (t) =>
   t.field({
@@ -64,7 +69,6 @@ builder.mutationField("deleteAllStations", (t) =>
     description: "Deletes all station record.",
     resolve: () => {
       return deleteAllStations();
-    }
-  })
-)
-
+    },
+  }),
+);

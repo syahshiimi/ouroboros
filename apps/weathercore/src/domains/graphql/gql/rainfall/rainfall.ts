@@ -11,9 +11,9 @@ import { RainfallType } from "../../types";
 const RainfallInput = builder.inputType("RainfallInput", {
   fields: (t) => ({
     station_id: t.string({ required: true }),
-    rainfall_value: t.string(),
-    file_name: t.string(),
-    timestamp: t.string(),
+    rainfall_value: t.string({ required: true }),
+    file_name: t.string({ required: true }),
+    timestamp: t.string({ required: true }),
   }),
 });
 
