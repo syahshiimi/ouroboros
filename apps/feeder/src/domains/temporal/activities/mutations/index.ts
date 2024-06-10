@@ -12,7 +12,12 @@ import { unwrapRainfallDTO } from "../../../dto/rainfall/rainfall.dto";
 import { unwrapUvDTO } from "../../../dto/uv/uv.dto";
 import { weatherCoreService } from "../../../weathercore/mutations/weathercore-service";
 
-export const createMutations = (fileName: string, topic: string) => {
+interface MutationOpts {
+  fileName: string;
+  topic: string;
+}
+
+export const createMutations = ({ fileName, topic }: MutationOpts) => {
   const logger = () => console.log(`Running the batch upsert for ${topic}...`);
   const promiseLogger = (length: number) =>
     console.log(`Batch upsert for chunks of length: ${length} done.`);
