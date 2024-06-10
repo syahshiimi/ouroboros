@@ -3,7 +3,7 @@ import { z, ZodTypeAny } from "zod";
 import { zodSchema } from "./shared/zod-schema";
 import { R2, S3Service } from "@ouroboros/s3-client";
 import { FeederDetails } from "./workflow/input";
-import { ZTemperatureType } from "@ouroboros/weather-schema";
+import { ZHumidityType, ZTemperatureType } from "@ouroboros/weather-schema";
 import { createMutations } from "./activities/mutations";
 
 /**
@@ -74,7 +74,7 @@ export async function runMutation<TObj>(
   try {
     switch (topic) {
       case "humidity":
-        return;
+        return await mutations.humidityMutation(response as ZHumidityType);
       case "rainfall":
         return;
       case "temperature":

@@ -31,6 +31,6 @@ export async function weatherCoreServiceBatchUpsertHumidityReadings(
 ) {
   console.log(`Running the batch upsert for humidity readings...`);
   return await requestClient(BatchUpsertHumidityReadingsDocument, {
-    temperatureReadings: [...variables],
+    humidityReadings: [...variables],
   });
 }
