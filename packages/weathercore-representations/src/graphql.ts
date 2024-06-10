@@ -225,13 +225,6 @@ export type TemperatureInput = {
   timestamp?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type BatchUpsertRainfallReadingsMutationVariables = Exact<{
-  rainfallReadings: Array<RainfallInput> | RainfallInput;
-}>;
-
-
-export type BatchUpsertRainfallReadingsMutation = { __typename?: 'Mutation', upsertRainfallReadings: Array<{ __typename?: 'Rainfall', station_id?: string | null, id?: string | null }> };
-
 export type BatchUpsertStationsMutationVariables = Exact<{
   stations: Array<StationsInput> | StationsInput;
 }>;
@@ -246,6 +239,13 @@ export type BatchUpsertHumidityReadingsMutationVariables = Exact<{
 
 export type BatchUpsertHumidityReadingsMutation = { __typename?: 'Mutation', upsertHumidityReadings: Array<{ __typename?: 'Humidity', station_id?: string | null }> };
 
+export type BatchUpsertRainfallReadingsMutationVariables = Exact<{
+  rainfallReadings: Array<RainfallInput> | RainfallInput;
+}>;
+
+
+export type BatchUpsertRainfallReadingsMutation = { __typename?: 'Mutation', upsertRainfallReadings: Array<{ __typename?: 'Rainfall', station_id?: string | null, id?: string | null }> };
+
 export type BatchUpsertTemperatureReadingsMutationVariables = Exact<{
   temperatureReadings: Array<TemperatureInput> | TemperatureInput;
 }>;
@@ -259,8 +259,8 @@ export type GetStationsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetStationsQuery = { __typename?: 'Query', getAllStations?: Array<{ __typename?: 'Stations', station_id?: string | null }> | null };
 
 
-export const BatchUpsertRainfallReadingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertRainfallReadings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rainfallReadings"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RainfallInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertRainfallReadings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rainfallReadings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertRainfallReadingsMutation, BatchUpsertRainfallReadingsMutationVariables>;
 export const BatchUpsertStationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertStations"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"stations"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"StationsInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertStation"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"stations"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}},{"kind":"Field","name":{"kind":"Name","value":"longitude"}},{"kind":"Field","name":{"kind":"Name","value":"latitude"}},{"kind":"Field","name":{"kind":"Name","value":"location_name"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertStationsMutation, BatchUpsertStationsMutationVariables>;
 export const BatchUpsertHumidityReadingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertHumidityReadings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"humidityReadings"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"HumidityInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertHumidityReadings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"humidityReadings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertHumidityReadingsMutation, BatchUpsertHumidityReadingsMutationVariables>;
+export const BatchUpsertRainfallReadingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertRainfallReadings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rainfallReadings"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RainfallInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertRainfallReadings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rainfallReadings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertRainfallReadingsMutation, BatchUpsertRainfallReadingsMutationVariables>;
 export const BatchUpsertTemperatureReadingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertTemperatureReadings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"temperatureReadings"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TemperatureInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertTemperatureReadings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"temperatureReadings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertTemperatureReadingsMutation, BatchUpsertTemperatureReadingsMutationVariables>;
 export const GetStationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllStations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}}]}}]}}]} as unknown as DocumentNode<GetStationsQuery, GetStationsQueryVariables>;
