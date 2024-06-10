@@ -1,9 +1,11 @@
 import { requestClient } from "../../temporal/shared/request";
 import {
   BatchUpsertHumidityReadingsDocument,
+  BatchUpsertRainfallReadingsDocument,
   BatchUpsertStationsDocument,
   BatchUpsertTemperatureReadingsDocument,
   Humidity,
+  Rainfall,
   Stations,
   Temperature,
 } from "@ouroboros/weathercore-representations";
@@ -32,5 +34,14 @@ export async function weatherCoreServiceBatchUpsertHumidityReadings(
   console.log(`Running the batch upsert for humidity readings...`);
   return await requestClient(BatchUpsertHumidityReadingsDocument, {
     humidityReadings: [...variables],
+  });
+}
+
+export async function weatherCoreServiceBatchUpsertRainfallReadings(
+  variables: Rainfall[],
+) {
+  console.log(`Running the batch upsert for humidity readings...`);
+  return await requestClient(BatchUpsertRainfallReadingsDocument, {
+    rainfallReadings: [...variables],
   });
 }

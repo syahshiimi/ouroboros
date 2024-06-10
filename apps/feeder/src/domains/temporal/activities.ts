@@ -3,7 +3,11 @@ import { z, ZodTypeAny } from "zod";
 import { zodSchema } from "./shared/zod-schema";
 import { R2, S3Service } from "@ouroboros/s3-client";
 import { FeederDetails } from "./workflow/input";
-import { ZHumidityType, ZTemperatureType } from "@ouroboros/weather-schema";
+import {
+  ZHumidityType,
+  ZRainfallType,
+  ZTemperatureType,
+} from "@ouroboros/weather-schema";
 import { createMutations } from "./activities/mutations";
 
 /**
@@ -76,7 +80,7 @@ export async function runMutation<TObj>(
       case "humidity":
         return await mutations.humidityMutation(response as ZHumidityType);
       case "rainfall":
-        return;
+        return await mutations.rainfallMutation(response as ZRainfallType);
       case "temperature":
         // TODO: We might want to abstract out the stations object in the DTO and
         // do the mutation here instead. THis means temperature mutation no longer needs to
