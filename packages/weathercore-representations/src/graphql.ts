@@ -44,14 +44,14 @@ export type Humidity = {
   humidity_value?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   station_id?: Maybe<Scalars['String']['output']>;
-  timestamp?: Maybe<Scalars['Date']['output']>;
+  timestamp?: Maybe<Scalars['String']['output']>;
 };
 
 export type HumidityInput = {
-  file_name?: InputMaybe<Scalars['String']['input']>;
-  humidity_value?: InputMaybe<Scalars['String']['input']>;
+  file_name: Scalars['String']['input'];
+  humidity_value: Scalars['String']['input'];
   station_id: Scalars['String']['input'];
-  timestamp: Scalars['Date']['input'];
+  timestamp: Scalars['String']['input'];
 };
 
 export type Mutation = {
@@ -183,14 +183,14 @@ export type Rainfall = {
   id?: Maybe<Scalars['String']['output']>;
   rainfall_value?: Maybe<Scalars['String']['output']>;
   station_id?: Maybe<Scalars['String']['output']>;
-  timestamp?: Maybe<Scalars['Date']['output']>;
+  timestamp?: Maybe<Scalars['String']['output']>;
 };
 
 export type RainfallInput = {
-  file_name?: InputMaybe<Scalars['String']['input']>;
-  rainfall_value?: InputMaybe<Scalars['String']['input']>;
+  file_name: Scalars['String']['input'];
+  rainfall_value: Scalars['String']['input'];
   station_id: Scalars['String']['input'];
-  timestamp: Scalars['Date']['input'];
+  timestamp: Scalars['String']['input'];
 };
 
 export type Stations = {
@@ -203,9 +203,9 @@ export type Stations = {
 };
 
 export type StationsInput = {
-  latitude?: InputMaybe<Scalars['Float']['input']>;
-  location_name?: InputMaybe<Scalars['String']['input']>;
-  longitude?: InputMaybe<Scalars['Float']['input']>;
+  latitude: Scalars['Float']['input'];
+  location_name: Scalars['String']['input'];
+  longitude: Scalars['Float']['input'];
   station_id: Scalars['String']['input'];
 };
 
@@ -219,10 +219,10 @@ export type Temperature = {
 };
 
 export type TemperatureInput = {
-  file_name?: InputMaybe<Scalars['String']['input']>;
-  reading?: InputMaybe<Scalars['String']['input']>;
+  file_name: Scalars['String']['input'];
+  reading: Scalars['String']['input'];
   station_id: Scalars['String']['input'];
-  timestamp?: InputMaybe<Scalars['String']['input']>;
+  timestamp: Scalars['String']['input'];
 };
 
 export type BatchUpsertStationsMutationVariables = Exact<{

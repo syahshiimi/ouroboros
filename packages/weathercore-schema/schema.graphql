@@ -27,14 +27,14 @@ type Humidity {
   humidity_value: String
   id: String
   station_id: String
-  timestamp: Date
+  timestamp: String
 }
 
 input HumidityInput {
-  file_name: String
-  humidity_value: String
+  file_name: String!
+  humidity_value: String!
   station_id: String!
-  timestamp: Date!
+  timestamp: String!
 }
 
 type Mutation {
@@ -106,14 +106,14 @@ type Rainfall {
   id: String
   rainfall_value: String
   station_id: String
-  timestamp: Date
+  timestamp: String
 }
 
 input RainfallInput {
-  file_name: String
-  rainfall_value: String
+  file_name: String!
+  rainfall_value: String!
   station_id: String!
-  timestamp: Date!
+  timestamp: String!
 }
 
 type Stations {
@@ -125,9 +125,9 @@ type Stations {
 }
 
 input StationsInput {
-  latitude: Float
-  location_name: String
-  longitude: Float
+  latitude: Float!
+  location_name: String!
+  longitude: Float!
   station_id: String!
 }
 
@@ -140,8 +140,8 @@ type Temperature {
 }
 
 input TemperatureInput {
-  file_name: String
-  reading: String
+  file_name: String!
+  reading: String!
   station_id: String!
-  timestamp: String
+  timestamp: String!
 }
