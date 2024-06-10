@@ -4,8 +4,6 @@ import {
   ZTemperatureType,
   ZUvType,
 } from "@ouroboros/weather-schema";
-import { unwrapStationDTO } from "../../../dto/stations";
-import { unwrapTemperatureDTO } from "../../../dto/temperature";
 import { chunker } from "../../utils/chunker";
 import {
   weatherCoreServiceBatchUpsertHumidityReadings,
@@ -14,8 +12,10 @@ import {
   weatherCoreServiceBatchUpsertTemperatureReadings,
   weatherCoreServiceBatchUpsertUvReadings,
 } from "../../../weathercore/mutations/weathercore-service";
-import { unwrapHumidityDTO } from "../../../dto/humidity";
-import { unwrapRainfallDTO } from "../../../dto/rainfall";
+import { unwrapStationDTO } from "../../../dto/stations/station.dto";
+import { unwrapTemperatureDTO } from "../../../dto/temperature/temperature.dto";
+import { unwrapHumidityDTO } from "../../../dto/humidity/humidity.dto";
+import { unwrapRainfallDTO } from "../../../dto/rainfall/rainfall.dto";
 import { unwrapUvDTO } from "../../../dto/uv/uv.dto";
 
 export const createMutations = (fileName: string) => ({
