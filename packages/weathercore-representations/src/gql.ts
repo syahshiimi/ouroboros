@@ -17,6 +17,7 @@ const documents = {
     "mutation BatchUpsertHumidityReadings($humidityReadings: [HumidityInput!]!) {\n  upsertHumidityReadings(input: $humidityReadings) {\n    station_id\n  }\n}": types.BatchUpsertHumidityReadingsDocument,
     "mutation BatchUpsertRainfallReadings($rainfallReadings: [RainfallInput!]!) {\n  upsertRainfallReadings(input: $rainfallReadings) {\n    station_id\n    id\n  }\n}": types.BatchUpsertRainfallReadingsDocument,
     "mutation BatchUpsertTemperatureReadings($temperatureReadings: [TemperatureInput!]!) {\n  upsertTemperatureReadings(input: $temperatureReadings) {\n    station_id\n    id\n  }\n}": types.BatchUpsertTemperatureReadingsDocument,
+    "mutation BatchUpsertUvReadings($uvReadings: [UvInput!]!) {\n  upsertUvReadings(input: $uvReadings) {\n    timestamp\n    update_timestamp\n    uv_index\n  }\n}": types.BatchUpsertUvReadingsDocument,
     "query GetStations {\n  getAllStations {\n    station_id\n  }\n}": types.GetStationsDocument,
 };
 
@@ -50,6 +51,10 @@ export function graphql(source: "mutation BatchUpsertRainfallReadings($rainfallR
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation BatchUpsertTemperatureReadings($temperatureReadings: [TemperatureInput!]!) {\n  upsertTemperatureReadings(input: $temperatureReadings) {\n    station_id\n    id\n  }\n}"): (typeof documents)["mutation BatchUpsertTemperatureReadings($temperatureReadings: [TemperatureInput!]!) {\n  upsertTemperatureReadings(input: $temperatureReadings) {\n    station_id\n    id\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation BatchUpsertUvReadings($uvReadings: [UvInput!]!) {\n  upsertUvReadings(input: $uvReadings) {\n    timestamp\n    update_timestamp\n    uv_index\n  }\n}"): (typeof documents)["mutation BatchUpsertUvReadings($uvReadings: [UvInput!]!) {\n  upsertUvReadings(input: $uvReadings) {\n    timestamp\n    update_timestamp\n    uv_index\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

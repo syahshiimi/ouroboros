@@ -78,6 +78,8 @@ export type Mutation = {
   upsertStation?: Maybe<Array<Stations>>;
   /** Inserts the temperature readings into the temperature table. */
   upsertTemperatureReadings?: Maybe<Array<Temperature>>;
+  /** Batch upserts UV records into the UV table */
+  upsertUvReadings?: Maybe<Array<Uv>>;
 };
 
 
@@ -115,6 +117,11 @@ export type MutationUpsertTemperatureReadingsArgs = {
   input: Array<TemperatureInput>;
 };
 
+
+export type MutationUpsertUvReadingsArgs = {
+  input: Array<UvInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
   /** Fetches the job tasks by the topic id */
@@ -127,6 +134,8 @@ export type Query = {
   findLatestRainfallByStationId?: Maybe<Rainfall>;
   /** Finds the latest temperature reading by the station_id. */
   findLatestTemperatureReadingByStationid?: Maybe<Temperature>;
+  /** Finds a latest UV readinbg by the ID */
+  findLatestUVReadingById?: Maybe<Uv>;
   /** Finds the rainfall readings by station_id. */
   findRainfallByStationId?: Maybe<Array<Rainfall>>;
   /** Finds a station by station_id. */
@@ -160,6 +169,11 @@ export type QueryFindLatestRainfallByStationIdArgs = {
 
 export type QueryFindLatestTemperatureReadingByStationidArgs = {
   station_id: Scalars['String']['input'];
+};
+
+
+export type QueryFindLatestUvReadingByIdArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -225,6 +239,22 @@ export type TemperatureInput = {
   timestamp: Scalars['String']['input'];
 };
 
+export type Uv = {
+  __typename?: 'UV';
+  file_name?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['String']['output']>;
+  update_timestamp?: Maybe<Scalars['String']['output']>;
+  uv_index?: Maybe<Scalars['Int']['output']>;
+};
+
+export type UvInput = {
+  file_name: Scalars['String']['input'];
+  timestamp?: InputMaybe<Scalars['String']['input']>;
+  update_timestamp?: InputMaybe<Scalars['String']['input']>;
+  uv_index: Scalars['Int']['input'];
+};
+
 export type BatchUpsertStationsMutationVariables = Exact<{
   stations: Array<StationsInput> | StationsInput;
 }>;
@@ -253,6 +283,13 @@ export type BatchUpsertTemperatureReadingsMutationVariables = Exact<{
 
 export type BatchUpsertTemperatureReadingsMutation = { __typename?: 'Mutation', upsertTemperatureReadings?: Array<{ __typename?: 'Temperature', station_id?: string | null, id?: string | null }> | null };
 
+export type BatchUpsertUvReadingsMutationVariables = Exact<{
+  uvReadings: Array<UvInput> | UvInput;
+}>;
+
+
+export type BatchUpsertUvReadingsMutation = { __typename?: 'Mutation', upsertUvReadings?: Array<{ __typename?: 'UV', timestamp?: string | null, update_timestamp?: string | null, uv_index?: number | null }> | null };
+
 export type GetStationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -263,4 +300,5 @@ export const BatchUpsertStationsDocument = {"kind":"Document","definitions":[{"k
 export const BatchUpsertHumidityReadingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertHumidityReadings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"humidityReadings"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"HumidityInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertHumidityReadings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"humidityReadings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertHumidityReadingsMutation, BatchUpsertHumidityReadingsMutationVariables>;
 export const BatchUpsertRainfallReadingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertRainfallReadings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rainfallReadings"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RainfallInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertRainfallReadings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rainfallReadings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertRainfallReadingsMutation, BatchUpsertRainfallReadingsMutationVariables>;
 export const BatchUpsertTemperatureReadingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertTemperatureReadings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"temperatureReadings"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TemperatureInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertTemperatureReadings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"temperatureReadings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertTemperatureReadingsMutation, BatchUpsertTemperatureReadingsMutationVariables>;
+export const BatchUpsertUvReadingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"BatchUpsertUvReadings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uvReadings"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UvInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"upsertUvReadings"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uvReadings"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"update_timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"uv_index"}}]}}]}}]} as unknown as DocumentNode<BatchUpsertUvReadingsMutation, BatchUpsertUvReadingsMutationVariables>;
 export const GetStationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllStations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"station_id"}}]}}]}}]} as unknown as DocumentNode<GetStationsQuery, GetStationsQueryVariables>;

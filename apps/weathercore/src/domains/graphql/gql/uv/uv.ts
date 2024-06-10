@@ -1,6 +1,7 @@
 import { builder } from "../../builder.ts";
 import { UvType } from "../../types.ts";
 import {
+  deleteAllUvReadings,
   findLatestUvReadingById,
   upsertUvReading,
 } from "../../../../data-access/repositories/uv/uv-repository.ts";
@@ -9,7 +10,7 @@ const UvInput = builder.inputType("UvInput", {
   fields: (t) => ({
     uv_index: t.int({ required: true }),
     timestamp: t.string(),
-    updated_timestamp: t.string(),
+    update_timestamp: t.string(),
     file_name: t.string({ required: true }),
   }),
 });
@@ -17,9 +18,10 @@ const UvInput = builder.inputType("UvInput", {
 UvType.implement({
   fields: (t) => ({
     id: t.exposeString("id"),
-    vu_index: t.exposeInt("uv_index"),
+    uv_index: t.exposeInt("uv_index"),
     timestamp: t.exposeString("timestamp"),
-    updated_timestamp: t.exposeString("update_timestamp"),
+    update_timestamp: t.exposeString("update_timestamp"),
+    file_name: t.exposeString("file_name"),
   }),
 });
 
@@ -46,6 +48,16 @@ builder.mutationField("upsertUvReadings", (t) =>
     },
     resolve: (_, args) => {
       return upsertUvReading([...args.input]);
+    },
+  }),
+);
+
+builder.mutationField("deleteAllUvReadings", (t) =>
+  t.field({
+    type: [UvType],
+    description: "Deletes all UV readings.",
+    resolve: async () => {
+      return await deleteAllUvReadings();
     },
   }),
 );

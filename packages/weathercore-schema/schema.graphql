@@ -70,6 +70,9 @@ type Mutation {
 
   """Inserts the temperature readings into the temperature table."""
   upsertTemperatureReadings(input: [TemperatureInput!]!): [Temperature!]
+
+  """Batch upserts UV records into the UV table"""
+  upsertUvReadings(input: [UvInput!]!): [UV!]
 }
 
 type Query {
@@ -87,6 +90,9 @@ type Query {
 
   """Finds the latest temperature reading by the station_id."""
   findLatestTemperatureReadingByStationid(station_id: String!): Temperature
+
+  """Finds a latest UV readinbg by the ID"""
+  findLatestUVReadingById(id: String!): UV
 
   """Finds the rainfall readings by station_id."""
   findRainfallByStationId(station_id: String!): [Rainfall!]
@@ -144,4 +150,19 @@ input TemperatureInput {
   reading: String!
   station_id: String!
   timestamp: String!
+}
+
+type UV {
+  file_name: String
+  id: String
+  timestamp: String
+  update_timestamp: String
+  uv_index: Int
+}
+
+input UvInput {
+  file_name: String!
+  timestamp: String
+  update_timestamp: String
+  uv_index: Int!
 }
