@@ -136,12 +136,12 @@ type Temperature {
   id: String
   reading: String
   station_id: String
-  timestamp: Date
+  timestamp: String
 }
 
 input TemperatureInput {
   file_name: String
   reading: String
   station_id: String!
-  timestamp: Date!
+  timestamp: String
 }
