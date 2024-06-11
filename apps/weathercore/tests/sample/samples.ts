@@ -12,9 +12,9 @@ import rainfall from "./rainfall.json";
 import uv from "./uv.json";
 
 export const sampleFetchJob: FetchJobs = {
-  topic_id: "9b530a5e-48dd-4714-8f93-9e49bc8f8604",
+  topic: "humidity",
   fetch_url: "sample.url.sg",
-  fetch_date: new Date(),
+  data_date: new Date(),
   fetch_job_start_date: new Date(),
   file_name: "sample_file.json",
   workflow_id: "41f196bd-31f2-4935-a863-a72e74107807",

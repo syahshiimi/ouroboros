@@ -3,30 +3,30 @@ import { fetchJobs } from "../../models/db/fetch-jobs";
 import type { FetchJobs } from "../../models/types";
 import { drizzleConnection } from "../connections";
 
-const connection = drizzleConnection(fetchJobs)
+const connection = drizzleConnection(fetchJobs);
 
 export async function findFetchJobsTaskById(
-  id: Exclude<FetchJobs["id"], undefined | null>
+  id: Exclude<FetchJobs["id"], undefined | null>,
 ) {
   return await connection.query.schema.findFirst({
-    where: eq(fetchJobs.id, id)
-  })
+    where: eq(fetchJobs.id, id),
+  });
 }
 
-export async function findFetchJobsByTopicId(
-  fetch_job_type_id: Exclude<FetchJobs["topic_id"], undefined | null>
+export async function findFetchJobsTasksByTopic(
+  fetch_job_type_id: Exclude<FetchJobs["topic"], undefined | null>,
 ) {
   return await connection.query.schema.findFirst({
-    where: eq(fetchJobs.topic_id, fetch_job_type_id)
-  })
+    where: eq(fetchJobs.topic, fetch_job_type_id),
+  });
 }
 
 export async function upsertFetchJobsTask(
-  fetch_task: FetchJobs[]
+  fetch_task: FetchJobs[],
 ): Promise<FetchJobs[]> {
-  return await connection.insert(fetchJobs).values(fetch_task).returning()
+  return connection.insert(fetchJobs).values(fetch_task).returning();
 }
 
 export async function deleteFetchJobsTask(): Promise<FetchJobs[]> {
-  return await connection.delete(fetchJobs)
+  return connection.delete(fetchJobs);
 }

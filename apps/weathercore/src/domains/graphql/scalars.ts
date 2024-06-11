@@ -1,11 +1,20 @@
-export type DateScalar = {
-  Date: {
-    Input: Date;
-    Output: Date
-  }
-}
+import { builder } from "./builder.ts";
+import type { FetchJobs } from "../../data-access/models/types.ts";
+
+builder.scalarType("TableTopic", {
+  serialize: (n) => n,
+});
 
 export type SchemaType = {
-  Scalars: DateScalar;
-  DefaultFieldNullability: true
-}
+  Scalars: {
+    Date: {
+      Input: Date;
+      Output: Date;
+    };
+    TableTopic: {
+      Input: FetchJobs["topic"];
+      Output: FetchJobs["topic"];
+    };
+  };
+  DefaultFieldNullability: true;
+};
