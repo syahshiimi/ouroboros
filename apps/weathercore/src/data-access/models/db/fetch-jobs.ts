@@ -32,6 +32,3 @@ export const fetchJobs = pgTable(
     };
   },
 );
-
-// export const fetchJobsSchema = createSelectSchema(fetchJobs);
-// export type FetchJobs = z.infer<typeof fetchJobsSchema>;

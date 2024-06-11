@@ -13,7 +13,7 @@ afterAll(async () => {
   await deleteFetchJobsTask();
 });
 
-describe("fetch jobs task queue", async () => {
+describe("upsert fetch jobs table", async () => {
   test("should insert fetch jobs task", async () => {
     const addFetchJobs = await upsertFetchJobsTask([sampleFetchJob]);
 
@@ -31,7 +31,7 @@ describe("fetch jobs task queue", async () => {
     }
   });
 
-  test("should find fetch job by fetch job type id", async () => {
+  test("should find fetch job by topic", async () => {
     const addFetchJobs = await upsertFetchJobsTask([sampleFetchJob]);
     expect(addFetchJobs.length).toBe(1);
 
