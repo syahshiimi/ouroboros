@@ -75,7 +75,7 @@ export async function runMutation<TObj>(
   response: TObj,
 ) {
   // Instantiate a singleton object and inject filename.
-  const mutations = createMutations(fileName, topic);
+  const mutations = createMutations({ fileName, topic });
   try {
     switch (topic) {
       case "humidity":
