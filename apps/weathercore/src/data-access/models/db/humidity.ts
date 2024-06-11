@@ -11,7 +11,7 @@ import { stations } from "./station";
 export const humidity = pgTable(
   "humidity",
   {
-    id: uuid("id").defaultRandom(),
+    id: uuid("id").notNull().defaultRandom(),
     station_id: varchar("station_id", { length: 20 }).references(
       () => stations.station_id,
     ),

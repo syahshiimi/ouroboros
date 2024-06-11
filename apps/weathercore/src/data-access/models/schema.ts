@@ -7,12 +7,11 @@ import type { stations } from "./db/station";
 import type { temperature } from "./db/temperature";
 import type { uv } from "./db/uv";
 
-export type AreaForecastSchema = typeof areaForecast
-export type FetchJobsSchema = typeof fetchJobs
-export type HumiditySchema = typeof humidity
-export type RainfallSchema = typeof rainfall
-export type RegionSchema = typeof region
-export type StationSchema = typeof stations
-export type TemperatureSchema = typeof temperature
-export type UvSchema = typeof uv
-
+export type AreaForecastSchema = typeof areaForecast;
+export type FetchJobsSchema = typeof fetchJobs;
+export type HumiditySchema = typeof humidity;
+export type RainfallSchema = typeof rainfall;
+export type RegionSchema = typeof region;
+export type StationSchema = typeof stations;
+export type TemperatureSchema = typeof temperature;
+export type UvSchema = typeof uv;

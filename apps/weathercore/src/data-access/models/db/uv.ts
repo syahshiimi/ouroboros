@@ -10,7 +10,7 @@ import {
 export const uv = pgTable(
   "uv",
   {
-    id: uuid("id").defaultRandom(),
+    id: uuid("id").notNull().defaultRandom(),
     uv_index: integer("uv_index"),
     timestamp: varchar("timestamp"),
     update_timestamp: varchar("updated_timestamp"),
