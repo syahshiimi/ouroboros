@@ -1,1 +1,0 @@
-ALTER TABLE "humidity" ALTER COLUMN "timestamp" SET DATA TYPE varchar;
