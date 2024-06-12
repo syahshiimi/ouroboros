@@ -11,9 +11,9 @@
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:*",
     "@ouroboros/typescript-config": "workspace:*",
-    "prettier": "^3.2.5",
-    "turbo": "latest",
-    "dotenv-cli": "^7.4.2"
+    "dotenv-cli": "^7.4.2",
+    "prettier": "^3.3.2",
+    "turbo": "latest"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
