@@ -4,9 +4,9 @@
   "description": "HonoJs + temporalio application that orchestras the services.",
   "scripts": {
     "build": "tsc --build",
-    "dev": "dotenv -e ../../.env tsx watch src/index.ts",
+    "dev": "dotenv -e .env tsx watch src/index.ts",
     "lint": "eslint .",
-    "start:worker": "dotenv -e ../../.env tsx watch src/domains/temporal/worker.ts",
+    "start:worker": "dotenv -e .env tsx watch src/domains/temporal/worker.ts",
     "test": "vitest"
   },
   "type": "module",

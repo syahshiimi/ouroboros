@@ -28,9 +28,13 @@
         ".env"
       ]
     },
+    "schemagen": {
+      "cache": false,
+      "persistent": true
+    },
     "codegen": {
       "dependsOn": [
-        "^codegen"
+        "^schemagen"
       ],
       "cache": false,
       "persistent": true

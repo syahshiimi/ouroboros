@@ -2,11 +2,12 @@
   "name": "ouroboros",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo run build",
     "dev": "dotenv -- turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "codegen": "turbo codegen"
+    "codegen": "turbo run codegen",
+    "schemagen": "turbo run schemagen"
   },
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:*",

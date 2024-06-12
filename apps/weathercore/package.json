@@ -9,7 +9,7 @@
     "dev": "bun run --watch ./index.ts",
     "lint": "eslint .",
     "test": "bun test",
-    "codegen": "bun run ./src/domains/graphql/generate.ts"
+    "schemagen": "bun run ./src/domains/graphql/generate.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
