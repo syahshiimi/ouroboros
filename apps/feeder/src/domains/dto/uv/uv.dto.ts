@@ -1,4 +1,4 @@
-import { Temperature, Uv } from "@ouroboros/weathercore-representations";
+import { Uv } from "@ouroboros/weathercore-representations";
 
 /**
  * Maps the incoming JSON schema to a data transfer object.
