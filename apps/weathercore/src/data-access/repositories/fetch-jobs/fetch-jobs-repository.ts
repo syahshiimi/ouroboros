@@ -24,7 +24,9 @@ export async function findFetchJobsTasksByTopic(
 export async function upsertFetchJobsTask(
   fetch_task: FetchJobs[],
 ): Promise<FetchJobs[]> {
-  return connection.insert(fetchJobs).values(fetch_task).returning();
+  return await connection.transaction(async (tx) => {
+    return tx.insert(fetchJobs).values(fetch_task).returning();
+  });
 }
 
 export async function deleteFetchJobsTask(): Promise<FetchJobs[]> {
