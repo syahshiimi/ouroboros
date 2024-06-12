@@ -14,7 +14,7 @@ import uv from "./uv.json";
 export const sampleFetchJob: FetchJobs = {
   topic: "humidity",
   fetch_url: "sample.url.sg",
-  data_date: new Date(),
+  data_date: new Date().toISOString(),
   fetch_job_start_date: new Date(),
   file_name: "sample_file.json",
   workflow_id: "41f196bd-31f2-4935-a863-a72e74107807",
