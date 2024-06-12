@@ -1,11 +1,22 @@
-import SchemaBuilder from '@pothos/core'
-import type { SchemaType } from './scalars';
-import { DateTimeResolver } from 'graphql-scalars';
+import SchemaBuilder from "@pothos/core";
+import { DateTimeResolver } from "graphql-scalars";
 
-const builder = new SchemaBuilder<SchemaType>({ defaultFieldNullability: true })
+export type SchemaType = {
+  Scalars: {
+    Date: {
+      Input: Date;
+      Output: Date;
+    };
+  };
+  DefaultFieldNullability: true;
+};
 
-builder.addScalarType("Date", DateTimeResolver)
-builder.queryType({})
-builder.mutationType({})
+const builder = new SchemaBuilder<SchemaType>({
+  defaultFieldNullability: true,
+});
+
+builder.addScalarType("Date", DateTimeResolver);
+builder.queryType({});
+builder.mutationType({});
 
 export { builder };

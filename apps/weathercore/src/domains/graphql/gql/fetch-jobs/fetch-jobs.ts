@@ -5,23 +5,44 @@ import {
 } from "../../../../data-access/repositories/fetch-jobs/fetch-jobs-repository";
 import { builder } from "../../builder";
 import { FetchJobsType } from "../../types";
+import { topicsEnum } from "../../enums.ts";
 
 const FetchJobsInput = builder.inputType("FetchJobsInput", {
   fields: (t) => ({
-    topic: t.field({ type: "TableTopic", required: true }),
-    data_date: t.field({ type: "Date", required: true }),
-    fetch_job_start_date: t.field({ type: "Date", required: true }),
-    fetch_url: t.string({ required: true }),
-    file_name: t.string(),
-    workflow_id: t.string({ required: true }),
+    topic: t.field({
+      type: topicsEnum,
+      required: true,
+      description: "The topic name.",
+    }),
+    data_date: t.string({
+      required: true,
+      description: "The corresponding date of the data in JSON file.",
+    }),
+    fetch_job_start_date: t.field({
+      type: "Date",
+      required: true,
+      description: "The fetch date of the job.",
+    }),
+    fetch_url: t.string({
+      required: true,
+      description: "The URL of the API endpoint.",
+    }),
+    file_name: t.string({
+      required: true,
+      description: "The file_name of the JSON stored in the bucket.",
+    }),
+    workflow_id: t.string({
+      required: true,
+      description: "THe ID of the workflow that handled this JSON file.",
+    }),
   }),
 });
 
 FetchJobsType.implement({
   fields: (t) => ({
     id: t.exposeID("id"),
-    topic: t.expose("topic", { type: "TableTopic" }),
-    data_date: t.expose("data_date", { type: "Date" }),
+    topic: t.expose("topic", { type: topicsEnum }),
+    data_date: t.exposeString("data_date"),
     fetch_job_start_date: t.expose("fetch_job_start_date", { type: "Date" }),
     fetch_url: t.exposeString("fetch_url"),
     file_name: t.exposeString("file_name"),
@@ -47,7 +68,7 @@ builder.queryField("findFetchJobsByTopic", (t) =>
     type: FetchJobsType,
     description: "Fetches the job tasks by the topic id",
     args: {
-      topic: t.arg({ type: "TableTopic", required: true }),
+      topic: t.arg({ type: topicsEnum, required: true }),
     },
     resolve: async (_, args) => {
       return await findFetchJobsTasksByTopic(args.topic);

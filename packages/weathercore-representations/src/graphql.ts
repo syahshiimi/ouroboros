@@ -20,21 +20,27 @@ export type Scalars = {
 
 export type FetchJobs = {
   __typename?: 'FetchJobs';
-  fetch_date?: Maybe<Scalars['Date']['output']>;
+  data_date?: Maybe<Scalars['String']['output']>;
   fetch_job_start_date?: Maybe<Scalars['Date']['output']>;
-  fetch_jobs_type_id?: Maybe<Scalars['ID']['output']>;
   fetch_url?: Maybe<Scalars['String']['output']>;
   file_name?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['ID']['output']>;
+  topic?: Maybe<TopicsEnum>;
   workflow_id?: Maybe<Scalars['String']['output']>;
 };
 
 export type FetchJobsInput = {
-  fetch_date: Scalars['Date']['input'];
+  /** The corresponding date of the data in JSON file. */
+  data_date: Scalars['String']['input'];
+  /** The fetch date of the job. */
   fetch_job_start_date: Scalars['Date']['input'];
+  /** The URL of the API endpoint. */
   fetch_url: Scalars['String']['input'];
-  file_name?: InputMaybe<Scalars['String']['input']>;
-  topic_id: Scalars['String']['input'];
+  /** The file_name of the JSON stored in the bucket. */
+  file_name: Scalars['String']['input'];
+  /** The topic name. */
+  topic: TopicsEnum;
+  /** THe ID of the workflow that handled this JSON file. */
   workflow_id: Scalars['String']['input'];
 };
 
@@ -60,6 +66,8 @@ export type Mutation = {
   deleteAllStations?: Maybe<Array<Stations>>;
   /** Deletes all temperature readings. */
   deleteAllTemperatureReadings?: Maybe<Array<Temperature>>;
+  /** Deletes all UV readings. */
+  deleteAllUvReadings?: Maybe<Array<Uv>>;
   /** Deletes all humidity readings. */
   deleteHumidityReadings?: Maybe<Array<Humidity>>;
   /** Deletes the rainfall readings by station_id. */
@@ -125,7 +133,7 @@ export type MutationUpsertUvReadingsArgs = {
 export type Query = {
   __typename?: 'Query';
   /** Fetches the job tasks by the topic id */
-  findFetchJobsByTopicId?: Maybe<FetchJobs>;
+  findFetchJobsByTopic?: Maybe<FetchJobs>;
   /** Fetches the job tasks by id. */
   findFetchJobsTaskById?: Maybe<FetchJobs>;
   /** Finds the humidity reading by the station_id. */
@@ -147,8 +155,8 @@ export type Query = {
 };
 
 
-export type QueryFindFetchJobsByTopicIdArgs = {
-  topic_id: Scalars['String']['input'];
+export type QueryFindFetchJobsByTopicArgs = {
+  topic: TopicsEnum;
 };
 
 
@@ -254,6 +262,13 @@ export type UvInput = {
   update_timestamp?: InputMaybe<Scalars['String']['input']>;
   uv_index: Scalars['Int']['input'];
 };
+
+export enum TopicsEnum {
+  Humidity = 'humidity',
+  Rainfall = 'rainfall',
+  Temperature = 'temperature',
+  Uv = 'uv'
+}
 
 export type BatchUpsertStationsMutationVariables = Exact<{
   stations: Array<StationsInput> | StationsInput;

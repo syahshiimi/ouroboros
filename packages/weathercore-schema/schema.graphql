@@ -4,21 +4,32 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar Date
 
 type FetchJobs {
-  fetch_date: Date
+  data_date: String
   fetch_job_start_date: Date
-  fetch_jobs_type_id: ID
   fetch_url: String
   file_name: String
   id: ID
+  topic: topicsEnum
   workflow_id: String
 }
 
 input FetchJobsInput {
-  fetch_date: Date!
+  """The corresponding date of the data in JSON file."""
+  data_date: String!
+
+  """The fetch date of the job."""
   fetch_job_start_date: Date!
+
+  """The URL of the API endpoint."""
   fetch_url: String!
-  file_name: String
-  topic_id: String!
+
+  """The file_name of the JSON stored in the bucket."""
+  file_name: String!
+
+  """The topic name."""
+  topic: topicsEnum!
+
+  """THe ID of the workflow that handled this JSON file."""
   workflow_id: String!
 }
 
@@ -43,6 +54,9 @@ type Mutation {
 
   """Deletes all temperature readings."""
   deleteAllTemperatureReadings: [Temperature!]
+
+  """Deletes all UV readings."""
+  deleteAllUvReadings: [UV!]
 
   """Deletes all humidity readings."""
   deleteHumidityReadings: [Humidity!]
@@ -77,7 +91,7 @@ type Mutation {
 
 type Query {
   """Fetches the job tasks by the topic id"""
-  findFetchJobsByTopicId(topic_id: String!): FetchJobs
+  findFetchJobsByTopic(topic: topicsEnum!): FetchJobs
 
   """Fetches the job tasks by id."""
   findFetchJobsTaskById(id: String!): FetchJobs
@@ -165,4 +179,11 @@ input UvInput {
   timestamp: String
   update_timestamp: String
   uv_index: Int!
+}
+
+enum topicsEnum {
+  humidity
+  rainfall
+  temperature
+  uv
 }
