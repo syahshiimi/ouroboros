@@ -3,19 +3,19 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "dotenv -- turbo dev",
-    "lint": "turbo lint",
+    "dev": "dotenv -- turbo run dev",
+    "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "codegen": "turbo codegen"
   },
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:*",
     "@ouroboros/typescript-config": "workspace:*",
+    "dotenv-cli": "^7.4.2",
     "prettier": "^3.2.5",
-    "turbo": "latest",
-    "dotenv-cli": "^7.4.2"
+    "turbo": "^2.0.3"
   },
-  "packageManager": "pnpm@8.9.0",
+  "packageManager": "pnpm@8.15.4",
   "engines": {
     "node": ">=18"
   }
