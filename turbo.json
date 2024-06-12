@@ -7,6 +7,7 @@
   "tasks": {
     "build": {
       "dependsOn": [
+        "lint",
         "^build"
       ],
       "outputs": [
@@ -17,7 +18,11 @@
     "lint": {
       "dependsOn": [
         "^lint"
-      ]
+      ],
+      "env": ["R2_*", "DB_*", "GRAPHQL_*"]
+    },
+    "test": {
+      "dependsOn": ["^build"]
     },
     "dev": {
       "cache": false,
