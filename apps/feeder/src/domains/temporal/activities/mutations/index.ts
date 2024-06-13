@@ -11,6 +11,7 @@ import { unwrapHumidityDTO } from "../../../dto/humidity/humidity.dto";
 import { unwrapRainfallDTO } from "../../../dto/rainfall/rainfall.dto";
 import { unwrapUvDTO } from "../../../dto/uv/uv.dto";
 import { weatherCoreService } from "../../../weathercore/mutations/weathercore-service";
+import { log } from "@temporalio/activity";
 
 interface MutationOpts {
   fileName: string;
@@ -18,9 +19,9 @@ interface MutationOpts {
 }
 
 export const createMutations = ({ fileName, topic }: MutationOpts) => {
-  const logger = () => console.log(`Running the batch upsert for ${topic}...`);
+  const logger = () => log.info(`Running the batch upsert for ${topic}...`);
   const promiseLogger = (length: number) =>
-    console.log(`Batch upsert for chunks of length: ${length} done.`);
+    log.info(`Batch upsert for chunks of length: ${length} done.`, { length });
 
   const service = weatherCoreService(logger);
 

@@ -1,15 +1,16 @@
 import { createZodFetcher } from "zod-fetch";
 import { z, ZodTypeAny } from "zod";
-import { zodSchema } from "./shared/zod-schema";
+import { zodSchema } from "../shared/zod-schema";
 import { R2, S3Service } from "@ouroboros/s3-client";
-import { FeederDetails } from "./workflow/input";
+import { FeederDetails } from "../workflow/input";
 import {
   ZHumidityType,
   ZRainfallType,
   ZTemperatureType,
   ZUvType,
 } from "@ouroboros/weather-schema";
-import { createMutations } from "./activities/mutations";
+import { createMutations } from "./mutations";
+import { log } from "@temporalio/activity";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -32,12 +33,14 @@ export async function fetchData<T extends ZodTypeAny>(
   const schema = zodSchema.schemer(topic) as unknown as z.infer<T>;
 
   if (!schema) {
-    console.error(`No schema found for topic: ${topic}`);
+    // console.error(`No schema found for topic: ${topic}`);
+    log.error("No schema found for the topic", { topic });
     return undefined;
   }
 
   try {
-    console.log(`Fetching from the endpoint: ${endpoint}`);
+    // console.log(`Fetching from the endpoint: ${endpoint}`);
+    log.info(`Fetching for the endpoint of: ${endpoint}`, { endpoint });
     return zodFetcher(schema, endpoint);
   } catch (error) {
     throw new Error(error as string);
@@ -65,7 +68,9 @@ export async function uploadR2(
       ContentType: "application/json",
     }),
   );
-  console.log(`R2 responded with code: ${response.$metadata.httpStatusCode}`);
+  log.info(`R2 responded with the code: ${response.$metadata.httpStatusCode}`, {
+    response,
+  });
   return fileKey;
 }
 

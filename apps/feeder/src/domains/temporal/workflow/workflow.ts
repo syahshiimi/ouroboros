@@ -1,4 +1,4 @@
-import { ApplicationFailure, proxyActivities } from "@temporalio/workflow";
+import { ApplicationFailure, log, proxyActivities } from "@temporalio/workflow";
 import { FeederDetails } from "./input";
 import { composer } from "../utils/composer";
 import * as activities from "../activities";
@@ -21,7 +21,7 @@ export async function feederFlow(input: FeederDetails) {
 
   // fetch from data.gov.sg
   try {
-    console.log(
+    log.info(
       `About to fetch data for the date: ${input.date} and for the topic: ${input.topic}`,
     );
     const zSchema = zodSchema.schemer(input.topic);
@@ -35,7 +35,7 @@ export async function feederFlow(input: FeederDetails) {
 
     // Upload the JSON to R2.
     try {
-      console.log(`Uploading the JSON for the topic of ${input.topic}...`);
+      log.info(`Uploading the JSON for the topic of ${input.topic}...`);
       fileName = await uploadR2(response, input.date, input.topic);
       console.log(`Uploading the JSON for the topic of ${input.topic} done.`);
     } catch (error) {
@@ -44,9 +44,9 @@ export async function feederFlow(input: FeederDetails) {
 
     // Map the JSON DTO to objects and run mutations.
     try {
-      console.log(`Starting batch upserts for the topic of ${input.topic}...`);
+      log.info(`Starting batch upserts for the topic of ${input.topic}...`);
       await runMutation(fileName, input.topic, response);
-      console.log(`Batch upserts for the topic of ${input.topic} done.`);
+      log.info(`Batch upserts for the topic of ${input.topic} done.`);
     } catch (error) {
       throw new Error(error as string);
     }
