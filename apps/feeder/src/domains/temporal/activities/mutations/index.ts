@@ -13,14 +13,16 @@ import { unwrapUvDTO } from "../../../dto/uv/uv.dto";
 import { weatherCoreService } from "../../../weathercore/mutations/weathercore-service";
 import { log } from "@temporalio/activity";
 import { FetchJobsInput } from "@ouroboros/weathercore-representations";
+import { FeederDetails } from "../../workflow/input";
 
 interface MutationOpts {
   fileName: string;
-  topic: string;
+  topic?: FeederDetails["topic"];
 }
 
 export const createMutations = ({ fileName, topic }: MutationOpts) => {
-  const logger = () => log.info(`Running the batch upsert for ${topic}...`);
+  const logger = () =>
+    topic && log.info(`Running the batch upsert for ${topic}...`);
   const promiseLogger = (length: number) =>
     log.info(`Batch upsert for chunks of length: ${length} done.`, { length });
 

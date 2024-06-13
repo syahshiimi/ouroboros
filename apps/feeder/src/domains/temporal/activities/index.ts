@@ -117,7 +117,7 @@ export async function updateFetchJobsTable(
     workflow_id: workflowInfo,
   };
 
-  const mutations = createMutations({ fileName, topic });
+  const mutations = createMutations({ fileName });
   try {
     return await mutations.fetchJobsMutation(fetchTask);
   } catch (error) {
