@@ -1,18 +1,22 @@
-import { ApplicationFailure, log, proxyActivities } from "@temporalio/workflow";
+import {
+  ApplicationFailure,
+  log,
+  proxyActivities,
+  workflowInfo,
+} from "@temporalio/workflow";
 import { FeederDetails } from "./input";
 import { composer } from "../utils/composer";
 import * as activities from "../activities";
 import { zodSchema } from "../shared/zod-schema";
 
 export async function feederFlow(input: FeederDetails) {
-  const { fetchData, uploadR2, runMutation } = proxyActivities<
-    typeof activities
-  >({
-    startToCloseTimeout: "1 minute",
-    retry: {
-      maximumAttempts: 1,
-    },
-  });
+  const { fetchData, uploadR2, runMutation, updateFetchJobsTable } =
+    proxyActivities<typeof activities>({
+      startToCloseTimeout: "1 minute",
+      retry: {
+        maximumAttempts: 1,
+      },
+    });
 
   // Global variables
   let fileName: string;
@@ -51,7 +55,19 @@ export async function feederFlow(input: FeederDetails) {
       throw new Error(error as string);
     }
 
-    // TODO: Update fetch_jobs table
+    try {
+      log.info(`Updating the fetch_jobs table`);
+      const workflowId = workflowInfo().workflowId;
+      await updateFetchJobsTable(
+        input,
+        endpoint,
+        fileName,
+        input.topic,
+        workflowId,
+      );
+    } catch (e) {
+      throw new Error(e as string);
+    }
   } catch (error) {
     throw new ApplicationFailure(error as string);
   }

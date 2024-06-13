@@ -12,6 +12,7 @@ import { unwrapRainfallDTO } from "../../../dto/rainfall/rainfall.dto";
 import { unwrapUvDTO } from "../../../dto/uv/uv.dto";
 import { weatherCoreService } from "../../../weathercore/mutations/weathercore-service";
 import { log } from "@temporalio/activity";
+import { FetchJobsInput } from "@ouroboros/weathercore-representations";
 
 interface MutationOpts {
   fileName: string;
@@ -44,7 +45,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       const chunked = await chunker(temperature, 100);
 
       try {
-        await service.weatherCoreServiceBatchUpsertStations(stations);
+        await service.BatchUpsertStations(stations);
       } catch (error) {
         throw new Error(error as string);
       }
@@ -52,9 +53,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       try {
         const promises = chunked.map(async (chunk) => {
           return new Promise((resolve) => {
-            resolve(
-              service.weatherCoreServiceBatchUpsertTemperatureReadings(chunk),
-            );
+            resolve(service.BatchUpsertTemperatureReadings(chunk));
           });
         });
         await Promise.all(promises).then(() => promiseLogger(chunked.length));
@@ -77,7 +76,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       const chunked = await chunker(humidity, 100);
 
       try {
-        await service.weatherCoreServiceBatchUpsertStations(stations);
+        await service.BatchUpsertStations(stations);
       } catch (error) {
         throw new Error(error as string);
       }
@@ -85,9 +84,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       try {
         const promises = chunked.map(async (chunk) => {
           return new Promise((resolve) => {
-            resolve(
-              service.weatherCoreServiceBatchUpsertHumidityReadings(chunk),
-            );
+            resolve(service.BatchUpsertHumidityReadings(chunk));
           });
         });
         await Promise.all(promises).then(() => promiseLogger(chunked.length));
@@ -110,7 +107,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       const chunked = await chunker(rainfall, 100);
 
       try {
-        await service.weatherCoreServiceBatchUpsertStations(stations);
+        await service.BatchUpsertStations(stations);
       } catch (error) {
         throw new Error(error as string);
       }
@@ -118,9 +115,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       try {
         const promises = chunked.map(async (chunk) => {
           return new Promise((resolve) => {
-            resolve(
-              service.weatherCoreServiceBatchUpsertRainfallReadings(chunk),
-            );
+            resolve(service.BatchUpsertRainfallReadings(chunk));
           });
         });
         await Promise.all(promises).then(() => promiseLogger(chunked.length));
@@ -141,7 +136,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       try {
         const promises = chunked.map(async (chunk) => {
           return new Promise((resolve) => {
-            resolve(service.weatherCoreServiceBatchUpsertUvReadings(chunk));
+            resolve(service.BatchUpsertUvReadings(chunk));
           });
         });
         await Promise.all(promises).then(() => promiseLogger(chunked.length));
@@ -149,6 +144,14 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
         throw new Error(error as string);
       }
       return fileName;
+    },
+    async fetchJobsMutation(fetchJobs: FetchJobsInput) {
+      try {
+        await service.UpsertFetchJobs(fetchJobs);
+      } catch (error) {
+        throw new Error(error as string);
+      }
+      return fetchJobs.workflow_id;
     },
   };
 };

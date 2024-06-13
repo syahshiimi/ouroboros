@@ -11,6 +11,10 @@ import {
 } from "@ouroboros/weather-schema";
 import { createMutations } from "./mutations";
 import { log } from "@temporalio/activity";
+import {
+  FetchJobsInput,
+  TopicsEnum,
+} from "@ouroboros/weathercore-representations";
 
 /**
  * A fetcher activity that utilises zod-fetcher library
@@ -94,6 +98,31 @@ export async function runMutation<TObj>(
       case "uv":
         return await mutations.UvMutation(response as ZUvType);
     }
+  } catch (error) {
+    throw new Error(error as string);
+  }
+}
+
+export async function updateFetchJobsTable(
+  input: FeederDetails,
+  endpoint: string,
+  fileName: string,
+  topic: string,
+  workflowInfo: string,
+) {
+  // Construct the object
+  const fetchTask: FetchJobsInput = {
+    data_date: input.date,
+    fetch_url: endpoint,
+    fetch_job_start_date: new Date().toISOString(),
+    file_name: fileName,
+    topic: TopicsEnum.Uv,
+    workflow_id: workflowInfo,
+  };
+
+  const mutations = createMutations({ fileName, topic });
+  try {
+    return await mutations.fetchJobsMutation(fetchTask);
   } catch (error) {
     throw new Error(error as string);
   }
