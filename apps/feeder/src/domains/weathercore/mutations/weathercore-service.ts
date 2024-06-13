@@ -6,38 +6,44 @@ import {
   BatchUpsertTemperatureReadingsDocument,
   BatchUpsertUvReadingsDocument,
   FetchJobsInput,
-  Humidity,
-  Rainfall,
-  Stations,
-  Temperature,
+  HumidityInput,
+  RainfallInput,
+  StationsInput,
+  TemperatureInput,
   UpsertFetchJobsDocument,
-  Uv,
+  UvInput,
 } from "@ouroboros/weathercore-representations";
 
+/**
+ * weatherCore service is an object containing
+ * the various async methods to perform mutation operations
+ * via weatherCore to thee database.
+ * @param logger
+ */
 export const weatherCoreService = (logger: () => void) => {
   logger();
   return {
-    async BatchUpsertStations(variables: Stations[]) {
+    async BatchUpsertStations(variables: StationsInput[]) {
       return await requestClient(BatchUpsertStationsDocument, {
         stations: [...variables],
       });
     },
-    async BatchUpsertTemperatureReadings(variables: Temperature[]) {
+    async BatchUpsertTemperatureReadings(variables: TemperatureInput[]) {
       return await requestClient(BatchUpsertTemperatureReadingsDocument, {
         temperatureReadings: [...variables],
       });
     },
-    async BatchUpsertHumidityReadings(variables: Humidity[]) {
+    async BatchUpsertHumidityReadings(variables: HumidityInput[]) {
       return await requestClient(BatchUpsertHumidityReadingsDocument, {
         humidityReadings: [...variables],
       });
     },
-    async BatchUpsertRainfallReadings(variables: Rainfall[]) {
+    async BatchUpsertRainfallReadings(variables: RainfallInput[]) {
       return await requestClient(BatchUpsertRainfallReadingsDocument, {
         rainfallReadings: [...variables],
       });
     },
-    async BatchUpsertUvReadings(variables: Uv[]) {
+    async BatchUpsertUvReadings(variables: UvInput[]) {
       return await requestClient(BatchUpsertUvReadingsDocument, {
         uvReadings: [...variables],
       });

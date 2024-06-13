@@ -1,4 +1,4 @@
-import { Uv } from "@ouroboros/weathercore-representations";
+import { UvInput } from "@ouroboros/weathercore-representations";
 
 /**
  * Maps the incoming JSON schema to a data transfer object.
@@ -11,7 +11,7 @@ export interface UvDto {
     timestamp: string;
   }[];
 }
-export const unwrapUvDTO = (dto: UvDto, fileName: string): Uv[] => {
+export const unwrapUvDTO = (dto: UvDto, fileName: string): UvInput[] => {
   return dto.index.map((uv) => ({
     update_timestamp: dto.update_timestamp,
     timestamp: uv.timestamp,

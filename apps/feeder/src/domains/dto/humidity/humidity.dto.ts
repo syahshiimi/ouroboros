@@ -1,4 +1,4 @@
-import { Humidity } from "@ouroboros/weathercore-representations";
+import { HumidityInput } from "@ouroboros/weathercore-representations";
 
 /**
  * Maps the incoming JSON schema to a data transfer object.
@@ -17,7 +17,7 @@ export interface HumidityDTO {
 export const unwrapHumidityDTO = (
   dto: HumidityDTO,
   fileName: string,
-): Humidity[] => {
+): HumidityInput[] => {
   return dto.readings.map((reading) => ({
     station_id: reading.station_id,
     timestamp: dto.timestamp,

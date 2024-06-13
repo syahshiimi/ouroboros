@@ -110,13 +110,15 @@ export async function updateFetchJobsTable(
   topic: string,
   workflowInfo: string,
 ) {
+  // capitalise input
+  const topicCapitalised = topic.charAt(0).toUpperCase() + topic.slice(1);
   // Construct the object
   const fetchTask: FetchJobsInput = {
     data_date: input.date,
     fetch_url: endpoint,
     fetch_job_start_date: new Date().toISOString(),
     file_name: fileName,
-    topic: TopicsEnum.Uv,
+    topic: TopicsEnum[topicCapitalised as keyof typeof TopicsEnum],
     workflow_id: workflowInfo,
   };
 

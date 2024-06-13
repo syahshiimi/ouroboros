@@ -1,4 +1,4 @@
-import { Rainfall } from "@ouroboros/weathercore-representations";
+import { RainfallInput } from "@ouroboros/weathercore-representations";
 
 /**
  * Maps the incoming JSON schema to a data transfer object.
@@ -17,7 +17,7 @@ export interface RainfallDTO {
 export const unwrapRainfallDTO = (
   dto: RainfallDTO,
   fileName: string,
-): Rainfall[] => {
+): RainfallInput[] => {
   return dto.readings.map((reading) => ({
     station_id: reading.station_id,
     timestamp: dto.timestamp,

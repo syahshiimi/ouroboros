@@ -1,14 +1,14 @@
-import { Temperature} from "@ouroboros/weathercore-representations";
+import { TemperatureInput } from "@ouroboros/weathercore-representations";
 
 /**
  * Maps the incoming JSON schema to a data transfer object.
  */
 export interface TemperatureDTO {
-    timestamp: string;
-    readings: {
-        station_id: string;
-        value: number;
-    }[];
+  timestamp: string;
+  readings: {
+    station_id: string;
+    value: number;
+  }[];
 }
 
 /**
@@ -16,11 +16,14 @@ export interface TemperatureDTO {
  * @param dto
  * @param fileName The filename of the json stored in the bucket.
  */
-export const unwrapTemperatureDTO = (dto: TemperatureDTO, fileName: string): Temperature[] => {
-    return dto.readings.map(reading => ({
-        station_id: reading.station_id,
-        timestamp: dto.timestamp,
-        reading: reading.value.toString(),
-        file_name: fileName
-    }));
+export const unwrapTemperatureDTO = (
+  dto: TemperatureDTO,
+  fileName: string,
+): TemperatureInput[] => {
+  return dto.readings.map((reading) => ({
+    station_id: reading.station_id,
+    timestamp: dto.timestamp,
+    reading: reading.value.toString(),
+    file_name: fileName,
+  }));
 };
