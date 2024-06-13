@@ -57,14 +57,10 @@ export async function fetchData<T extends ZodTypeAny>(
  * @param date
  * @param topic
  */
-export async function uploadR2(
-  input: unknown,
-  date: string,
-  topic: string,
-): Promise<string> {
+export async function uploadR2(input: unknown, date: string, topic: string) {
   const buf = Buffer.from(JSON.stringify(input));
   const fileKey = `${date}-${topic}.json`;
-  const response = await R2.send(
+  const r2Res = await R2.send(
     new S3Service.PutObjectCommand({
       Bucket: `${process.env.R2_BUCKET_NAME}`,
       Body: buf,
@@ -72,13 +68,13 @@ export async function uploadR2(
       ContentType: "application/json",
     }),
   );
-  log.info(`R2 responded with the code: ${response.$metadata.httpStatusCode}`, {
-    response,
+  log.info(`R2 responded with the code: ${r2Res.$metadata.httpStatusCode}`, {
+    r2Res,
   });
-  return fileKey;
+  return { r2Res, fileKey };
 }
 
-export async function runMutation<TObj>(
+export async function updateTopicsTable<TObj>(
   fileName: string,
   topic: FeederDetails["topic"],
   response: TObj,
@@ -107,14 +103,13 @@ export async function updateFetchJobsTable(
   input: FeederDetails,
   endpoint: string,
   fileName: string,
-  topic: string,
   workflowInfo: string,
 ) {
-  // capitalise input
+  const { date, topic } = input;
   const topicCapitalised = topic.charAt(0).toUpperCase() + topic.slice(1);
   // Construct the object
   const fetchTask: FetchJobsInput = {
-    data_date: input.date,
+    data_date: date,
     fetch_url: endpoint,
     fetch_job_start_date: new Date().toISOString(),
     file_name: fileName,
