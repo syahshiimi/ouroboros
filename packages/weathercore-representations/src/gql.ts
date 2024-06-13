@@ -14,6 +14,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  */
 const documents = {
     "mutation BatchUpsertStations($stations: [StationsInput!]!) {\n  upsertStation(input: $stations) {\n    station_id\n    longitude\n    latitude\n    location_name\n  }\n}": types.BatchUpsertStationsDocument,
+    "mutation upsertFetchJobs($fetchJob: [FetchJobsInput!]!) {\n  upsertFetchJobsTask(input: $fetchJob) {\n    id\n  }\n}": types.UpsertFetchJobsDocument,
     "mutation BatchUpsertHumidityReadings($humidityReadings: [HumidityInput!]!) {\n  upsertHumidityReadings(input: $humidityReadings) {\n    station_id\n  }\n}": types.BatchUpsertHumidityReadingsDocument,
     "mutation BatchUpsertRainfallReadings($rainfallReadings: [RainfallInput!]!) {\n  upsertRainfallReadings(input: $rainfallReadings) {\n    station_id\n    id\n  }\n}": types.BatchUpsertRainfallReadingsDocument,
     "mutation BatchUpsertTemperatureReadings($temperatureReadings: [TemperatureInput!]!) {\n  upsertTemperatureReadings(input: $temperatureReadings) {\n    station_id\n    id\n  }\n}": types.BatchUpsertTemperatureReadingsDocument,
@@ -39,6 +40,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation BatchUpsertStations($stations: [StationsInput!]!) {\n  upsertStation(input: $stations) {\n    station_id\n    longitude\n    latitude\n    location_name\n  }\n}"): (typeof documents)["mutation BatchUpsertStations($stations: [StationsInput!]!) {\n  upsertStation(input: $stations) {\n    station_id\n    longitude\n    latitude\n    location_name\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation upsertFetchJobs($fetchJob: [FetchJobsInput!]!) {\n  upsertFetchJobsTask(input: $fetchJob) {\n    id\n  }\n}"): (typeof documents)["mutation upsertFetchJobs($fetchJob: [FetchJobsInput!]!) {\n  upsertFetchJobsTask(input: $fetchJob) {\n    id\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

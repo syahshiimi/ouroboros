@@ -1,0 +1,5 @@
+mutation upsertFetchJobs($fetchJob: [FetchJobsInput!]!) {
+    upsertFetchJobsTask(input: $fetchJob) {
+        id
+    }
+}
