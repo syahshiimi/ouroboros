@@ -1,7 +1,8 @@
 {
-  "name": "weathercore",
+  "name": "@ouroboros/weathercore",
   "module": "index.ts",
   "scripts": {
+    "build": "bun build --entrypoints ./index.ts --outdir ./out --target node --splitting",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "push": "drizzle-kit push",

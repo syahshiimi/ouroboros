@@ -1,5 +1,5 @@
 {
-  "name": "feeder",
+  "name": "@ouroboros/feeder",
   "private": "true",
   "description": "HonoJs + temporalio application that orchestras the services.",
   "scripts": {
