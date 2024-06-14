@@ -20,12 +20,6 @@ import {
  * A fetcher activity that utilises zod-fetcher library
  * for runtime validation of the schema, ensuring we don't break
  * we become aware of any breaking API contracts.
- *
- * @param endpoint
- * The API endpoint.
- * @param topic
- * The topic for fetching. Resolves and should only be used with composer.
- * @param _zSchema
  */
 export async function fetchData<T extends ZodTypeAny>(
   endpoint: string,
@@ -53,9 +47,8 @@ export async function fetchData<T extends ZodTypeAny>(
 
 /**
  *
- * @param input
- * @param date
- * @param topic
+ * The activity function that uploads the JSON to the preconfigured
+ * R2 Cloud Bucket.
  */
 export async function uploadR2(input: unknown, date: string, topic: string) {
   const buf = Buffer.from(JSON.stringify(input));
@@ -74,6 +67,10 @@ export async function uploadR2(input: unknown, date: string, topic: string) {
   return { r2Res, fileKey };
 }
 
+/**
+* The activiy function that maps the topics to the corresponding
+* mutation.
+**/
 export async function updateTopicsTable<TObj>(
   fileName: string,
   topic: FeederDetails["topic"],
