@@ -40,12 +40,11 @@ export async function feederFlow(input: FeederDetails) {
     const mutate = await updateTopicsTable(fileKey, input.topic, response);
 
     log.info(`Updating the fetch_jobs table.`);
-    const workflowId = workflowInfo().workflowId;
     const updateRes = await updateFetchJobsTable(
       input,
       endpoint,
       mutate,
-      workflowId,
+      workflowInfo().workflowId,
     );
     log.info(`Updated the fetch_jobs table.`, { updateRes });
   } catch (error) {

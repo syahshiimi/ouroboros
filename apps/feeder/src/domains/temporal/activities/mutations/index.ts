@@ -14,6 +14,7 @@ import { weatherCoreService } from "../../../weathercore/mutations/weathercore-s
 import { log } from "@temporalio/activity";
 import { FetchJobsInput } from "@ouroboros/weathercore-representations";
 import { FeederDetails } from "../../workflow/input";
+import { requestClient } from "../../shared/request";
 
 interface MutationOpts {
   fileName: string;

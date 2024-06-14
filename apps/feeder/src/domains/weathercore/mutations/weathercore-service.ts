@@ -13,6 +13,7 @@ import {
   UpsertFetchJobsDocument,
   UvInput,
 } from "@ouroboros/weathercore-representations";
+import { DocumentNode } from "graphql/language";
 
 /**
  * weatherCore service is an object containing
@@ -20,32 +21,52 @@ import {
  * via weatherCore to thee database.
  * @param logger
  */
+interface BatchUpsertOptions {
+  document: DocumentNode;
+  variableName: string;
+}
+
 export const weatherCoreService = (logger: () => void) => {
   logger();
+
+  const batchUpsert = async <T>(
+    variables: T[],
+    options: BatchUpsertOptions,
+  ) => {
+    const { document, variableName } = options;
+    const variableObject = { [variableName]: [...variables] };
+    return await requestClient(document, variableObject);
+  };
+
   return {
     async BatchUpsertStations(variables: StationsInput[]) {
-      return await requestClient(BatchUpsertStationsDocument, {
-        stations: [...variables],
+      return batchUpsert(variables, {
+        document: BatchUpsertStationsDocument,
+        variableName: "stations",
       });
     },
     async BatchUpsertTemperatureReadings(variables: TemperatureInput[]) {
-      return await requestClient(BatchUpsertTemperatureReadingsDocument, {
-        temperatureReadings: [...variables],
+      return batchUpsert(variables, {
+        document: BatchUpsertTemperatureReadingsDocument,
+        variableName: "temperatureReadings",
       });
     },
     async BatchUpsertHumidityReadings(variables: HumidityInput[]) {
-      return await requestClient(BatchUpsertHumidityReadingsDocument, {
-        humidityReadings: [...variables],
+      return batchUpsert(variables, {
+        document: BatchUpsertHumidityReadingsDocument,
+        variableName: "humidityReadings",
       });
     },
     async BatchUpsertRainfallReadings(variables: RainfallInput[]) {
-      return await requestClient(BatchUpsertRainfallReadingsDocument, {
-        rainfallReadings: [...variables],
+      return batchUpsert(variables, {
+        document: BatchUpsertRainfallReadingsDocument,
+        variableName: "rainfallReadings",
       });
     },
     async BatchUpsertUvReadings(variables: UvInput[]) {
-      return await requestClient(BatchUpsertUvReadingsDocument, {
-        uvReadings: [...variables],
+      return batchUpsert(variables, {
+        document: BatchUpsertUvReadingsDocument,
+        variableName: "uvReadings",
       });
     },
     async UpsertFetchJobs(variables: FetchJobsInput) {
