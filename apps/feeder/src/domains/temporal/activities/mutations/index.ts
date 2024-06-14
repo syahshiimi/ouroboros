@@ -14,7 +14,6 @@ import { weatherCoreService } from "../../../weathercore/mutations/weathercore-s
 import { log } from "@temporalio/activity";
 import { FetchJobsInput } from "@ouroboros/weathercore-representations";
 import { FeederDetails } from "../../workflow/input";
-import { requestClient } from "../../shared/request";
 
 interface MutationOpts {
   fileName: string;
@@ -35,23 +34,20 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
      * @param response
      */
     async temperatureMutation(response: ZTemperatureType) {
-      // TODO: We might want to abstract out the stations object in the DTO and
-      // do the mutation here instead. THis means temperature mutation no longer needs to
-      // do the mapping and insertion, being single responsible in nature. This also ensures that
-      // for each incoming data topic, the stations will be added first.
       const stations = response.metadata.stations.map((station) =>
         unwrapStationDTO(station),
       );
-      const temperature = response.items.flatMap((temperature) =>
-        unwrapTemperatureDTO(temperature, fileName),
-      );
-      const chunked = await chunker(temperature, 100);
 
       try {
         await service.BatchUpsertStations(stations);
       } catch (error) {
         throw new Error(error as string);
       }
+
+      const temperature = response.items.flatMap((temperature) =>
+        unwrapTemperatureDTO(temperature, fileName),
+      );
+      const chunked = await chunker(temperature, 100);
 
       try {
         const promises = chunked.map(async (chunk) => {
@@ -73,16 +69,17 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       const stations = response.metadata.stations.map((station) =>
         unwrapStationDTO(station),
       );
-      const humidity = response.items.flatMap((humidity) =>
-        unwrapHumidityDTO(humidity, fileName),
-      );
-      const chunked = await chunker(humidity, 100);
 
       try {
         await service.BatchUpsertStations(stations);
       } catch (error) {
         throw new Error(error as string);
       }
+
+      const humidity = response.items.flatMap((humidity) =>
+        unwrapHumidityDTO(humidity, fileName),
+      );
+      const chunked = await chunker(humidity, 100);
 
       try {
         const promises = chunked.map(async (chunk) => {
@@ -104,16 +101,17 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       const stations = response.metadata.stations.map((station) =>
         unwrapStationDTO(station),
       );
-      const rainfall = response.items.flatMap((rainfall) =>
-        unwrapRainfallDTO(rainfall, fileName),
-      );
-      const chunked = await chunker(rainfall, 100);
-
       try {
         await service.BatchUpsertStations(stations);
       } catch (error) {
         throw new Error(error as string);
       }
+
+      const rainfall = response.items.flatMap((rainfall) =>
+        unwrapRainfallDTO(rainfall, fileName),
+      );
+
+      const chunked = await chunker(rainfall, 100);
 
       try {
         const promises = chunked.map(async (chunk) => {
@@ -148,6 +146,9 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
       }
       return fileName;
     },
+    /**
+    * Mutation for the Fetch Jobs table.
+    **/
     async fetchJobsMutation(fetchJobs: FetchJobsInput) {
       try {
         await service.UpsertFetchJobs(fetchJobs);
