@@ -31,6 +31,7 @@ module.exports = {
     ".*.js",
     "node_modules/",
     "dist/",
+    "out/"
   ],
   overrides: [
     {
