@@ -9,7 +9,7 @@ import { composer } from "../utils/composer";
 import * as activities from "../activities";
 import { zodSchema } from "../shared/zod-schema";
 
-export async function feederFlow(input: FeederDetails) {
+export async function feederFlow({ topic, date }: FeederDetails) {
   const { fetchData, uploadR2, updateTopicsTable, updateFetchJobsTable } =
     proxyActivities<typeof activities>({
       startToCloseTimeout: "1 minute",
@@ -18,38 +18,39 @@ export async function feederFlow(input: FeederDetails) {
       },
     });
 
-  const endpoint = await composer({ date: input.date, topic: input.topic });
+  const endpoint = await composer({ date: date, topic: topic });
 
   try {
     log.info(
-      `About to fetch data for the date: ${input.date} and for the topic: ${input.topic}`,
+      `About to fetch data for the date: ${date} and for the topic: ${topic}`,
     );
-    const zSchema = zodSchema.schemer(input.topic);
-    const response = await fetchData(endpoint, input.topic, zSchema);
+    const zSchema = zodSchema.schemer(topic);
+    const response = await fetchData({ endpoint: endpoint, topic: topic, _zSchema: zSchema });
 
     if (response == undefined) {
       throw new ApplicationFailure(
-        `Response is undefined. Please check if input topic: ${input.topic} is a valid topic with a mapped schema`,
+        `Response is undefined. Please check if input topic: ${topic} is a valid topic with a mapped schema`,
       );
     }
 
-    log.info(`Uploading the JSON for the topic of ${input.topic}...`);
-    const { fileKey } = await uploadR2(response, input.date, input.topic);
+    log.info(`Uploading the JSON for the topic of ${topic}...`);
+    const { fileKey } = await uploadR2({ response: response, input: { date, topic } });
 
-    log.info(`Starting batch upserts for the topic of ${input.topic}...`);
-    const mutate = await updateTopicsTable(fileKey, input.topic, response);
+    log.info(`Starting batch upserts for the topic of ${topic}...`);
+    const mutate = await updateTopicsTable({ fileName: fileKey, topic: topic, response });
 
     log.info(`Updating the fetch_jobs table.`);
-    const updateRes = await updateFetchJobsTable(
-      input,
-      endpoint,
-      mutate,
-      workflowInfo().workflowId,
+    const updateRes = await updateFetchJobsTable({
+      input: { topic, date },
+      endpoint: endpoint,
+      fileName: mutate,
+      workflowInfo: workflowInfo().workflowId,
+    }
     );
     log.info(`Updated the fetch_jobs table.`, { updateRes });
   } catch (error) {
     throw new ApplicationFailure(error as string);
   }
 
-  return `Successfully fetched for the topic: ${input.topic} at ${input.date}`;
+  return `Successfully fetched for the topic: ${topic} at ${date}`;
 }
