@@ -31,6 +31,7 @@ export async function fetchData<T extends ZodTypeAny>(
   {
     endpoint,
     topic,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _zSchema,
   }: FetchData<T>
 ): Promise<z.infer<T> | undefined> {
