@@ -5,7 +5,6 @@ import {
   ZUvType,
 } from "@ouroboros/weather-schema";
 import { chunker } from "../../utils/chunker";
-import { unwrapStationDTO } from "../../../dto/stations/station.dto";
 import { unwrapTemperatureDTO } from "../../../dto/temperature/temperature.dto";
 import { unwrapHumidityDTO } from "../../../dto/humidity/humidity.dto";
 import { unwrapRainfallDTO } from "../../../dto/rainfall/rainfall.dto";
@@ -14,6 +13,7 @@ import { weatherCoreService } from "../../../weathercore/mutations/weathercore-s
 import { log } from "@temporalio/activity";
 import { FetchJobsInput } from "@ouroboros/weathercore-representations";
 import { FeederDetails } from "../../workflow/input";
+import { mapStations } from "./station";
 
 interface MutationOpts {
   fileName: string;
@@ -34,9 +34,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
      * @param response
      */
     async temperatureMutation(response: ZTemperatureType) {
-      const stations = response.metadata.stations.map((station) =>
-        unwrapStationDTO(station),
-      );
+      const stations = await mapStations(response)
 
       try {
         await service.BatchUpsertStations(stations);
@@ -66,9 +64,7 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
      * @param response
      */
     async humidityMutation(response: ZHumidityType) {
-      const stations = response.metadata.stations.map((station) =>
-        unwrapStationDTO(station),
-      );
+      const stations = await mapStations(response)
 
       try {
         await service.BatchUpsertStations(stations);
@@ -98,9 +94,8 @@ export const createMutations = ({ fileName, topic }: MutationOpts) => {
      * @param response
      */
     async rainfallMutation(response: ZRainfallType) {
-      const stations = response.metadata.stations.map((station) =>
-        unwrapStationDTO(station),
-      );
+      const stations = await mapStations(response)
+
       try {
         await service.BatchUpsertStations(stations);
       } catch (error) {
