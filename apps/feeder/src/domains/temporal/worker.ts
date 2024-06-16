@@ -5,6 +5,8 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 
+// TODO: Create an optimised bunlder by using a pre-bundled file.
+// https://github.com/temporalio/samples-typescript/blob/main/production/src/worker.ts
 async function worker() {
   const worker = await Worker.create({
     namespace: "default",
