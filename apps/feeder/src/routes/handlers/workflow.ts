@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { validator } from "hono/validator";
 import { feederFlow } from "../../domains/temporal/workflow/workflow";
 import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input";
-import { workflowBinding } from "../binder/workflowBinding";
+import { workflowBinding } from "../binder";
 import { parse } from "../utils/parse";
 
 const workflow = new Hono()
@@ -35,12 +35,12 @@ workflow.post(
     c.status(200)
     console.log(await handle.result())
     return c.json({
-        executionRunId: handle.firstExecutionRunId,
-        workflowId: handle.workflowId,
-        parameters: {
-            date: date,
-            topic: topic
-        },
+      executionRunId: handle.firstExecutionRunId,
+      workflowId: handle.workflowId,
+      parameters: {
+        date: date,
+        topic: topic
+      },
     })
   }
 )
