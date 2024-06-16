@@ -36,7 +36,7 @@ export async function fetchData<T extends ZodTypeAny>(
   }: FetchData<T>
 ): Promise<z.infer<T> | undefined> {
   const zodFetcher = createZodFetcher();
-  const schema = zodSchema.schemer(topic) as unknown as z.infer<T>;
+  const schema = zodSchema.schemer(topic) as z.infer<T>;
 
   if (!schema) {
     log.error("No schema found for the topic", { topic });
