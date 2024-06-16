@@ -1,12 +1,40 @@
-FROM node:20-bullseye
+FROM node:20-bullseye AS base
 
-# For better cache utilization, copy package.json and lock file first and install the dependencies before copying the
-# rest of the application and building.
-COPY . /app
+FROM base AS builder
+
+RUN apt-get update
+
+# Set working dir.
+WORKDIR /app
+RUN npm install -g turbo
+# RUN pnpm global add turbo
+COPY . .
+RUN turbo prune @ouroboros/feeder --docker
+
+# Add Lockfile and package.json of the issolated workspace.
+FROM base AS installer
+RUN apt-get update
+RUN 
 WORKDIR /app
 
-# Alternatively, run npm ci, which installs only dependencies specified in the lock file and is generally faster.
-RUN npm install --only=production \
-  && npm run build
+# Install the depenendencies.
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-workspace.yaml
+RUN pnpm install
 
-CMD ["npm", "start"]
+# Build the project and its depenendencies.
+COPY --from=builder /app/out/full .
+COPY turbo.json turbo.json
+
+RUN pnpm turbo build --filter=@ouroboros/feeder
+
+FROM base as RUNNER
+WORKDIR /app
+
+RUN groupadd --system --gid 1001 feeder
+# RUN groupadd --system --uid 1001 feeder
+USER feeder
+COPY --from=installer /app .
+
+CMD node apps/feeder/out/index.js
