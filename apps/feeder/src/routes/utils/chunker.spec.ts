@@ -1,5 +1,5 @@
-import {chunker} from "../../../domains/temporal/utils/chunker";
-import {describe, expect, test} from "vitest";
+import { describe, expect, test } from "vitest";
+import { chunker } from "../../domains/temporal/utils/chunker";
 
 describe('test the chunking of a function', async () => {
   const oddArray = [1, 2, 3, 4, 5, 6, 7]
@@ -15,6 +15,6 @@ describe('test the chunking of a function', async () => {
 
   test(`an odd sized array, should not be left behind`, async () => {
     const result = await chunker(oddArray, oddChunkSize)
-    expect(result[result.length-1]?.length).toBe(1)
+    expect(result[result.length - 1]?.length).toBe(1)
   })
 })

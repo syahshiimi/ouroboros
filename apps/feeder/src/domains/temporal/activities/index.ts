@@ -16,7 +16,7 @@ import {
   TopicsEnum,
 } from "@ouroboros/weathercore-representations";
 
-interface FetchData<T> {
+export interface FetchData<T> {
   endpoint: string,
   topic: string,
   _zSchema: T,
