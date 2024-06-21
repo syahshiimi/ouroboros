@@ -51,7 +51,7 @@ export async function fetchData<T extends ZodTypeAny>(
   }
 }
 
-interface UploadR2 {
+export interface UploadR2 {
   response: unknown,
   input: FeederDetails
 }
