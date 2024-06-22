@@ -1,0 +1,21 @@
+{
+  "name": "@ouroboros/feeder-ui",
+  "description": "HonoJs REST endpoint for interacting with feeder service.",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.4.7",
+    "@ouroboros/s3-client": "workspace:*",
+    "@ouroboros/weather-schema": "workspace:*",
+    "@ouroboros/weathercore-representations": "workspace:*",
+    "dotenv-cli": "^7.4.2",
+    "graphql": "^16.9.0",
+    "graphql-request": "^7.0.1"
+  },
+  "devDependencies": {
+    "@ouroboros/eslint-config": "workspace:*",
+    "@ouroboros/typescript-config": "workspace:*",
+    "@types/bun": "latest"
+  }
+}
