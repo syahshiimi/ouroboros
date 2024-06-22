@@ -197,6 +197,9 @@ importers:
       '@ouroboros/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      typescript:
+        specifier: ^5.4.5
+        version: 5.5.2
 
   packages/typescript-config: {}
 
@@ -255,6 +258,16 @@ importers:
       graphql:
         specifier: ^16.8.1
         version: 16.8.1
+    devDependencies:
+      '@ouroboros/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@ouroboros/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: ^5.4.5
+        version: 5.5.2
 
 packages:
 

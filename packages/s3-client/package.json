@@ -15,7 +15,8 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:*",
-    "@ouroboros/typescript-config": "workspace:*"
+    "@ouroboros/typescript-config": "workspace:*",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.583.0"
