@@ -5,17 +5,14 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 
-// TODO: Create an optimised bunlder by using a pre-bundled file.
-// https://github.com/temporalio/samples-typescript/blob/main/production/src/worker.ts
-
-const workflowOption = () =>
-  process.env.NODE_ENV === 'production'
-    ? {
-      workflowBundle: {
-        codePath: require.resolve('../workflow/workflow-bundle.js'),
-      },
-    }
-    : { workflowsPath: require.resolve('./workflow/workflow') };
+// const workflowOption = () =>
+//   process.env.NODE_ENV === 'production'
+//     ? {
+//       workflowBundle: {
+//         codePath: require.resolve('./workflow/workflow'),
+//       },
+//     }
+//     : { workflowsPath: require.resolve('./workflow/workflow') };
 
 const temporalConnectionUrl = process.env.TEMPORAL_SERVER_ENDPOINT || 'localhost:7233'
 
@@ -28,8 +25,7 @@ async function worker() {
     connection: connection,
     namespace: "default",
     taskQueue: taskQueueName,
-    ...workflowOption(),
-    // workflowsPath: require.resolve("./workflow/workflow"),
+    workflowsPath: require.resolve('./workflow/workflow'),
     activities,
   });
 
