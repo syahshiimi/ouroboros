@@ -8,6 +8,8 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 RUN corepack enable
 RUN pnpm install turbo --global
+RUN pnpm config set store-dir ~/.pnpm-store
+
 
 FROM base AS builder
 # Set working dir.
@@ -27,20 +29,25 @@ COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
-RUN pnpm install
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --frozen-lockfile
 
 # Build the project and its depenendencies.
 COPY --from=builder /app/out/full .
 COPY turbo.json turbo.json
 RUN turbo build --filter=@ouroboros/feeder
 
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
+RUN rm -rf ./**/*/src
+
 FROM base as RUNNER
 WORKDIR /app
 
 RUN groupadd --system --gid 1001 feeder
-# RUN groupadd --system --uid 1001 feeder
+RUN adduser --system -uid 1001 feeder
 USER feeder
-COPY --from=installer /app .
+COPY --from=installer --chown=feeder:feeder /app .
 
-CMD node app/api/dist/index.js
+ENV PORT 4000
+EXPOSE $PORT
 
+CMD ["node", "apps/feeder/out/src/index.js"]
