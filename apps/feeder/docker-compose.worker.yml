@@ -1,0 +1,31 @@
+services:
+  feeder-worker:
+    container_name: feeder-worker
+    user: 1001:1001
+    image: ouroboros/feeder-worker:latest
+    env_file:
+      - .env
+    networks:
+      - temporal-network
+  feeder-api:
+    container_name: feeder-api
+    user: 1001:1001
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=${TEMPORAL_POSTGRES_USER}
+      - POSTGRES_PWD=${TEMPORAL_POSTGRES_PASSWORD}
+      - POSTGRES_SEEDS=postgresql
+    image: ouroboros/feeder-api:latest
+    env_file:
+      - ./.env
+    ports:
+      - published: 4000
+        target: 4000
+    networks:
+      - temporal-network
+
+networks:
+  temporal-network:
+    driver: bridge
+    name: temporal-network
