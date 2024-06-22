@@ -1,4 +1,5 @@
 import { Client, Connection } from "@temporalio/client";
+import { temporalConnectionUrl } from "../../shared/connection/temporal.js";
 
 /**
   * Create the temporal client with the connection object
@@ -6,7 +7,7 @@ import { Client, Connection } from "@temporalio/client";
 **/
 async function createTemporalClient(): Promise<Client> {
   const connection = await Connection.connect({
-    address: String(process.env.TEMPORAL_SERVER_ENDPOINT)
+    address: temporalConnectionUrl()
   });
   return new Client({ connection })
 }

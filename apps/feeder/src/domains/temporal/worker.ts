@@ -2,23 +2,13 @@ import { NativeConnection, Worker } from "@temporalio/worker";
 import { taskQueueName } from "./shared/topics.js";
 import * as activities from "./activities/index.js";
 import { createRequire } from "node:module";
+import { temporalConnectionUrl } from "../../shared/connection/temporal.js";
 
 const require = createRequire(import.meta.url);
 
-// const workflowOption = () =>
-//   process.env.NODE_ENV === 'production'
-//     ? {
-//       workflowBundle: {
-//         codePath: require.resolve('./workflow/workflow'),
-//       },
-//     }
-//     : { workflowsPath: require.resolve('./workflow/workflow') };
-
-const temporalConnectionUrl = process.env.TEMPORAL_SERVER_ENDPOINT || 'localhost:7233'
-
 async function worker() {
   const connection = await NativeConnection.connect({
-    address: temporalConnectionUrl
+    address: temporalConnectionUrl()
   })
 
   const worker = await Worker.create({
