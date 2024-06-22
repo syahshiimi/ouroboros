@@ -2,9 +2,7 @@
   "extends": "@ouroboros/typescript-config/base.json",
   "version": "4.4.2",
   "compilerOptions": {
-    "noEmit": true,
-    "moduleResolution": "node16",
-    "module": "node16"
+    "outDir": "./out",
   },
   "include": ["src/**/*.ts", "./index.ts"],
   "exlude": ["node_modules"]

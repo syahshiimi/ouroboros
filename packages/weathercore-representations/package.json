@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "weathercore-representations are client-side TypeScript representations of weathercore database schema, generated via codegen",
   "exports": {
-    ".": "./index.ts"
+    ".": "./out/index.js"
+  },
+  "scripts": {
+    "build": "tsc"
   },
   "type": "module",
-  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",

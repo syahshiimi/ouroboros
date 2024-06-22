@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "weather-schema generates JSON-Schema and exports reusable Zod Schema for runtime validation, servicing the development of a type-safe external-facing API",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./out/index.js"
   },
-  "main": "./src/index.ts",
   "scripts": {
-    "build": "tsc --build",
+    "build": "tsc",
     "generate:schema": "tsx ./src/utils/generate-schema.ts",
     "generate:zod": "tsx ./src/utils/generate-zod.ts"
   },
