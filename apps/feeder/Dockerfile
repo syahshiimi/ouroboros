@@ -42,12 +42,13 @@ RUN rm -rf ./**/*/src
 FROM base as RUNNER
 WORKDIR /app
 
-RUN groupadd --system --gid 1001 feeder
-RUN adduser --system -uid 1001 feeder
+RUN groupadd --system --gid 1001 feeder/rest
+RUN adduser --system --uid 1001 rest
 USER feeder
 COPY --from=installer --chown=feeder:feeder /app .
 
 ENV PORT 4000
+ENV NODE_ENV=production
 EXPOSE $PORT
 
 CMD ["node", "apps/feeder/out/src/index.js"]
