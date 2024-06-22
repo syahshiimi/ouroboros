@@ -19,7 +19,7 @@
       "dependsOn": [
         "^lint"
       ],
-      "env": ["R2_*", "DB_*", "GRAPHQL_*"]
+      "env": ["R2_*", "DB_*", "GRAPHQL_*", "TEMPORAL_*"]
     },
     "test": {
       "dependsOn": ["^build"]

@@ -42,4 +42,5 @@ RUN groupadd --system --gid 1001 feeder
 USER feeder
 COPY --from=installer /app .
 
-CMD node apps/api/dist/index.js
+CMD node app/api/dist/index.js
+
