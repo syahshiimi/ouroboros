@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { composer } from "../../domains/temporal/utils/composer";
+import { composer } from "../../domains/temporal/utils/composer.js";
 
 describe('test the topic producer', async () => {
   test('the topic should produce a url with topic and data', async () => {

@@ -1,9 +1,9 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import buckets from './routes/handlers/bucket'
-import upload from "./routes/handlers/upload";
-import workflow from "./routes/handlers/workflow";
-import graphql from "./routes/handlers/graphql";
+import buckets from './routes/handlers/bucket.js'
+import upload from "./routes/handlers/upload.js";
+import workflow from "./routes/handlers/workflow.js";
+import graphql from "./routes/handlers/graphql.js";
 
 const app = new Hono()
 

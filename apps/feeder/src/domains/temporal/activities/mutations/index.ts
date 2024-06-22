@@ -4,16 +4,16 @@ import {
   ZTemperatureType,
   ZUvType,
 } from "@ouroboros/weather-schema";
-import { chunker } from "../../utils/chunker";
-import { unwrapTemperatureDTO } from "../../../dto/temperature/temperature.dto";
-import { unwrapHumidityDTO } from "../../../dto/humidity/humidity.dto";
-import { unwrapRainfallDTO } from "../../../dto/rainfall/rainfall.dto";
-import { unwrapUvDTO } from "../../../dto/uv/uv.dto";
-import { weatherCoreService } from "../../../weathercore/mutations/weathercore-service";
+import { chunker } from "../../utils/chunker.js";
+import { unwrapTemperatureDTO } from "../../../dto/temperature/temperature.dto.js";
+import { unwrapHumidityDTO } from "../../../dto/humidity/humidity.dto.js";
+import { unwrapRainfallDTO } from "../../../dto/rainfall/rainfall.dto.js";
+import { unwrapUvDTO } from "../../../dto/uv/uv.dto.js";
+import { weatherCoreService } from "../../../weathercore/mutations/weathercore-service.js";
 import { log } from "@temporalio/activity";
 import { FetchJobsInput } from "@ouroboros/weathercore-representations";
-import { FeederDetails } from "../../workflow/input";
-import { mapStations } from "./station";
+import { FeederDetails } from "../../workflow/input.js";
+import { mapStations } from "./station.js";
 
 interface MutationOpts {
   fileName: string;

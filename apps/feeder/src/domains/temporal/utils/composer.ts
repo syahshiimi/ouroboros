@@ -1,5 +1,5 @@
-import {topics} from "../shared/topics";
-import {FeederDetails} from "../workflow/input";
+import { topics } from "../shared/topics.js";
+import { FeederDetails } from "../workflow/input.js";
 
 export async function composer(input: FeederDetails): Promise<string> {
   // Get API topic, from topic.
@@ -12,5 +12,5 @@ export async function composer(input: FeederDetails): Promise<string> {
   const data = new URLSearchParams();
   data.append('date', input.date)
 
-   return `${apiUrl}?${data.toString()}`
+  return `${apiUrl}?${data.toString()}`
 }

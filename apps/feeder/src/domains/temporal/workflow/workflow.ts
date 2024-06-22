@@ -4,10 +4,10 @@ import {
   proxyActivities,
   workflowInfo,
 } from "@temporalio/workflow";
-import { FeederDetails } from "./input";
-import { composer } from "../utils/composer";
-import * as activities from "../activities";
-import { zodSchema } from "../shared/zod-schema";
+import { FeederDetails } from "./input.js";
+import { composer } from "../utils/composer.js";
+import * as activities from "../activities/index.js";
+import { zodSchema } from "../shared/zod-schema.js";
 
 export async function feederFlow({ topic, date }: FeederDetails) {
   const { fetchData, uploadR2, updateTopicsTable, updateFetchJobsTable } =

@@ -1,4 +1,4 @@
-import { requestClient } from "../../temporal/shared/request";
+import { requestClient } from "../../temporal/shared/request.js";
 import {
   BatchUpsertHumidityReadingsDocument,
   BatchUpsertRainfallReadingsDocument,

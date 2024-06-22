@@ -1,9 +1,9 @@
 import { MockActivityEnvironment } from "@temporalio/testing";
 import { describe, expect, it } from "vitest";
-import { FeederDetails } from "../workflow/input";
-import * as actitivies from "./index"
-import { composer } from "../utils/composer";
-import { zodSchema } from "../shared/zod-schema";
+import * as actitivies from "./index.js"
+import { composer } from "../utils/composer.js";
+import { zodSchema } from "../shared/zod-schema.js";
+import { FeederDetails } from "../workflow/input.js";
 
 describe('ouroboros feeder activities', async () => {
   const env = new MockActivityEnvironment();

@@ -1,20 +1,20 @@
 import { createZodFetcher } from "zod-fetch";
 import { z, ZodTypeAny } from "zod";
-import { zodSchema } from "../shared/zod-schema";
+import { zodSchema } from "../shared/zod-schema.js";
 import { R2, S3Service } from "@ouroboros/s3-client";
-import { FeederDetails } from "../workflow/input";
+import { FeederDetails } from "../workflow/input.js";
 import {
   ZHumidityType,
   ZRainfallType,
   ZTemperatureType,
   ZUvType,
 } from "@ouroboros/weather-schema";
-import { createMutations } from "./mutations";
 import { log } from "@temporalio/activity";
 import {
   FetchJobsInput,
   TopicsEnum,
 } from "@ouroboros/weathercore-representations";
+import { createMutations } from "./mutations/index.js";
 
 export interface FetchData<T> {
   endpoint: string,

@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 import { validator } from "hono/validator";
-import { feederFlow } from "../../domains/temporal/workflow/workflow";
-import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input";
-import { workflowBinding } from "../binder";
-import { parse } from "../utils/parse";
+import { feederFlow } from "../../domains/temporal/workflow/workflow.js";
+import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input.js";
+import { workflowBinding } from "../binder/index.js";
+import { parse } from "../utils/parse.js";
 
 const workflow = new Hono()
 

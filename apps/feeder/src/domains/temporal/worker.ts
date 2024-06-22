@@ -1,6 +1,6 @@
 import { Worker } from "@temporalio/worker";
-import { taskQueueName } from "./shared/topics";
-import * as activities from "./activities";
+import { taskQueueName } from "./shared/topics.js";
+import * as activities from "./activities/index.js";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
