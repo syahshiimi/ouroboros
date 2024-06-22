@@ -4,7 +4,6 @@ import { FeederDetails } from "../workflow/input";
 import * as actitivies from "./index"
 import { composer } from "../utils/composer";
 import { zodSchema } from "../shared/zod-schema";
-import { unknown } from "zod";
 
 describe('ouroboros feeder activities', async () => {
   const env = new MockActivityEnvironment();
@@ -30,11 +29,6 @@ describe('ouroboros feeder activities', async () => {
 
   // Use the s3 mocking library...
   it('should upload to the R2 bucket', async () => {
-    const details: actitivies.UploadR2 = {
-      response: unknown,
-      input: feederDetails
-    }
-
   })
 
   it('should store to the topics table', async () => {
