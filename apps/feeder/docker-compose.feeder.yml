@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     networks:
-      - temporal-network
+      - ouroboros-local
   feeder-api:
     container_name: feeder-api
     user: 1001:1001
@@ -23,9 +23,9 @@ services:
       - published: 4000
         target: 4000
     networks:
-      - temporal-network
+      - ouroboros-local
 
 networks:
-  temporal-network:
+  ouroboros-local:
     driver: bridge
-    name: temporal-network
+    name: ouroboros-local
