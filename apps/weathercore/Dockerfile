@@ -1,64 +1,37 @@
-FROM oven/bun:1.1-debian AS base
+# use the official Bun image
+# see all versions at https://hub.docker.com/r/oven/bun/tags
+FROM oven/bun:1 as base
+WORKDIR /usr/src/app
 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+# install dependencies into temp directory
+# this will cache them and speed up future builds
+FROM base AS install
+RUN mkdir -p /temp/dev
+COPY package.json bun.lockb /temp/dev/
+RUN cd /temp/dev && bun install --frozen-lockfile
 
-# Setup debian-slim image.
-RUN apt-get update \
-  && apt-get install -y ca-certificates \
-  && apt-get install no \
-  && rm -rf /var/lib/apt/lists/* 
+# install with --production (exclude devDependencies)
+RUN mkdir -p /temp/prod
+COPY package.json bun.lockb /temp/prod/
+RUN cd /temp/prod && bun install --frozen-lockfile --production
 
-# Setup corepack pnpm and turbo.
-RUN bun i corepack
-RUN corepack enable
-RUN pnpm install turbo --global
-RUN pnpm config set store-dir ~/.pnpm-store
-
-# Prune projects.
-FROM base AS builder
-RUN apt-get update
-WORKDIR /app
+# copy node_modules from temp directory
+# then copy all (non-ignored) project files into the image
+FROM base AS prerelease
+COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
-RUN turbo prune @ouroboros/weathercore --docker
 
-# Build the project
-FROM base AS installer
-RUN apt-get update
-WORKDIR /app
-
-# Add lockfile and package.json.
-COPY .gitignore .gitignore
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=builder /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
-
-# Install the depenendencies first.
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --no-frozen-lockfile
-
-# Copy source code fro misoalted sub-workspace.
-COPY --from=builder /app/out/full .
-
-# Build the project
-COPY turbo.json turbo.json
-RUN turbo build --filter=@ouroboros/weathercore
-RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
-
-RUN rm -rf ./**/*/src
-
-# Final Image
-FROM base as RUNNER
-WORKDIR /app
-
-RUN groupadd --system --gid 1001 weathercore
-RUN adduser --system --uid 1001 waethercore
-USER feeder
-
+# [optional] tests & build
 ENV NODE_ENV=production
+RUN bun run build
 
-COPY --from=installer --chown=feeder:feeder /app .
-
-ENV PORT 3000
-EXPOSE $PORT
-
-CMD ["bun", "apps/weathercore/out/index.js"]
+# # copy production dependencies and source code into final image
+FROM base AS release
+COPY --from=install /temp/prod/node_modules node_modules
+COPY --from=prerelease /usr/src/app/out/index.js .
+COPY --from=prerelease /usr/src/app/package.json .
+#
+# # run the app
+USER bun
+EXPOSE 3000/tcp
+ENTRYPOINT [ "bun", "run", "index.js" ]
