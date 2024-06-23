@@ -1,5 +1,9 @@
 import { yoga } from "./src/domains/graphql/yoga";
 
+const port = 3000
+console.log(`Bun GraphQL Yoga server is running at http://localhost:${port}`)
+
 Bun.serve({
-  fetch: yoga
+  fetch: yoga,
+  port: port
 })
