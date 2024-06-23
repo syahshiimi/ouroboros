@@ -2,16 +2,14 @@ FROM node:20-bullseye-slim AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-# Setup debian-slim image.
+# Setup the debian-slim image.
 RUN apt-get update \
   && apt-get install -y ca-certificates \
   && rm -rf /var/lib/apt/lists/*
-
 # Setup corepack pnpm and turbo.
 RUN corepack enable
 RUN pnpm install turbo --global
 RUN pnpm config set store-dir ~/.pnpm-store
-
 
 # Prune projects.
 FROM base AS builder
