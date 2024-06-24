@@ -49,10 +49,10 @@ importers:
         version: 1.10.1
       '@temporalio/testing':
         specifier: ~1.9.3
-        version: 1.9.3
+        version: 1.9.3(esbuild@0.21.5)
       '@temporalio/worker':
         specifier: ^1.10.1
-        version: 1.10.1
+        version: 1.10.1(esbuild@0.21.5)
       '@temporalio/workflow':
         specifier: ^1.10.1
         version: 1.10.1
@@ -102,6 +102,9 @@ importers:
       aws-sdk-client-mock:
         specifier: ^4.0.1
         version: 4.0.1
+      esbuild:
+        specifier: 0.21.5
+        version: 0.21.5
       ts-to-zod:
         specifier: ^3.8.5
         version: 3.8.5
@@ -1813,7 +1816,6 @@ packages:
     cpu: [ppc64]
     os: [aix]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/android-arm64@0.18.20:
@@ -1848,7 +1850,6 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/android-arm@0.18.20:
@@ -1883,7 +1884,6 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/android-x64@0.18.20:
@@ -1918,7 +1918,6 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/darwin-arm64@0.18.20:
@@ -1953,7 +1952,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/darwin-x64@0.18.20:
@@ -1988,7 +1986,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/freebsd-arm64@0.18.20:
@@ -2023,7 +2020,6 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/freebsd-x64@0.18.20:
@@ -2058,7 +2054,6 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-arm64@0.18.20:
@@ -2093,7 +2088,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-arm@0.18.20:
@@ -2128,7 +2122,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-ia32@0.18.20:
@@ -2163,7 +2156,6 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-loong64@0.18.20:
@@ -2198,7 +2190,6 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-mips64el@0.18.20:
@@ -2233,7 +2224,6 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-ppc64@0.18.20:
@@ -2268,7 +2258,6 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-riscv64@0.18.20:
@@ -2303,7 +2292,6 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-s390x@0.18.20:
@@ -2338,7 +2326,6 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-x64@0.18.20:
@@ -2373,7 +2360,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/netbsd-x64@0.18.20:
@@ -2408,7 +2394,6 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/openbsd-x64@0.18.20:
@@ -2443,7 +2428,6 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/sunos-x64@0.18.20:
@@ -2478,7 +2462,6 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-arm64@0.18.20:
@@ -2513,7 +2496,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-ia32@0.18.20:
@@ -2548,7 +2530,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-x64@0.18.20:
@@ -2583,7 +2564,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.57.0):
@@ -4723,7 +4703,7 @@ packages:
       protobufjs: 7.3.2
     dev: false
 
-  /@temporalio/testing@1.9.3:
+  /@temporalio/testing@1.9.3(esbuild@0.21.5):
     resolution: {integrity: sha512-HsNH552QdooJ0LNLM5fXe3CG9Een2vAYcO9RHg7zHiBNuF4PSb4JxCL9v16Y1lhf1aSZJuQEBHShpXxb0RgTDw==}
     dependencies:
       '@grpc/grpc-js': 1.7.3
@@ -4732,7 +4712,7 @@ packages:
       '@temporalio/common': 1.9.3
       '@temporalio/core-bridge': 1.9.3
       '@temporalio/proto': 1.9.3
-      '@temporalio/worker': 1.9.3
+      '@temporalio/worker': 1.9.3(esbuild@0.21.5)
       '@temporalio/workflow': 1.9.3
       abort-controller: 3.0.0
     transitivePeerDependencies:
@@ -4742,7 +4722,7 @@ packages:
       - webpack-cli
     dev: false
 
-  /@temporalio/worker@1.10.1:
+  /@temporalio/worker@1.10.1(esbuild@0.21.5):
     resolution: {integrity: sha512-bGgA7ahVPc9OskeezYpkixQV4pCriEVm++M2wVxOz8wOygWokfqjpduE0sXmtKt7YNGM4oFTgs3ObQ3H9s7Ryg==}
     engines: {node: '>= 16.0.0'}
     dependencies:
@@ -4762,7 +4742,7 @@ packages:
       supports-color: 8.1.1
       swc-loader: 0.2.6(@swc/core@1.6.3)(webpack@5.92.1)
       unionfs: 4.5.4
-      webpack: 5.92.1(@swc/core@1.6.3)
+      webpack: 5.92.1(@swc/core@1.6.3)(esbuild@0.21.5)
     transitivePeerDependencies:
       - '@swc/helpers'
       - esbuild
@@ -4770,7 +4750,7 @@ packages:
       - webpack-cli
     dev: false
 
-  /@temporalio/worker@1.9.3:
+  /@temporalio/worker@1.9.3(esbuild@0.21.5):
     resolution: {integrity: sha512-RFotNUeWNnLDk4EvnPVZBiYAZWc+daezr/Prn/iMsCI6e3CxbchDha6GiqIVkIF3ppq1R2Vl+FpouNA/gBniGg==}
     engines: {node: '>= 14.18.0'}
     dependencies:
@@ -4789,7 +4769,7 @@ packages:
       source-map-loader: 4.0.2(webpack@5.92.1)
       swc-loader: 0.2.6(@swc/core@1.6.3)(webpack@5.92.1)
       unionfs: 4.5.4
-      webpack: 5.92.1(@swc/core@1.6.3)
+      webpack: 5.92.1(@swc/core@1.6.3)(esbuild@0.21.5)
     transitivePeerDependencies:
       - '@swc/helpers'
       - esbuild
@@ -6997,7 +6977,6 @@ packages:
       '@esbuild/win32-arm64': 0.21.5
       '@esbuild/win32-ia32': 0.21.5
       '@esbuild/win32-x64': 0.21.5
-    dev: true
 
   /escalade@3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -10074,7 +10053,7 @@ packages:
     dependencies:
       iconv-lite: 0.6.3
       source-map-js: 1.2.0
-      webpack: 5.92.1(@swc/core@1.6.3)
+      webpack: 5.92.1(@swc/core@1.6.3)(esbuild@0.21.5)
     dev: false
 
   /source-map-support@0.5.21:
@@ -10284,7 +10263,7 @@ packages:
     dependencies:
       '@swc/core': 1.6.3
       '@swc/counter': 0.1.3
-      webpack: 5.92.1(@swc/core@1.6.3)
+      webpack: 5.92.1(@swc/core@1.6.3)(esbuild@0.21.5)
     dev: false
 
   /synckit@0.8.5:
@@ -10299,7 +10278,7 @@ packages:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
 
-  /terser-webpack-plugin@5.3.10(@swc/core@1.6.3)(webpack@5.92.1):
+  /terser-webpack-plugin@5.3.10(@swc/core@1.6.3)(esbuild@0.21.5)(webpack@5.92.1):
     resolution: {integrity: sha512-BKFPWlPDndPs+NGGCr1U59t0XScL5317Y0UReNrHaw9/FwhPENlq6bfgs+4yPfyP51vqC1bQ4rp1EfXW5ZSH9w==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -10317,11 +10296,12 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       '@swc/core': 1.6.3
+      esbuild: 0.21.5
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.31.1
-      webpack: 5.92.1(@swc/core@1.6.3)
+      webpack: 5.92.1(@swc/core@1.6.3)(esbuild@0.21.5)
     dev: false
 
   /terser@5.31.1:
@@ -10977,7 +10957,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: false
 
-  /webpack@5.92.1(@swc/core@1.6.3):
+  /webpack@5.92.1(@swc/core@1.6.3)(esbuild@0.21.5):
     resolution: {integrity: sha512-JECQ7IwJb+7fgUFBlrJzbyu3GEuNBcdqr1LD7IbSzwkSmIevTm8PF+wej3Oxuz/JFBUZ6O1o43zsPkwm1C4TmA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
@@ -11008,7 +10988,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(@swc/core@1.6.3)(webpack@5.92.1)
+      terser-webpack-plugin: 5.3.10(@swc/core@1.6.3)(esbuild@0.21.5)(webpack@5.92.1)
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
