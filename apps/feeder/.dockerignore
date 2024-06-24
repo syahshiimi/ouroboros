@@ -3,6 +3,7 @@ Dockerfile*
 docker-compose*
 .dockerignore
 .git
+.gitignore
 README.md
 LICENSE
 .vscode
@@ -11,4 +12,3 @@ helm-charts
 .editorconfig
 .idea
 coverage*
-out/
