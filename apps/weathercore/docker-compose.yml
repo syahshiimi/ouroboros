@@ -1,7 +1,5 @@
-version: '3.1'
-
 services:
-  db:
+  timescale:
     image: timescale/timescaledb-ha:pg14-latest 
     restart: always 
     # volumes:
@@ -12,3 +10,19 @@ services:
       POSTGRES_DB: ${DB_NAME} 
     ports:
       - 5433:5432
+    networks:
+      - ouroboros-local
+  weathercore:
+    image: ouroboros/weathercore:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    networks:
+      - ouroboros-local
+
+networks:
+  ouroboros-local:
+    driver: bridge
+    name: ouroboros-local

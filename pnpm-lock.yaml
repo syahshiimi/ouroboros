@@ -117,6 +117,12 @@ importers:
 
   apps/weathercore:
     dependencies:
+      '@ouroboros/eslint-config':
+        specifier: workspace:*
+        version: link:../../packages/eslint-config
+      '@ouroboros/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
       '@pothos/core':
         specifier: ^3.41.1
         version: 3.41.1(graphql@16.8.1)
