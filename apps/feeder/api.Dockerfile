@@ -53,9 +53,9 @@ USER feeder
 
 ENV NODE_ENV=production
 
-COPY --from=installer --chown=feeder:feeder /app .
+COPY --from=installer --chown=feeder:feeder /app/apps/feeder/out/index.cjs .
 
 ENV PORT 4000
 EXPOSE $PORT
 
-CMD ["node", "apps/feeder/out/src/index.js"]
+ENTRYPOINT ["node", "index.cjs"]
