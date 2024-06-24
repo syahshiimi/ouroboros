@@ -5,9 +5,9 @@
     "build": "bun build --entrypoints ./index.ts --outdir ./out --target node --splitting",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
-    "push": "drizzle-kit push",
+    "push": "dotenv -e .env.local drizzle-kit push",
     "drop": "drizzle-kit drop",
-    "dev": "bun run --watch ./index.ts",
+    "dev": "bun --env-file=.env.local run --watch ./index.ts",
     "lint": "eslint .",
     "test": "bun test",
     "schemagen": "bun run ./src/domains/graphql/generate.ts"
