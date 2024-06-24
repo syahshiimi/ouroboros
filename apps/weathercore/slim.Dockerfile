@@ -30,6 +30,7 @@ FROM base as installer
 RUN apt-get update
 WORKDIR /app
 
+
 # Add lockfile and package.json
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
@@ -42,13 +43,12 @@ RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --no-frozen-loc
 # Copy source code fro misoalted sub-workspace.
 COPY --from=builder /app/out/full .
 
+ENV NODE_ENV=production
+
 # Build the project
 COPY turbo.json turbo.json
 RUN turbo build --filter=@ouroboros/weathercore
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
-
-# Cleanup the workdir.
-RUN rm -rf node_modules/
 
 # Final iamge.
 FROM base as runner
@@ -59,11 +59,10 @@ RUN groupadd --system --gid 1001 weathercore
 RUN adduser --system --uid 1001 weathercore
 USER weathercore
 
-ENV NODE_ENV=production
-
-COPY --from=installer --chown=weathercore:weathercore /app .
+# Copy relevant build artifacts only.
+COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/out/index.js .
 
 ENV PORT 3000
 EXPOSE $PORT
 
-ENTRYPOINT [ "bun", "run", "apps/weathercore/out/index.js" ]
+ENTRYPOINT [ "bun", "run", "index.js" ]
