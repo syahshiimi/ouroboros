@@ -9,11 +9,11 @@ import { unwrapTemperatureDTO } from "../../../dto/temperature/temperature.dto.j
 import { unwrapHumidityDTO } from "../../../dto/humidity/humidity.dto.js";
 import { unwrapRainfallDTO } from "../../../dto/rainfall/rainfall.dto.js";
 import { unwrapUvDTO } from "../../../dto/uv/uv.dto.js";
-import { weatherCoreService } from "../../../weathercore/mutations/weathercore-service.js";
 import { log } from "@temporalio/activity";
 import { FetchJobsInput } from "@ouroboros/weathercore-representations";
 import { FeederDetails } from "../../workflow/input.js";
 import { mapStations } from "./station.js";
+import { weatherCoreService } from "../../../weathercore/mutations/index.js";
 
 interface MutationOpts {
   fileName: string;
