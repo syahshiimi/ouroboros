@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { chunker } from "../../domains/temporal/utils/chunker.js";
+import { chunker } from "./chunker.js";
 
 describe('test the chunking of a function', async () => {
   const oddArray = [1, 2, 3, 4, 5, 6, 7]

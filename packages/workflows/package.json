@@ -26,7 +26,9 @@
     "build": "tsc --build",
     "build.watch": "tsc --build --watch",
     "lint": "eslint .",
-    "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "type": "module",
   "dependencies": {
@@ -52,6 +54,7 @@
     "@types/node": "^16.11.43",
     "prettier": "^2.8.8",
     "tsx": "^4.15.7",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.2",
+    "vitest": "^1.6.0"
   }
 }
