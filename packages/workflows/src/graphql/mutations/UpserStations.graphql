@@ -1,0 +1,10 @@
+mutation BatchUpsertStations($stations: [StationsInput!]!) {
+    upsertStation(
+        input: $stations
+    ) {
+        station_id
+        longitude
+        latitude
+        location_name
+    }
+}

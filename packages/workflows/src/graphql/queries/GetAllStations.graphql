@@ -1,0 +1,5 @@
+query GetStations {
+  getAllStations {
+    station_id
+  }
+}
