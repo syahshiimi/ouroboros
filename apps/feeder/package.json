@@ -34,6 +34,7 @@
     "zod-fetch": "^0.1.1"
   },
   "devDependencies": {
+    "eslint": "^8.57.0",
     "@ouroboros/eslint-config": "workspace:*",
     "@ouroboros/typescript-config": "workspace:*",
     "@types/node": "^20.14.7",
