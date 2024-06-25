@@ -1,9 +1,18 @@
 import { Hono } from "hono";
 import { validator } from "hono/validator";
-import { feederFlow } from "../../domains/temporal/workflow/workflow.js";
-import { FeederDetails, requestSchema } from "../../domains/temporal/workflow/input.js";
 import { workflowBinding } from "../binder/index.js";
 import { parse } from "../utils/parse.js";
+import { z } from "zod";
+import { feederFlow } from "@ouroboros/workflows";
+import { FeederDetails } from "@ouroboros/workflows/inputs";
+import { availableTopics } from "@ouroboros/workflows/task";
+
+export const requestSchema = z.object({
+  date: z.string().date(),
+  topic: z.enum(availableTopics)
+})
+
+export type RequestSchema = z.infer<typeof requestSchema>
 
 const workflow = new Hono()
 

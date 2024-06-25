@@ -1,8 +1,8 @@
 import { Workflow } from "@temporalio/client";
 import { nanoid } from "nanoid";
-import { taskQueueName } from "../../domains/temporal/shared/topics.js";
-import { FeederDetails } from "../../domains/temporal/workflow/input.js";
 import { temporalBinderClient } from "./client.js";
+import { FeederDetails } from "@ouroboros/workflows/inputs";
+import { taskQueueName } from "@ouroboros/workflows/task";
 
 interface CreateWorkflowHandler<T extends FeederDetails> {
   workflowCallback: Workflow,
