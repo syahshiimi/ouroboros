@@ -4,6 +4,7 @@
   "description": "HonoJs + temporalio application that orchestras the services.",
   "scripts": {
     "build": "esbuild src/index.ts --bundle --platform=node --format=cjs --outfile=out/index.cjs",
+    "build:worker": "tsc",
     "dev": "dotenv -e .env tsx watch src/index.ts",
     "start": "dotenv -e .env node out/src/index.js",
     "lint": "eslint .",
@@ -32,7 +33,6 @@
     "hono": "^4.4.7",
     "nanoid": "~3.3.7",
     "node-fetch": "^3.3.2",
-    "pkgroll": "^2.1.1",
     "zod": "^3.23.8",
     "zod-fetch": "^0.1.1"
   },
@@ -44,7 +44,6 @@
     "@vitest/coverage-v8": "^1.6.0",
     "aws-sdk-client-mock": "^4.0.1",
     "esbuild": "0.21.5",
-    "ts-to-zod": "^3.8.5",
     "tsx": "^4.15.7",
     "typescript": "^5.5.2",
     "vitest": "^1.6.0"
