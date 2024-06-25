@@ -1,9 +1,7 @@
-FROM node:20-bullseye-slim AS base
+FROM node:20-alpine AS base
 
-# Setup the debian-slim image.
-RUN apt-get update \
-  && apt-get install -y ca-certificates \
-  && rm -rf /var/lib/apt/lists/*
+# Setup the alpine image.
+RUN apk add --no-cache libc6-compat
 
 # Setup corepack pnpm and turbo.
 ENV PNPM_HOME="/pnpm"
@@ -15,14 +13,14 @@ RUN pnpm config set store-dir ~/.pnpm-store
 
 # Prune projects.
 FROM base AS builder
-RUN apt-get update
+RUN apk update
 WORKDIR /app
 COPY . .
 RUN turbo prune @ouroboros/feeder --docker
 
 # Prepare the build step.
 FROM base AS installer
-RUN apt-get update
+RUN apk update
 WORKDIR /app
 
 # Add lockfile and package.json.
@@ -47,13 +45,13 @@ RUN rm -rf ./**/*/src
 FROM base as RUNNER
 WORKDIR /app
 
-RUN groupadd --system --gid 1001 feeder/rest
-RUN adduser --system --uid 1001 rest
-USER feeder
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 hono
+USER hono
 
 ENV NODE_ENV=production
 
-COPY --from=installer --chown=feeder:feeder /app/apps/feeder/out/index.cjs .
+COPY --from=installer --chown=hono:nodejs /app/apps/feeder/out/index.cjs .
 
 ENV PORT 4000
 EXPOSE $PORT
