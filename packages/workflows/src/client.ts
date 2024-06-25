@@ -1,9 +1,7 @@
 import { Connection, Client } from '@temporalio/client';
 import { nanoid } from 'nanoid';
 import { TASK_QUEUE_NAME } from './shared';
-
-// import your workflow
-import { YOUR_WORKFLOW } from './workflows';
+import { workflows } from './workflows';
 
 async function run() {
   // Connect to the default Server location
@@ -19,10 +17,10 @@ async function run() {
     // namespace: 'foo.bar', // connects to 'default' namespace if not specified
   });
 
-  const handle = await client.workflow.start(YOUR_WORKFLOW, {
+  const handle = await client.workflow.start(workflows, {
     taskQueue: TASK_QUEUE_NAME,
     // type inference works! args: [name: string]
-    args: ['Temporal'],
+    args: undefined,
     // in practice, use a meaningful business ID, like customerId or transactionId
     workflowId: 'workflow-' + nanoid(),
   });
