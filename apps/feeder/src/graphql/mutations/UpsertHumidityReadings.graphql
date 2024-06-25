@@ -1,5 +1,0 @@
-mutation BatchUpsertHumidityReadings($humidityReadings: [HumidityInput!]!) {
-    upsertHumidityReadings(input: $humidityReadings) {
-        station_id
-    }
-}

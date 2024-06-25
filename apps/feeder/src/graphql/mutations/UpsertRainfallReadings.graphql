@@ -1,7 +1,0 @@
-mutation BatchUpsertRainfallReadings($rainfallReadings: [RainfallInput!]!) {
-    upsertRainfallReadings(input: $rainfallReadings)
-    {
-        station_id
-        id
-    }
-}
