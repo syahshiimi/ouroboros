@@ -1,9 +1,8 @@
 import { NativeConnection, Worker } from "@temporalio/worker";
 import { createRequire } from "node:module";
-import { temporalConnectionUrl } from "./shared/connection/temporal.js";
+import { temporalConnectionUrl } from "../shared/connection/temporal.js";
 import * as activities from "@ouroboros/workflows/activities"
 import { taskQueueName } from "@ouroboros/workflows/task";
-
 
 const require = createRequire(import.meta.url);
 
