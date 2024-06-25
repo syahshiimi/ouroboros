@@ -5,7 +5,22 @@
   "author": "syahshiimi",
   "private": true,
   "exports": {
-    ".": "./out/index.js"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./out/index.js"
+    },
+    "./inputs": {
+      "types": "./src/input.ts",
+      "default": "./out/input.js"
+    },
+    "./activities": {
+      "types": "./src/activities.ts",
+      "default": "./out/activities.js"
+    },
+    "./task": {
+      "types": "./src/tasks.ts",
+      "default": "./out/tasks.js"
+    }
   },
   "scripts": {
     "build": "tsc --build",
