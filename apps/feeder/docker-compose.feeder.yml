@@ -4,7 +4,7 @@ services:
     user: 1001:1001
     image: ouroboros/feeder-worker:latest
     env_file:
-      - .env
+      - .env.docker
     networks:
       - ouroboros-local
   feeder-api:
@@ -18,7 +18,7 @@ services:
       - POSTGRES_SEEDS=postgresql
     image: ouroboros/feeder-api:latest
     env_file:
-      - .env
+      - .env.docker
     ports:
       - published: 4000
         target: 4000
