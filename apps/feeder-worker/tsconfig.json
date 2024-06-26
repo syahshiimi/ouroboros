@@ -1,12 +1,19 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
-  "version": "4.4.2",
+  "extends": "@ouroboros/typescript-config/base.json",
   "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
     "sourceMap": true,
-    "rootDir": "./src",
-    "outDir": "./lib"
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./out",
+    "types": [
+      "node"
+    ],
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "./*.config.ts"],
+  "exclude": ["node_modules" ],
 }

@@ -1,38 +1,31 @@
-import { NativeConnection, Worker } from '@temporalio/worker';
-import * as activities from './activities';
-import { TASK_QUEUE_NAME } from './shared';
+import { NativeConnection, Worker } from "@temporalio/worker";
+import { createRequire } from "node:module";
+import * as activities from "@ouroboros/workflows/activities"
+import { taskQueueName } from "@ouroboros/workflows/task";
 
-async function run() {
-  // Step 1: Establish a connection with Temporal server.
-  //
-  // Worker code uses `@temporalio/worker.NativeConnection`.
-  // (But in your application code it's `@temporalio/client.Connection`.)
+const require = createRequire(import.meta.url);
+
+async function worker() {
+  const temporalConnectionUrl = () => process.env.NODE_ENV === 'production'
+    ? process.env.TEMPORAL_SERVER_ENDPOINT
+    : 'localhost:7233'
+
   const connection = await NativeConnection.connect({
-    address: 'localhost:7233',
-    // TLS and gRPC metadata configuration goes here.
-  });
-  // Step 2: Register Workflows and Activities with the Worker.
+    address: temporalConnectionUrl()
+  })
+
   const worker = await Worker.create({
-    connection,
-    namespace: 'default',
-    taskQueue: TASK_QUEUE_NAME,
-    // Workflows are registered using a path as they run in a separate JS context.
-    workflowsPath: require.resolve('./workflows'),
-    activities,
+    connection: connection,
+    namespace: "default",
+    taskQueue: taskQueueName,
+    workflowsPath: require.resolve('@ouroboros/workflows'),
+    activities: activities,
   });
 
-  // Step 3: Start accepting tasks on the Task Queue specified in TASK_QUEUE_NAME
-  //
-  // The worker runs until it encounters an unexpected error or the process receives a shutdown signal registered on
-  // the SDK Runtime object.
-  //
-  // By default, worker logs are written via the Runtime logger to STDERR at INFO level.
-  //
-  // See https://typescript.temporal.io/api/classes/worker.Runtime#install to customize these defaults.
   await worker.run();
 }
 
-run().catch((err) => {
+worker().catch((err) => {
   console.error(err);
   process.exit(1);
 });

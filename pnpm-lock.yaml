@@ -108,16 +108,10 @@ importers:
 
   apps/feeder-worker:
     dependencies:
-      '@temporalio/activity':
-        specifier: ^1.9.0
-        version: 1.10.1
-      '@temporalio/client':
-        specifier: ^1.9.0
-        version: 1.10.1
+      '@ouroboros/workflows':
+        specifier: workspace:*
+        version: link:../../packages/workflows
       '@temporalio/worker':
-        specifier: ^1.9.0
-        version: 1.10.1
-      '@temporalio/workflow':
         specifier: ^1.9.0
         version: 1.10.1
       nanoid:
@@ -136,9 +130,12 @@ importers:
       prettier:
         specifier: ^2.8.8
         version: 2.8.8
+      tsx:
+        specifier: ^4.15.7
+        version: 4.15.7
       typescript:
-        specifier: ^4.4.2
-        version: 4.9.5
+        specifier: ^5.5.2
+        version: 5.5.2
 
   apps/weathercore:
     dependencies:
@@ -10306,12 +10303,6 @@ packages:
       call-bind: 1.0.5
       for-each: 0.3.3
       is-typed-array: 1.1.12
-    dev: true
-
-  /typescript@4.9.5:
-    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
     dev: true
 
   /typescript@5.3.3:
