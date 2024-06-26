@@ -43,26 +43,17 @@ RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optio
 RUN rm -rf ./**/*/src
 
 # Final Image
-FROM base as RUNNER
+FROM gcr.io/distroless/nodejs20-debian11
 WORKDIR /app
-
-RUN groupadd --system --gid 1001 feeder-worker
-RUN adduser --system --uid 1001 worker
-USER worker
 
 ENV NODE_ENV=production
 
-# Working, dont delete.
-# COPY --from=installer --chown=worker:feeder-worker /app .
+# Copy from installer to the distroless image.
+COPY --from=installer /app/apps/feeder-worker/out ./apps/feeder-worker/out
+COPY --from=installer /app/apps/feeder-worker/node_modules ./apps/feeder-worker/node_modules
+COPY --from=installer /app/apps/feeder-worker/package.json ./apps/feeder-worker/package.json
 
-COPY --from=installer --chown=worker:feeder-worker /app/apps/feeder-worker/out ./apps/feeder-worker/out
-COPY --from=installer --chown=worker:feeder-worker /app/apps/feeder-worker/node_modules ./apps/feeder-worker/node_modules
-COPY --from=installer --chown=worker:feeder-worker /app/apps/feeder-worker/package.json ./apps/feeder-worker/package.json
+COPY --from=installer /app/node_modules node_modules
+COPY --from=installer /app/packages packages
 
-COPY --from=installer --chown=worker:feeder-worker /app/node_modules node_modules
-COPY --from=installer --chown=worker:feeder-worker /app/packages packages
-
-CMD du -sh *
-
-# working, don't delete.
-ENTRYPOINT ["node", "apps/feeder-worker/out/worker.js"]
+CMD ["apps/feeder-worker/out/worker.js"]
