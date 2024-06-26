@@ -8,8 +8,7 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
 RUN corepack enable
-RUN pnpm install turbo --global
-RUN pnpm config set store-dir ~/.pnpm-store
+RUN pnpm install turbo --global && pnpm config set store-dir ~/.pnpm-store
 
 # Prune projects.
 FROM base AS builder
