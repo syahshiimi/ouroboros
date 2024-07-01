@@ -18,14 +18,17 @@ jobs:
  
     steps:
       - name: Check out code
-        uses: oven-sh/setup-bun@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
  
       - uses: pnpm/action-setup@v3
         with:
           version: 8
- 
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
