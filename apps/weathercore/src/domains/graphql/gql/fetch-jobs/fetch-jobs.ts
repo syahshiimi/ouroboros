@@ -1,11 +1,7 @@
-import {
-  findFetchJobsTasksByTopic,
-  findFetchJobsTaskById,
-  upsertFetchJobsTask,
-} from "../../../../data-access/repositories/fetch-jobs/fetch-jobs-repository";
 import { builder } from "../../builder";
 import { FetchJobsType } from "../../types";
 import { topicsEnum } from "../../enums.ts";
+import { FetchJobsRepository } from "../../../../data-access/repositories/fetch-jobs/fetch-jobs-repository.ts";
 
 const FetchJobsInput = builder.inputType("FetchJobsInput", {
   fields: (t) => ({
@@ -50,6 +46,8 @@ FetchJobsType.implement({
   }),
 });
 
+const fetchService = await FetchJobsRepository();
+
 builder.queryField("findFetchJobsTaskById", (t) =>
   t.field({
     type: FetchJobsType,
@@ -58,7 +56,7 @@ builder.queryField("findFetchJobsTaskById", (t) =>
       id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await findFetchJobsTaskById(args.id);
+      return await fetchService.findFetchJobsTaskById(args.id);
     },
   }),
 );
@@ -71,7 +69,7 @@ builder.queryField("findFetchJobsByTopic", (t) =>
       topic: t.arg({ type: topicsEnum, required: true }),
     },
     resolve: async (_, args) => {
-      return await findFetchJobsTasksByTopic(args.topic);
+      return await fetchService.findFetchJobsTasksByTopic(args.topic);
     },
   }),
 );
@@ -84,7 +82,7 @@ builder.mutationField("upsertFetchJobsTask", (t) =>
       input: t.arg({ type: [FetchJobsInput], required: true }),
     },
     resolve: async (_, args) => {
-      return await upsertFetchJobsTask([...args.input]);
+      return await fetchService.upsertFetchJobsTask([...args.input]);
     },
   }),
 );
