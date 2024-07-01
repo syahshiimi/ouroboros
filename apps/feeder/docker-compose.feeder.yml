@@ -2,7 +2,7 @@ services:
   feeder-worker:
     container_name: feeder-worker
     user: 1001:1001
-    image: ouroboros/feeder-worker:latest
+    image: syahshiimi/ouroboros-feeder-worker:main
     env_file:
       - .env.docker
     networks:
@@ -16,7 +16,7 @@ services:
       - POSTGRES_USER=${TEMPORAL_POSTGRES_USER}
       - POSTGRES_PWD=${TEMPORAL_POSTGRES_PASSWORD}
       - POSTGRES_SEEDS=postgresql
-    image: ouroboros/feeder-api:latest
+    image: syahshiimi/ouroboros-feeder-api:main
     env_file:
       - .env.docker
     ports:
