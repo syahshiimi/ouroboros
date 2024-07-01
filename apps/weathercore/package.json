@@ -9,7 +9,7 @@
     "drop": "drizzle-kit drop",
     "dev": "bun --env-file=.env.local run --watch ./index.ts",
     "lint": "eslint .",
-    "test": "bun test",
+    "test": "dotenv -e .env.local bun test",
     "schemagen": "bun run ./src/domains/graphql/generate.ts"
   },
   "devDependencies": {

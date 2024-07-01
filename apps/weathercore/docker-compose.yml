@@ -13,7 +13,7 @@ services:
     networks:
       - ouroboros-local
   weathercore:
-    image: ouroboros/weathercore:latest
+    image: syahshiimi/ouroboros-weathercore:main
     user: 1001:1001
     restart: always
     env_file:

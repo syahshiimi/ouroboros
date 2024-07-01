@@ -1,37 +1,71 @@
-# use the official Bun image
-# see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1 as base
-WORKDIR /usr/src/app
+ARG NODE_VERSION=20
 
-# install dependencies into temp directory
-# this will cache them and speed up future builds
-FROM base AS install
-RUN mkdir -p /temp/dev
-COPY package.json bun.lockb /temp/dev/
-RUN cd /temp/dev && bun install --frozen-lockfile
+FROM node:${NODE_VERSION}-bullseye-slim AS base
 
-# install with --production (exclude devDependencies)
-RUN mkdir -p /temp/prod
-COPY package.json bun.lockb /temp/prod/
-RUN cd /temp/prod && bun install --frozen-lockfile --production
+ARG BUN_VERSION=1.1.16
 
-# copy node_modules from temp directory
-# then copy all (non-ignored) project files into the image
-FROM base AS prerelease
-COPY --from=install /temp/dev/node_modules node_modules
+# Install bun.
+ENV PATH="${PATH}:/root/.bun/bin"
+# We will use bun for runtime only, not to install the package.
+RUN apt-get update && apt-get install -y bash curl unzip && \
+  curl https://bun.sh/install | bash -s -- bun-v${BUN_VERSION} 
+
+# Install pnpm
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+RUN corepack enable
+RUN pnpm install turbo --global
+RUN pnpm config set store-dir ~/.pnpm-store
+
+# Prune projects.
+FROM base as builder
+RUN apt-get update
+WORKDIR /app
 COPY . .
+RUN turbo prune @ouroboros/weathercore --docker
 
-# [optional] tests & build
+# Prepare the build step.
+FROM base as installer
+RUN apt-get update
+WORKDIR /app
+
+
+# Add lockfile and package.json
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=builder /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+
+# Install the dependencies.
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm install --no-frozen-lockfile
+
+# Copy source code fro misoalted sub-workspace.
+COPY --from=builder /app/out/full .
+
 ENV NODE_ENV=production
-RUN bun run build
 
-# # copy production dependencies and source code into final image
-FROM base AS release
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=prerelease /usr/src/app/out/index.js .
-COPY --from=prerelease /usr/src/app/package.json .
-#
-# # run the app
-USER bun
-EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", "index.js" ]
+# Build the project
+COPY turbo.json turbo.json
+RUN turbo build --filter=@ouroboros/weathercore
+RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
+
+# Final iamge.
+# FROM base as runner
+FROM oven/bun:distroless as runner
+WORKDIR /app
+
+# Create user groups.
+# RUN groupadd --system --gid 1001 weathercore
+# RUN adduser --system --uid 1001 weathercore
+# USER weathercore
+
+# Copy relevant build artifacts only.
+COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/out/index.js .
+COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/package.json package.json
+
+ENV PORT 3000
+EXPOSE $PORT
+
+# ENTRYPOINT [ "bun", "run", "index.js" ]
+CMD [ "./index.js" ]
