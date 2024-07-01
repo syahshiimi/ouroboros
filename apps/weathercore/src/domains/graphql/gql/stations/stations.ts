@@ -1,11 +1,8 @@
-import {
-  deleteAllStations,
-  findStationByStationId,
-  getAllStations,
-  upsertStationDetails,
-} from "../../../../data-access/repositories/stations/stations-repository";
 import { builder } from "../../builder";
 import { StationsType } from "../../types";
+import { StationsRepository } from "../../../../data-access/repositories/stations/stations-repository.ts";
+
+const stationService = await StationsRepository();
 
 const StationsInput = builder.inputType("StationsInput", {
   fields: (t) => ({
@@ -35,7 +32,7 @@ builder.queryField("findStationsByStationId", (t) =>
       station_id: t.arg.string({ required: true }),
     },
     resolve: (_, args) => {
-      return findStationByStationId(args.station_id);
+      return stationService.findStationByStationId(args.station_id);
     },
   }),
 );
@@ -45,7 +42,7 @@ builder.queryField("getAllStations", (t) =>
     type: [StationsType],
     description: "Finds all stations.",
     resolve: () => {
-      return getAllStations();
+      return stationService.getAllStations();
     },
   }),
 );
@@ -58,7 +55,7 @@ builder.mutationField("upsertStation", (t) =>
       input: t.arg({ type: [StationsInput], required: true }),
     },
     resolve: (_, args) => {
-      return upsertStationDetails([...args.input]);
+      return stationService.upsertStationDetails([...args.input]);
     },
   }),
 );
@@ -68,7 +65,7 @@ builder.mutationField("deleteAllStations", (t) =>
     type: [StationsType],
     description: "Deletes all station record.",
     resolve: () => {
-      return deleteAllStations();
+      return stationService.deleteAllStations();
     },
   }),
 );
