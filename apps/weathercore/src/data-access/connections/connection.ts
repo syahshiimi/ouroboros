@@ -1,4 +1,6 @@
 import postgres from "postgres";
+import { PgTable } from "drizzle-orm/pg-core";
+import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 
 const DB_USER = process.env.DB_USER;
 const DB_HOST = process.env.DB_HOST;
@@ -8,19 +10,31 @@ const DB_NAME = process.env.DB_NAME;
 
 const localDevString = `postgresql://${DB_USER!}:${DB_PASSWORD!}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
-/**
- * Creates a postgres DB connection to the endpoint.
- **/
-export function createDbConnection(
+const createDbConnection = (
   connection: number = 1,
   connectionString: string = localDevString,
-) {
+) => {
   return postgres(connectionString, { max: connection });
-}
+};
 
-/**
+export const createRepositoryConnection = <T extends PgTable>(args: {
+  connectionNumber?: number;
+  connectionString?: string;
+  schema: T;
+}): PostgresJsDatabase<{ schema: T }> => {
+  const dbConnection = createDbConnection(
+    args.connectionNumber,
+    args.connectionString,
+  );
+
+  const { schema } = args;
+  // return drizzleConnection<T>(args.schema, dbConnection);
+  return drizzle(dbConnection, { schema: { schema } });
+};
+
+export /**
  * Exits the DB conenction gracefully.
  */
-export function exitDbConnection() {
+function exitDbConnection() {
   return createDbConnection().end();
 }
