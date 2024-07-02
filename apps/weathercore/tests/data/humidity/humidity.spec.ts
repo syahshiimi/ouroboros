@@ -1,42 +1,82 @@
-import { exitDbConnection } from "../../../src/data-access/connections/connection"
-import { deleteAllHumidityReadings, findHumidityReadingsByStationId, upsertHumidityReadings } from "../../../src/data-access/repositories/humidity/humidity-repository"
-import { deleteAllStations, upsertStationDetails } from "../../../src/data-access/repositories/stations/stations-repository"
-import { sampleHumidity, sampleStations } from "../../sample/samples"
-import { beforeAll, afterAll, describe, expect, test } from "bun:test"
-
-
-beforeAll(async () => {
-  await upsertStationDetails(sampleStations)
-})
-
-afterAll(async () => {
-  await deleteAllHumidityReadings();
-  await deleteAllStations();
-  await exitDbConnection();
-})
+import { exitDbConnection } from "../../../src/data-access/connections/connection";
+import { sampleHumidity, sampleStations } from "../../sample/samples";
+import { beforeAll, afterAll, describe, expect, test } from "bun:test";
+import {
+  PostgreSqlContainer,
+  StartedPostgreSqlContainer,
+} from "@testcontainers/postgresql";
+import postgres from "postgres";
+import { StationsRepository } from "../../../src/data-access/repositories/stations/stations-repository.ts";
+import { HumidityRepository } from "../../../src/data-access/repositories/humidity/humidity-repository.ts";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
+import { drizzle } from "drizzle-orm/postgres-js";
 
 describe("humidity records", () => {
-  const stationId = "S117"
+  const stationId = "S117";
+  let container: StartedPostgreSqlContainer;
+  let client: postgres.Sql;
+  let stationService: Awaited<ReturnType<typeof StationsRepository>>;
+  let humidityService: Awaited<ReturnType<typeof HumidityRepository>>;
+
+  beforeAll(async () => {
+    container = await new PostgreSqlContainer().start();
+    client = postgres({
+      host: container.getHost(),
+      port: container.getPort(),
+      database: container.getDatabase(),
+      user: container.getUsername(),
+      password: container.getPassword(),
+    });
+
+    // do migration
+    const sql = drizzle(client);
+
+    await migrate(sql, {
+      migrationsFolder: "src/data-access/migrations",
+    });
+
+    // instantiate humidity service
+    humidityService = await HumidityRepository(container.getConnectionUri());
+
+    // Instantiate the service here.
+    stationService = await StationsRepository(container.getConnectionUri());
+
+    // Insert the station details before test.
+    await stationService.upsertStationDetails(sampleStations);
+  });
+
+  afterAll(async () => {
+    await humidityService.deleteAllHumidityReadings();
+    await stationService.deleteAllStations();
+
+    await exitDbConnection();
+    await container.stop();
+  });
 
   test("should upsert humidity records into the database", async () => {
-    const addHumidityRecords = await upsertHumidityReadings(sampleHumidity)
+    const addHumidityRecords =
+      await humidityService.upsertHumidityReadings(sampleHumidity);
 
-    expect(addHumidityRecords).not.toBeNull()
-    expect(addHumidityRecords.length).toBe(sampleHumidity.length)
+    expect(addHumidityRecords).not.toBeNull();
+    expect(addHumidityRecords.length).toBe(sampleHumidity.length);
     expect(addHumidityRecords[0]).toMatchObject({
-      file_name: "sampleHumidity.json"
-    })
-  })
+      file_name: "sampleHumidity.json",
+    });
+  });
 
   test("should get humidity records by station_id", async () => {
-    const humidityRecords = await findHumidityReadingsByStationId(stationId)
+    const humidityRecords =
+      await humidityService.findHumidityReadingsByStationId(stationId);
 
-    expect(humidityRecords?.[0]).toMatchObject({ station_id: stationId, file_name: "sampleHumidity.json" })
-  })
+    expect(humidityRecords?.[0]).toMatchObject({
+      station_id: stationId,
+      file_name: "sampleHumidity.json",
+    });
+  });
 
   test("should delete all humidity records", async () => {
-    const deleteRecords = await deleteAllHumidityReadings();
+    const deleteRecords = await humidityService.deleteAllHumidityReadings();
 
-    expect(deleteRecords.length).toEqual(sampleHumidity.length)
-  })
-})
+    expect(deleteRecords.length).toEqual(sampleHumidity.length);
+  });
+});

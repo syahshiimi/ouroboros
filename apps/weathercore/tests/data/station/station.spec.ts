@@ -42,6 +42,7 @@ describe("station records", () => {
   afterAll(async () => {
     await stationService.deleteAllStations();
     await exitDbConnection();
+    await container.stop();
   });
 
   test("should upsert station records into the database", async () => {
