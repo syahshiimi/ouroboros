@@ -1,13 +1,15 @@
 import { eq } from "drizzle-orm";
 import { stations } from "../../models/db/station";
-import { drizzleConnection } from "../connections";
 import type { Stations } from "../../models/types";
 import type { StationSchema } from "../../models/schema";
-import { createDbConnection } from "../../connections/connection.ts";
+import { createRepositoryConnection } from "../../connections/connection.ts";
 
 export const StationsRepository = async (connectionString?: string) => {
-  const dbConnection = createDbConnection(5, connectionString);
-  const connection = drizzleConnection<StationSchema>(stations, dbConnection);
+  const connection = createRepositoryConnection<StationSchema>({
+    connectionNumber: 5,
+    connectionString: connectionString,
+    schema: stations,
+  });
 
   return {
     async findStationByStationId(

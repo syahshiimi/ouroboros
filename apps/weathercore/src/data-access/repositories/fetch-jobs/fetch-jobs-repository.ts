@@ -1,12 +1,15 @@
 import { eq } from "drizzle-orm";
 import { fetchJobs } from "../../models/db/fetch-jobs";
 import type { FetchJobs } from "../../models/types";
-import { drizzleConnection } from "../connections";
-import { createDbConnection } from "../../connections/connection.ts";
+import { createRepositoryConnection } from "../../connections/connection.ts";
+import type { FetchJobsSchema } from "../../models/schema.ts";
 
 export const FetchJobsRepository = async (connectionString?: string) => {
-  const dbConnection = createDbConnection(5, connectionString);
-  const connection = drizzleConnection(fetchJobs, dbConnection);
+  const connection = createRepositoryConnection<FetchJobsSchema>({
+    connectionNumber: 5,
+    connectionString: connectionString,
+    schema: fetchJobs,
+  });
 
   return {
     async findFetchJobsTaskById(
