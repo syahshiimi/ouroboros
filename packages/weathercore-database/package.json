@@ -2,15 +2,21 @@
   "name": "@ouroboros/weathercore-database",
   "module": ".src/index.ts",
   "type": "module",
+  "private": "true",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./out/index.js"
+    }
   },
   "scripts": {
     "build": "tsc",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
+    "drop": "drizzle-kit drop",
     "db:check": "drizzle-kit check",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "lint": "eslint . "
   },
   "devDependencies": {
     "drizzle-kit": "^0.21.4",
