@@ -64,6 +64,7 @@ WORKDIR /app
 COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/out/index.js .
 COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/package.json package.json
 
+ENV NODE_ENV=production
 ENV PORT 3000
 EXPOSE $PORT
 
