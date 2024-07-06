@@ -27,6 +27,7 @@
   "dependencies": {
     "@ouroboros/eslint-config": "workspace:*",
     "@ouroboros/typescript-config": "workspace:*",
+    "@ouroboros/weathercore-database": "workspace:*",
     "@pothos/core": "^3.41.2",
     "@pothos/plugin-add-graphql": "^3.2.1",
     "drizzle-orm": "^0.30.10",

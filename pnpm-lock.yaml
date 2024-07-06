@@ -192,6 +192,9 @@ importers:
       '@ouroboros/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      '@ouroboros/weathercore-database':
+        specifier: workspace:*
+        version: link:../../packages/weathercore-database
       '@pothos/core':
         specifier: ^3.41.2
         version: 3.41.2(graphql@16.9.0)
