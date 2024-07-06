@@ -1,4 +1,4 @@
-import { TemperatureRepository } from "@ouroboros/weathercore-database";
+import { TemperatureRepository } from "@ouroboros/weathercore-database/repository";
 import { builder } from "../../builder";
 import { InsertTemperatureType, SelectTemperatureType } from "../../types.ts";
 

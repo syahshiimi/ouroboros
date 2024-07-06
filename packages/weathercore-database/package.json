@@ -4,12 +4,12 @@
   "private": "true",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./out/src/index.d.ts",
       "default": "./out/src/index.js"
     },
     "./repository": {
-      "types": "./src/repository.ts",
-      "deafult": "./out/src/repository.js"
+      "types": "./out/src/repository.d.ts",
+      "default": "./out/src/repository.js"
     }
   },
   "scripts": {

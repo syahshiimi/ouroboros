@@ -1,4 +1,4 @@
-import { HumidityRepository } from "@ouroboros/weathercore-database";
+import { HumidityRepository } from "@ouroboros/weathercore-database/repository";
 import { builder } from "../../builder";
 import { InsertHumidityType, SelectHumidityType } from "../../types.ts";
 

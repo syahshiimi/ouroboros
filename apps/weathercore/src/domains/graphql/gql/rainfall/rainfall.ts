@@ -1,4 +1,4 @@
-import { RainfallRepository } from "@ouroboros/weathercore-database";
+import { RainfallRepository } from "@ouroboros/weathercore-database/repository";
 import { builder } from "../../builder";
 import { InsertRainfallType, SelectRainfallType } from "../../types.ts";
 

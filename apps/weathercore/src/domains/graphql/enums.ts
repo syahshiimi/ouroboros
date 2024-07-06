@@ -5,6 +5,7 @@ import type {
   ShapeFromEnumValues,
   ValuesFromEnum,
 } from "@pothos/core";
+import { topicEnums } from "@ouroboros/weathercore-database";
 export const topicsEnum: EnumRef<
   "topicsEnum" extends BaseEnum
     ? ValuesFromEnum<"topicsEnum">
@@ -19,5 +20,6 @@ export const topicsEnum: EnumRef<
         readonly [string, string, string, string]
       >
 > = builder.enumType("topicsEnum", {
-  values: ["humidity", "rainfall", "uv", "temperature"],
+  // values: ["humidity", "rainfall", "uv", "temperature"],
+  values: topicEnums,
 });

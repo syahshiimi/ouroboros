@@ -1,4 +1,4 @@
-import { UVRepository } from "@ouroboros/weathercore-database";
+import { UVRepository } from "@ouroboros/weathercore-database/repository";
 import { builder } from "../../builder.ts";
 import { InsertUvType, SelectUvType } from "../../types.ts";
 
