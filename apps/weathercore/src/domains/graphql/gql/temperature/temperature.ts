@@ -1,10 +1,4 @@
-import {
-  deleteAllTemperatureReadings,
-  deleteTemperatureReadingById,
-  findLatestTemperatureReadingByStationId,
-  findTemperatureReadingsByStationId,
-  upsertTemperatureReading,
-} from "../../../../data-access/repositories/temperature/temperature-repository";
+import { TemperatureRepository } from "../../../../data-access/repositories/temperature/temperature-repository";
 import { builder } from "../../builder";
 import { TemperatureType } from "../../types";
 
@@ -27,6 +21,8 @@ TemperatureType.implement({
   }),
 });
 
+const temperatureService = await TemperatureRepository();
+
 builder.queryField("findLatestTemperatureReadingByStationid", (t) =>
   t.field({
     type: TemperatureType,
@@ -36,7 +32,7 @@ builder.queryField("findLatestTemperatureReadingByStationid", (t) =>
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await findLatestTemperatureReadingByStationId(args.station_id);
+      return await temperatureService.findLatestTemperatureReadingByStationId(args.station_id);
     },
   }),
 );
@@ -50,7 +46,7 @@ builder.queryField("findTemperatureReadingByStationid", (t) =>
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await findTemperatureReadingsByStationId(args.station_id);
+      return await temperatureService.findTemperatureReadingsByStationId(args.station_id);
     },
   }),
 );
@@ -64,7 +60,7 @@ builder.mutationField("upsertTemperatureReadings", (t) =>
       input: t.arg({ type: [TemperatureInput], required: true }),
     },
     resolve: async (_, args) => {
-      return await upsertTemperatureReading([...args.input]);
+      return await temperatureService.upsertTemperatureReading([...args.input]);
     },
   }),
 );
@@ -77,7 +73,7 @@ builder.mutationField("deleteTemperatureReadingById", (t) =>
       id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await deleteTemperatureReadingById(args.id);
+      return await temperatureService.deleteTemperatureReadingById(args.id);
     },
   }),
 );
@@ -87,7 +83,7 @@ builder.mutationField("deleteAllTemperatureReadings", (t) =>
     type: [TemperatureType],
     description: "Deletes all temperature readings.",
     resolve: async () => {
-      return await deleteAllTemperatureReadings();
+      return await temperatureService.deleteAllTemperatureReadings();
     },
   }),
 );

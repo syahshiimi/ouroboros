@@ -1,10 +1,4 @@
-import {
-  deleteAllRainfaillReadings,
-  deleteRainfallReadingByStationId,
-  findLatestRainfallByStationId,
-  findRainfallReadingsByStationId,
-  upsertRainfallReadings,
-} from "../../../../data-access/repositories/rainfall/rainfaill-repository";
+import { RainfallRepository } from "../../../../data-access/repositories/rainfall/rainfaill-repository";
 import { builder } from "../../builder";
 import { RainfallType } from "../../types";
 
@@ -27,6 +21,8 @@ RainfallType.implement({
   }),
 });
 
+const rainfallService = await RainfallRepository();
+
 builder.queryField("findLatestRainfallByStationId", (t) =>
   t.field({
     type: RainfallType,
@@ -35,7 +31,7 @@ builder.queryField("findLatestRainfallByStationId", (t) =>
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await findLatestRainfallByStationId(args.station_id);
+      return await rainfallService.findLatestRainfallByStationId(args.station_id);
     },
   }),
 );
@@ -48,7 +44,7 @@ builder.queryField("findRainfallByStationId", (t) =>
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await findRainfallReadingsByStationId(args.station_id);
+      return await rainfallService.findRainfallReadingsByStationId(args.station_id);
     },
   }),
 );
@@ -62,7 +58,7 @@ builder.mutationField("upsertRainfallReadings", (t) =>
       input: t.arg({ type: [RainfallInput], required: true }),
     },
     resolve: async (_, args) => {
-      return await upsertRainfallReadings([...args.input]);
+      return await rainfallService.upsertRainfallReadings([...args.input]);
     },
   }),
 );
@@ -76,7 +72,7 @@ builder.mutationField("deleteRainfallReadingStationId", (t) =>
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await deleteRainfallReadingByStationId(args.station_id);
+      return await rainfallService.deleteRainfallReadingByStationId(args.station_id);
     },
   }),
 );
@@ -86,7 +82,7 @@ builder.mutationField("deleteRainfallReadings", (t) =>
     type: [RainfallType],
     description: "Deletes all rainfall readings.",
     resolve: async () => {
-      return await deleteAllRainfaillReadings();
+      return await rainfallService.deleteAllRainfaillReadings();
     },
   }),
 );

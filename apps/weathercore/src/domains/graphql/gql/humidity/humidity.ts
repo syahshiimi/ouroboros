@@ -1,8 +1,4 @@
-import {
-  deleteAllHumidityReadings,
-  findHumidityReadingsByStationId,
-  upsertHumidityReadings,
-} from "../../../../data-access/repositories/humidity/humidity-repository";
+import { HumidityRepository } from "../../../../data-access/repositories/humidity/humidity-repository";
 import { builder } from "../../builder";
 import { HumidityType } from "../../types";
 
@@ -25,6 +21,8 @@ HumidityType.implement({
   }),
 });
 
+const humidityService = await HumidityRepository();
+
 builder.queryField("findHumidityReadingsByStationId", (t) =>
   t.field({
     type: [HumidityType],
@@ -33,7 +31,7 @@ builder.queryField("findHumidityReadingsByStationId", (t) =>
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await findHumidityReadingsByStationId(args.station_id);
+      return await humidityService.findHumidityReadingsByStationId(args.station_id);
     },
   }),
 );
@@ -47,7 +45,7 @@ builder.mutationField("upsertHumidityReadings", (t) =>
       input: t.arg({ type: [HumidityInput], required: true }),
     },
     resolve: async (_, args) => {
-      return await upsertHumidityReadings([...args.input]);
+      return await humidityService.upsertHumidityReadings([...args.input]);
     },
   }),
 );
@@ -57,7 +55,7 @@ builder.mutationField("deleteHumidityReadings", (t) =>
     type: [HumidityType],
     description: "Deletes all humidity readings.",
     resolve: async () => {
-      return await deleteAllHumidityReadings();
+      return await humidityService.deleteAllHumidityReadings();
     },
   }),
 );

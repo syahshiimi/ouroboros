@@ -1,10 +1,6 @@
+import { UVRepository } from "../../../../data-access/repositories/uv/uv-repository.ts";
 import { builder } from "../../builder.ts";
 import { UvType } from "../../types.ts";
-import {
-  deleteAllUvReadings,
-  findLatestUvReadingById,
-  upsertUvReading,
-} from "../../../../data-access/repositories/uv/uv-repository.ts";
 
 const UvInput = builder.inputType("UvInput", {
   fields: (t) => ({
@@ -14,6 +10,8 @@ const UvInput = builder.inputType("UvInput", {
     file_name: t.string({ required: true }),
   }),
 });
+
+const uvService = await UVRepository();
 
 UvType.implement({
   fields: (t) => ({
@@ -34,7 +32,7 @@ builder.queryField("findLatestUVReadingById", (t) =>
       id: t.arg.string({ required: true }),
     },
     resolve: (_, args) => {
-      return findLatestUvReadingById(args.id);
+      return uvService.findLatestUvReadingById(args.id);
     },
   }),
 );
@@ -47,7 +45,7 @@ builder.mutationField("upsertUvReadings", (t) =>
       input: t.arg({ type: [UvInput], required: true }),
     },
     resolve: (_, args) => {
-      return upsertUvReading([...args.input]);
+      return uvService.upsertUvReading([...args.input]);
     },
   }),
 );
@@ -57,7 +55,7 @@ builder.mutationField("deleteAllUvReadings", (t) =>
     type: [UvType],
     description: "Deletes all UV readings.",
     resolve: async () => {
-      return await deleteAllUvReadings();
+      return await uvService.deleteAllUvReadings();
     },
   }),
 );
