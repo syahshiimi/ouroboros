@@ -25,6 +25,16 @@ SelectUvType.implement({
   }),
 });
 
+InsertUvType.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
+    uv_index: t.exposeInt("uv_index"),
+    timestamp: t.exposeString("timestamp"),
+    update_timestamp: t.exposeString("update_timestamp"),
+    file_name: t.exposeString("file_name"),
+  }),
+});
+
 builder.queryField("findLatestUVReadingById", (t) =>
   t.field({
     type: SelectUvType,

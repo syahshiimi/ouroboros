@@ -23,6 +23,18 @@ SelectTemperatureType.implement({
   }),
 });
 
+InsertTemperatureType.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
+    station_id: t.exposeString("station_id"),
+    timestamp: t.exposeString("timestamp"),
+    reading: t.exposeString("reading"),
+    file_name: t.exposeString("file_name"),
+  }),
+});
+
+const temperatureService = await TemperatureRepository();
+
 builder.queryField("findLatestTemperatureReadingByStationid", (t) =>
   t.field({
     type: SelectTemperatureType,

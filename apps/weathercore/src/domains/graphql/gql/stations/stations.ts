@@ -1,11 +1,16 @@
 import { builder } from "../../builder";
-import { InsertStationType } from "../../types.ts";
-import {
-  SelectStations,
-  StationsRepository,
-} from "@ouroboros/weathercore-database";
+import { InsertStationType, SelectStationsType } from "../../types.ts";
+import { StationsRepository } from "@ouroboros/weathercore-database";
 
-export const SelectStationsType = builder.objectRef<SelectStations>("Stations");
+InsertStationType.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
+    station_id: t.exposeString("station_id"),
+    location_name: t.exposeString("location_name"),
+    longitude: t.exposeFloat("longitude"),
+    latitude: t.exposeFloat("latitude"),
+  }),
+});
 
 SelectStationsType.implement({
   fields: (t) => ({

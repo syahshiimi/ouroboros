@@ -23,6 +23,18 @@ SelectHumidityType.implement({
   }),
 });
 
+InsertHumidityType.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
+    station_id: t.exposeString("station_id"),
+    timestamp: t.exposeString("timestamp"),
+    humidity_value: t.exposeString("humidity_value"),
+    file_name: t.exposeString("file_name"),
+  }),
+});
+
+const humidityService = await HumidityRepository();
+
 builder.queryField("findHumidityReadingsByStationId", (t) =>
   t.field({
     type: [SelectHumidityType],

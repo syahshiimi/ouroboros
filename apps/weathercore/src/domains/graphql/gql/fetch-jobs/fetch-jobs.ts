@@ -49,6 +49,20 @@ SelectFetchJobsType.implement({
   }),
 });
 
+InsertFetchJobsType.implement({
+  fields: (t) => ({
+    id: t.exposeID("id"),
+    topic: t.expose("topic", { type: topicsEnum }),
+    data_date: t.exposeString("data_date"),
+    fetch_job_start_date: t.expose("fetch_job_start_date", { type: "Date" }),
+    fetch_url: t.exposeString("fetch_url"),
+    file_name: t.exposeString("file_name"),
+    workflow_id: t.exposeString("workflow_id"),
+  }),
+});
+
+const fetchService = await FetchJobsRepository();
+
 builder.queryField("findFetchJobsTaskById", (t) =>
   t.field({
     type: SelectFetchJobsType,

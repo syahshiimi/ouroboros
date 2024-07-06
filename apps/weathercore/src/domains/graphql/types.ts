@@ -15,20 +15,26 @@ import type {
 import { builder } from "./builder";
 
 export const SelectFetchJobsType =
-  builder.objectRef<SelectFetchJobs>("FetchJobs");
-export const SelectHumidityType = builder.objectRef<SelectHumidity>("Humidity");
-export const SelectRainfallType = builder.objectRef<SelectRainfall>("Rainfall");
-export const SelectStationsType = builder.objectRef<SelectStations>("Stations");
+  builder.objectRef<SelectFetchJobs>("SelectFetchJobs");
+export const SelectHumidityType =
+  builder.objectRef<SelectHumidity>("SelectHumidity");
+export const SelectRainfallType =
+  builder.objectRef<SelectRainfall>("SelectRainfall");
+export const SelectStationsType =
+  builder.objectRef<SelectStations>("SelectStations");
 export const SelectTemperatureType =
-  builder.objectRef<SelectTemperature>("Temperature");
-export const SelectUvType = builder.objectRef<SelectUV>("UV");
+  builder.objectRef<SelectTemperature>("SelectTemperature");
+export const SelectUvType = builder.objectRef<SelectUV>("SelectUV");
 
 export const InsertFetchJobsType =
-  builder.objectRef<InsertFetchJobs>("FetchJobs");
-export const InsertHumidityType = builder.objectRef<InsertHumidity>("Humidity");
-export const InsertRainfallType = builder.objectRef<InsertRainfall>("Rainfall");
-export const InsertStationType = builder.objectRef<InsertStations>("Stations");
+  builder.objectRef<InsertFetchJobs>("InsertFetchJobs");
+export const InsertHumidityType =
+  builder.objectRef<InsertHumidity>("InsertHumidity");
+export const InsertRainfallType =
+  builder.objectRef<InsertRainfall>("InsertRainfall");
+export const InsertStationType =
+  builder.objectRef<InsertStations>("InsertStation");
 export const InsertTemperatureType =
-  builder.objectRef<InsertTemperature>("Temperature");
+  builder.objectRef<InsertTemperature>("InsertTemperature");
 
-export const InsertUvType = builder.objectRef<InsertUv>("UV");
+export const InsertUvType = builder.objectRef<InsertUv>("InsertUV");
