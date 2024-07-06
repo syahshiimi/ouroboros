@@ -1,5 +1,6 @@
 services:
   timescale:
+    container_name: timescale
     image: timescale/timescaledb-ha:pg14-latest 
     restart: always 
     # volumes:
@@ -13,6 +14,7 @@ services:
     networks:
       - ouroboros-local
   weathercore:
+    container_name: weathercore
     image: syahshiimi/ouroboros-weathercore:main
     user: 1001:1001
     restart: always
