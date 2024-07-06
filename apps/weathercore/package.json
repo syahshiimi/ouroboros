@@ -7,7 +7,7 @@
     "migrate": "drizzle-kit migrate",
     "push": "dotenv -e .env.local drizzle-kit push",
     "drop": "drizzle-kit drop",
-    "dev": "bun --env-file=.env.test run --watch ./index.ts",
+    "dev": "bun TESTCONTAINERS_RYUK_DISABLED=true TESTCONTAINERS_RYUK_PRIVILEGED=true run --watch ./index.ts",
     "lint": "eslint .",
     "test": "dotenv -e .env.local bun test",
     "schemagen": "bun run ./src/domains/graphql/generate.ts"
