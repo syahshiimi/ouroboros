@@ -1,0 +1,27 @@
+{
+  "name": "@ouroboros/weathercore-database",
+  "module": ".src/index.ts",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "db:check": "drizzle-kit check",
+    "dev": "tsc --watch"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.21.4",
+    "@types/bun": "latest",
+    "@ouroboros/eslint-config": "workspace:*",
+    "@ouroboros/typescript-config": "workspace:*",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.30.10",
+    "drizzle-zod": "^0.5.1",
+    "postgres": "^3.4.4"
+  }
+}
