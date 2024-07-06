@@ -1,4 +1,4 @@
-import { StationsRepository } from "@ouroboros/weathercore-database";
+import { StationsRepository } from "@ouroboros/weathercore-database/repository";
 import { builder } from "../../builder";
 import { InsertStationType, SelectStationsType } from "../../types.ts";
 

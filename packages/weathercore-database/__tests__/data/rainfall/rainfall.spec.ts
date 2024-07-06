@@ -1,5 +1,3 @@
-import { exitDbConnection } from "../../../src/data-access/connections/connection";
-import { sampleRainfall, sampleRainfallStations } from "../../sample/samples";
 import { beforeAll, afterAll, describe, test, expect } from "bun:test";
 import {
   PostgreSqlContainer,
@@ -7,16 +5,23 @@ import {
 } from "@testcontainers/postgresql";
 import postgres from "postgres";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { StationsRepository } from "../../../src/data-access/repositories/stations/stations-repository.ts";
-import { RainfallRepository } from "../../../src/data-access/repositories/rainfall/rainfaill-repository.ts";
 import { drizzle } from "drizzle-orm/postgres-js";
+import { exitDbConnection } from "../../../src/index.js";
+import {
+  sampleRainfall,
+  sampleRainfallStations,
+} from "../../sample/samples.js";
+import {
+  RainfallRepository,
+  StationsRepository,
+} from "../../../src/data-access/repositories/index.js";
 
 describe("rainfall", () => {
   const stationId = "S117";
-  let container: StartedPostgreSqlContainer;
-  let client: postgres.Sql;
-  let rainfallService: Awaited<ReturnType<typeof RainfallRepository>>;
-  let stationService: Awaited<ReturnType<typeof StationsRepository>>;
+  let container: StartedPostgreSqlContainer,
+    client: postgres.Sql,
+    rainfallService: Awaited<ReturnType<typeof RainfallRepository>>,
+    stationService: Awaited<ReturnType<typeof StationsRepository>>;
 
   beforeAll(async () => {
     container = await new PostgreSqlContainer().start();
@@ -46,7 +51,7 @@ describe("rainfall", () => {
   });
 
   afterAll(async () => {
-    await rainfallService.deleteAllRainfaillReadings();
+    await rainfallService.deleteAllRainfallReadings();
     await stationService.deleteAllStations();
 
     await exitDbConnection();
@@ -89,7 +94,7 @@ describe("rainfall", () => {
   });
 
   test("should delete all rainfall records", async () => {
-    const deletedRecords = await rainfallService.deleteAllRainfaillReadings();
+    const deletedRecords = await rainfallService.deleteAllRainfallReadings();
 
     expect(deletedRecords.length).toEqual(sampleRainfall.length - 1);
   });

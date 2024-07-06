@@ -1,12 +1,15 @@
 {
   "name": "@ouroboros/weathercore-database",
-  "module": ".src/index.ts",
   "type": "module",
   "private": "true",
   "exports": {
     ".": {
       "types": "./src/index.ts",
       "default": "./out/index.js"
+    },
+    "./repository": {
+      "types": "./src/repository.ts",
+      "deafult": "./out/src/repository.js"
     }
   },
   "scripts": {
@@ -16,6 +19,7 @@
     "drop": "drizzle-kit drop",
     "db:check": "drizzle-kit check",
     "dev": "tsc --watch",
+    "test": "dotenv -e .env.local bun test",
     "lint": "eslint . "
   },
   "devDependencies": {
@@ -23,6 +27,8 @@
     "@types/bun": "latest",
     "@ouroboros/eslint-config": "workspace:*",
     "@ouroboros/typescript-config": "workspace:*",
+    "testcontainers": "^10.10.0",
+    "@testcontainers/postgresql": "^10.10.0",
     "typescript": "^5.0.0"
   },
   "dependencies": {

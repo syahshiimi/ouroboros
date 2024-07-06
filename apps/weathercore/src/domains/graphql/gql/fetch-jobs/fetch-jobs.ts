@@ -2,7 +2,6 @@ import { builder } from "../../builder";
 import { topicsEnum } from "../../enums.ts";
 import {
   FetchJobsRepository,
-  InsertFetchJobs,
   type SelectFetchJobs,
 } from "@ouroboros/weathercore-database";
 import { InsertFetchJobsType, SelectFetchJobsType } from "../../types.ts";
@@ -88,9 +87,7 @@ builder.mutationField("upsertFetchJobsTask", (t) =>
       input: t.arg({ type: [FetchJobsInput], required: true }),
     },
     resolve: async (_, args) => {
-      return await fetchService.upsertFetchJobsTask([
-        ...(args.input as InsertFetchJobs),
-      ]);
+      return await fetchService.upsertFetchJobsTask([...(args.input as any)]);
     },
   }),
 );
