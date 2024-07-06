@@ -10,7 +10,7 @@ const DB_NAME = process.env.DB_NAME;
 
 const localDevString = `postgresql://${DB_USER!}:${DB_PASSWORD!}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
-const createDbConnection = (
+export const createDbConnection = (
   connection: number = 1,
   connectionString: string = localDevString,
 ) => {
