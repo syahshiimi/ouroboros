@@ -1,7 +1,11 @@
 import { builder } from "../../builder";
-import { FetchJobsType } from "../../types";
 import { topicsEnum } from "../../enums.ts";
-import { FetchJobsRepository } from "../../../../data-access/repositories/fetch-jobs/fetch-jobs-repository.ts";
+import {
+  FetchJobsRepository,
+  InsertFetchJobs,
+  type SelectFetchJobs,
+} from "@ouroboros/weathercore-database";
+import { InsertFetchJobsType, SelectFetchJobsType } from "../../types.ts";
 
 const fetchService = await FetchJobsRepository();
 
@@ -36,7 +40,7 @@ const FetchJobsInput = builder.inputType("FetchJobsInput", {
   }),
 });
 
-FetchJobsType.implement({
+SelectFetchJobsType.implement({
   fields: (t) => ({
     id: t.exposeID("id"),
     topic: t.expose("topic", { type: topicsEnum }),
@@ -50,7 +54,7 @@ FetchJobsType.implement({
 
 builder.queryField("findFetchJobsTaskById", (t) =>
   t.field({
-    type: FetchJobsType,
+    type: SelectFetchJobsType,
     description: "Fetches the job tasks by id.",
     args: {
       id: t.arg.string({ required: true }),
@@ -63,26 +67,30 @@ builder.queryField("findFetchJobsTaskById", (t) =>
 
 builder.queryField("findFetchJobsByTopic", (t) =>
   t.field({
-    type: FetchJobsType,
+    type: SelectFetchJobsType,
     description: "Fetches the job tasks by the topic id",
     args: {
       topic: t.arg({ type: topicsEnum, required: true }),
     },
     resolve: async (_, args) => {
-      return await fetchService.findFetchJobsTasksByTopic(args.topic);
+      return await fetchService.findFetchJobsTasksByTopic(
+        args.topic as SelectFetchJobs["topic"],
+      );
     },
   }),
 );
 
 builder.mutationField("upsertFetchJobsTask", (t) =>
   t.field({
-    type: [FetchJobsType],
+    type: [InsertFetchJobsType],
     description: "Upserts the fetch job task table.",
     args: {
       input: t.arg({ type: [FetchJobsInput], required: true }),
     },
     resolve: async (_, args) => {
-      return await fetchService.upsertFetchJobsTask([...args.input]);
+      return await fetchService.upsertFetchJobsTask([
+        ...(args.input as InsertFetchJobs),
+      ]);
     },
   }),
 );

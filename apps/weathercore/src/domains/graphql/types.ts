@@ -1,9 +1,34 @@
-import { type Stations, type Humidity, type Temperature, type UV, type Rainfall, type FetchJobs } from "../../data-access/models/types";
 import { builder } from "./builder";
+import type {
+  InsertFetchJobs,
+  InsertHumidity,
+  InsertRainfall,
+  InsertStations,
+  InsertTemperature,
+  InsertUv,
+  SelectFetchJobs,
+  SelectHumidity,
+  SelectRainfall,
+  SelectStations,
+  SelectTemperature,
+  SelectUV,
+} from "@ouroboros/weathercore-database";
 
-export const FetchJobsType = builder.objectRef<FetchJobs>("FetchJobs")
-export const HumidityType = builder.objectRef<Humidity>("Humidity")
-export const RainfallType = builder.objectRef<Rainfall>("Rainfall")
-export const StationsType = builder.objectRef<Stations>("Stations")
-export const TemperatureType = builder.objectRef<Temperature>("Temperature")
-export const UvType = builder.objectRef<UV>("UV")
+export const SelectFetchJobsType =
+  builder.objectRef<SelectFetchJobs>("FetchJobs");
+export const SelectHumidityType = builder.objectRef<SelectHumidity>("Humidity");
+export const SelectRainfallType = builder.objectRef<SelectRainfall>("Rainfall");
+export const SelectStationsType = builder.objectRef<SelectStations>("Stations");
+export const SelectTemperatureType =
+  builder.objectRef<SelectTemperature>("Temperature");
+export const SelectUvType = builder.objectRef<SelectUV>("UV");
+
+export const InsertFetchJobsType =
+  builder.objectRef<InsertFetchJobs>("FetchJobs");
+export const InsertHumidityType = builder.objectRef<InsertHumidity>("Humidity");
+export const InsertRainfallType = builder.objectRef<InsertRainfall>("Rainfall");
+export const InsertStationType = builder.objectRef<InsertStations>("Stations");
+export const InsertTemperatureType =
+  builder.objectRef<InsertTemperature>("Temperature");
+
+export const InsertUvType = builder.objectRef<InsertUv>("UV");

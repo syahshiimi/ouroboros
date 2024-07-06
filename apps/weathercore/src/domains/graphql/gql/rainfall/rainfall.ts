@@ -1,6 +1,6 @@
-import { RainfallRepository } from "../../../../data-access/repositories/rainfall/rainfaill-repository";
+import { RainfallRepository } from "@ouroboros/weathercore-database";
 import { builder } from "../../builder";
-import { RainfallType } from "../../types";
+import { InsertRainfallType, SelectRainfallType } from "../../types.ts";
 
 const rainfallService = await RainfallRepository();
 
@@ -13,7 +13,7 @@ const RainfallInput = builder.inputType("RainfallInput", {
   }),
 });
 
-RainfallType.implement({
+SelectRainfallType.implement({
   fields: (t) => ({
     id: t.exposeString("id"),
     station_id: t.exposeString("station_id"),
@@ -25,33 +25,37 @@ RainfallType.implement({
 
 builder.queryField("findLatestRainfallByStationId", (t) =>
   t.field({
-    type: RainfallType,
+    type: SelectRainfallType,
     description: "Finds the latest rainfall reading by station_id.",
     args: {
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await rainfallService.findLatestRainfallByStationId(args.station_id);
+      return await rainfallService.findLatestRainfallByStationId({
+        station_id: args.station_id,
+      });
     },
   }),
 );
 
 builder.queryField("findRainfallByStationId", (t) =>
   t.field({
-    type: [RainfallType],
+    type: [SelectRainfallType],
     description: "Finds the rainfall readings by station_id.",
     args: {
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await rainfallService.findRainfallReadingsByStationId(args.station_id);
+      return await rainfallService.findRainfallReadingsByStationId(
+        args.station_id,
+      );
     },
   }),
 );
 
 builder.mutationField("upsertRainfallReadings", (t) =>
   t.field({
-    type: [RainfallType],
+    type: [InsertRainfallType],
     description: "Inserts the rainfall readings into the table.",
     nullable: false,
     args: {
@@ -65,24 +69,26 @@ builder.mutationField("upsertRainfallReadings", (t) =>
 
 builder.mutationField("deleteRainfallReadingStationId", (t) =>
   t.field({
-    type: [RainfallType],
+    type: [InsertRainfallType],
     description: "Deletes the rainfall readings by station_id.",
     nullable: false,
     args: {
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await rainfallService.deleteRainfallReadingByStationId(args.station_id);
+      return await rainfallService.deleteRainfallReadingByStationId(
+        args.station_id,
+      );
     },
   }),
 );
 
 builder.mutationField("deleteRainfallReadings", (t) =>
   t.field({
-    type: [RainfallType],
+    type: [InsertRainfallType],
     description: "Deletes all rainfall readings.",
     resolve: async () => {
-      return await rainfallService.deleteAllRainfaillReadings();
+      return await rainfallService.deleteAllRainfallReadings();
     },
   }),
 );
