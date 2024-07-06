@@ -38,9 +38,9 @@ export const createRepositoryConnection = <T extends PgTable>(args: {
   return drizzle(dbConnection, { schema: { schema } });
 };
 
-export /**
+/**
  * Exits the DB conenction gracefully.
  */
-  function exitDbConnection() {
+export function exitDbConnection() {
   return createDbConnection().end();
 }
