@@ -8,10 +8,8 @@ import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { exitDbConnection } from "../../../src/index.js";
 import { sampleHumidity, sampleStations } from "../../sample/samples.js";
-import {
-  HumidityRepository,
-  StationsRepository,
-} from "../../../src/data-access/repositories/index.js";
+import { StationsRepository } from "../../../src/data-access/repositories/stations/stations-repository.js";
+import { HumidityRepository } from "../../../src/data-access/repositories/humidity/humidity-repository.js";
 
 describe("humidity records", () => {
   const stationId = "S117";

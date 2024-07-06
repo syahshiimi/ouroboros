@@ -5,7 +5,7 @@
   "exports": {
     ".": {
       "types": "./src/index.ts",
-      "default": "./out/index.js"
+      "default": "./out/src/index.js"
     },
     "./repository": {
       "types": "./src/repository.ts",

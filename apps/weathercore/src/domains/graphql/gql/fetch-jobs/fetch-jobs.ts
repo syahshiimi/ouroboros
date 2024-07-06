@@ -1,10 +1,8 @@
 import { builder } from "../../builder";
-import { topicsEnum } from "../../enums.ts";
-import {
-  FetchJobsRepository,
-  type SelectFetchJobs,
-} from "@ouroboros/weathercore-database";
 import { InsertFetchJobsType, SelectFetchJobsType } from "../../types.ts";
+import { topicsEnum } from "../../enums.ts";
+import type { SelectFetchJobs } from "@ouroboros/weathercore-database";
+import { FetchJobsRepository } from "@ouroboros/weathercore-database";
 
 const fetchService = await FetchJobsRepository();
 

@@ -1,17 +1,11 @@
-import { StationsRepository } from "@ouroboros/weathercore-database/repository";
 import { builder } from "../../builder";
-import { InsertStationType, SelectStationsType } from "../../types.ts";
+import { InsertStationType } from "../../types.ts";
+import {
+  SelectStations,
+  StationsRepository,
+} from "@ouroboros/weathercore-database";
 
-const stationService = await StationsRepository();
-
-const StationsInput = builder.inputType("StationsInput", {
-  fields: (t) => ({
-    station_id: t.string({ required: true }),
-    location_name: t.string({ required: true }),
-    longitude: t.float({ required: true }),
-    latitude: t.float({ required: true }),
-  }),
-});
+export const SelectStationsType = builder.objectRef<SelectStations>("Stations");
 
 SelectStationsType.implement({
   fields: (t) => ({
@@ -22,6 +16,17 @@ SelectStationsType.implement({
     latitude: t.exposeFloat("latitude"),
   }),
 });
+
+const StationsInput = builder.inputType("StationsInput", {
+  fields: (t) => ({
+    station_id: t.string({ required: true }),
+    location_name: t.string({ required: true }),
+    longitude: t.float({ required: true }),
+    latitude: t.float({ required: true }),
+  }),
+});
+
+const stationService = await StationsRepository();
 
 builder.queryField("findStationsByStationId", (t) =>
   t.field({

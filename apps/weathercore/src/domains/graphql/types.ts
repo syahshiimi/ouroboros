@@ -1,4 +1,3 @@
-import { builder } from "./builder";
 import type {
   InsertFetchJobs,
   InsertHumidity,
@@ -13,6 +12,7 @@ import type {
   SelectTemperature,
   SelectUV,
 } from "@ouroboros/weathercore-database";
+import { builder } from "./builder";
 
 export const SelectFetchJobsType =
   builder.objectRef<SelectFetchJobs>("FetchJobs");

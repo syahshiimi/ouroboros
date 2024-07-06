@@ -1,7 +1,7 @@
-import { eq } from "drizzle-orm";
 import { rainfall } from "../../models/index.js";
 import { createRepositoryConnection } from "../../connection/connection.js";
 import { InsertRainfall, SelectRainfall } from "../../models/types.js";
+import { eq } from "drizzle-orm";
 export const RainfallRepository = async (connectionString?: string) => {
   const connection = createRepositoryConnection({
     connectionNumber: 5,

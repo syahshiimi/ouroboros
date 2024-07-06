@@ -7,7 +7,7 @@ import postgres from "postgres";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { sampleFetchJob } from "../../sample/samples.js";
-import { FetchJobsRepository } from "../../../src/data-access/repositories/index.js";
+import { FetchJobsRepository } from "../../../src/data-access/repositories/fetch-jobs/fetch-jobs-repository.js";
 
 describe("upsert fetch jobs table", async () => {
   let container: StartedPostgreSqlContainer;

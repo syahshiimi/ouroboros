@@ -11,10 +11,8 @@ import {
   sampleRainfall,
   sampleRainfallStations,
 } from "../../sample/samples.js";
-import {
-  RainfallRepository,
-  StationsRepository,
-} from "../../../src/data-access/repositories/index.js";
+import { RainfallRepository } from "../../../src/data-access/repositories/rainfall/rainfaill-repository.js";
+import { StationsRepository } from "../../../src/data-access/repositories/stations/stations-repository.js";
 
 describe("rainfall", () => {
   const stationId = "S117";
