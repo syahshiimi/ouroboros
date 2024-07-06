@@ -8,11 +8,11 @@ const DB_PORT = process.env.DB_PORT;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NAME = process.env.DB_NAME;
 
-const localDevString = `postgresql://${DB_USER!}:${DB_PASSWORD!}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+const dbConnectionString = `postgresql://${DB_USER!}:${DB_PASSWORD!}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
 export const createDbConnection = (
   connection: number = 1,
-  connectionString: string = localDevString,
+  connectionString: string = dbConnectionString,
 ) => {
   return postgres(connectionString, { max: connection });
 };
