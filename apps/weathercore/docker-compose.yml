@@ -18,8 +18,11 @@ services:
     image: syahshiimi/ouroboros-weathercore:main
     user: 1001:1001
     restart: always
+    # depends_on:
+    #   weathercore-migrations:
+    #     condition: service_completed_successfully
     env_file:
-      - .env.docker
+      - .env
     ports:
       - 3000:3000
     networks:
@@ -27,9 +30,10 @@ services:
   weathercore-migrations:
     container_name: weathercore-migrations
     image: syahshiimi/weatherchore-migration:latest
+    depends_on:
+      timescale:
+        condition: service_started
     user: 1001:1001
-    env_file:
-      - .env.docker
     networks:
       - ouroboros-local
 
