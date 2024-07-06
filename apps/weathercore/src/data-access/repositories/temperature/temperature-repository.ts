@@ -1,11 +1,8 @@
-import { type Temperature } from "../../models/types";
-import type { TemperatureSchema } from "../../models/schema";
+import { createRepositoryConnection, temperature, type InsertTemperature, type SelectTemperature } from "@ouroboros/weathercore-database";
 import { eq } from "drizzle-orm";
-import { temperature } from "../../models/db/temperature";
-import { createRepositoryConnection } from "../../connections/connection.ts";
 
 export const TemperatureRepository = async (connectionString?: string) => {
-  const connection = createRepositoryConnection<TemperatureSchema>({
+  const connection = createRepositoryConnection({
     connectionNumber: 5,
     connectionString: connectionString,
     schema: temperature,
@@ -13,22 +10,22 @@ export const TemperatureRepository = async (connectionString?: string) => {
 
   return {
     async findLatestTemperatureReadingByStationId(
-      station_id: Exclude<Temperature["station_id"], undefined | null>,
-    ): Promise<Temperature | undefined> {
+      station_id: Exclude<SelectTemperature["station_id"], undefined | null>,
+    ): Promise<SelectTemperature | undefined> {
       return await connection.query.schema.findFirst({
         where: eq(temperature.station_id, station_id),
       });
     },
     async findTemperatureReadingsByStationId(
-      station_id: Exclude<Temperature["station_id"], undefined | null>,
-    ): Promise<Temperature[]> {
+      station_id: Exclude<SelectTemperature["station_id"], undefined | null>,
+    ): Promise<SelectTemperature[]> {
       return await connection.query.schema.findMany({
         where: eq(temperature.station_id, station_id),
       });
     },
     async upsertTemperatureReading(
-      record: Temperature[],
-    ): Promise<Temperature[]> {
+      record: InsertTemperature[],
+    ): Promise<InsertTemperature[]> {
       return await connection.transaction(async (tx) => {
         return tx
           .insert(temperature)
@@ -38,7 +35,7 @@ export const TemperatureRepository = async (connectionString?: string) => {
       });
     },
     async deleteTemperatureReadingById(
-      uuid: Exclude<Temperature["id"], undefined | null>,
+      uuid: Exclude<InsertTemperature["id"], undefined | null>,
     ) {
       const deletedRow = await connection
         .delete(temperature)
@@ -47,7 +44,7 @@ export const TemperatureRepository = async (connectionString?: string) => {
 
       return deletedRow.length > 1 ? null : deletedRow[0];
     },
-    async deleteAllTemperatureReadings(): Promise<Temperature[]> {
+    async deleteAllTemperatureReadings(): Promise<InsertTemperature[]> {
       return connection.delete(temperature).returning();
     },
   };

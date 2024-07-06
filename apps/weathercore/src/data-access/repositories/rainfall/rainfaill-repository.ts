@@ -1,12 +1,7 @@
-import { rainfall } from "../../models/db/rainfall";
-import type { Rainfall } from "../../models/types";
-import { stations } from "../../models/db/station";
+import { createRepositoryConnection, rainfall, stations, type InsertRainfall, type SelectRainfall } from "@ouroboros/weathercore-database";
 import { eq } from "drizzle-orm";
-import { type RainfallSchema } from "../../models/schema";
-import { createRepositoryConnection } from "../../connections/connection.ts";
-
 export const RainfallRepository = async (connectionString?: string) => {
-  const connection = createRepositoryConnection<RainfallSchema>({
+  const connection = createRepositoryConnection({
     connectionNumber: 5,
     connectionString: connectionString,
     schema: rainfall,
@@ -14,22 +9,22 @@ export const RainfallRepository = async (connectionString?: string) => {
 
   return {
     async findLatestRainfallByStationId(
-      station_id: Exclude<Rainfall["station_id"], undefined | null>,
-    ): Promise<Rainfall | undefined> {
+      station_id: Exclude<SelectRainfall["station_id"], undefined | null>,
+    ): Promise<SelectRainfall | undefined> {
       return await connection.query.schema.findFirst({
-        where: eq(stations.station_id, station_id),
+        where: eq(rainfall.station_id, station_id),
       });
     },
 
     async findRainfallReadingsByStationId(
-      station_id: Exclude<Rainfall["station_id"], undefined | null>,
-    ): Promise<Rainfall[]> {
+      station_id: Exclude<SelectRainfall["station_id"], undefined | null>,
+    ): Promise<SelectRainfall[]> {
       return await connection.query.schema.findMany({
         where: eq(rainfall.station_id, station_id),
       });
     },
 
-    async upsertRainfallReadings(record: Rainfall[]): Promise<Rainfall[]> {
+    async upsertRainfallReadings(record: InsertRainfall[]): Promise<InsertRainfall[]> {
       return await connection.transaction(async (tx) => {
         return tx
           .insert(rainfall)
@@ -39,14 +34,14 @@ export const RainfallRepository = async (connectionString?: string) => {
       });
     },
     async deleteRainfallReadingByStationId(
-      uuid: Exclude<Rainfall["id"], undefined | null>,
+      uuid: Exclude<InsertRainfall["id"], undefined | null>,
     ) {
       return connection
         .delete(rainfall)
         .where(eq(rainfall.id, uuid))
         .returning();
     },
-    async deleteAllRainfaillReadings(): Promise<Rainfall[]> {
+    async deleteAllRainfaillReadings(): Promise<InsertRainfall[]> {
       return connection.delete(rainfall).returning();
     },
   };

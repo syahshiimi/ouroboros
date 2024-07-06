@@ -1,11 +1,8 @@
-import { humidity } from "../../models/db/humidity";
-import type { Humidity } from "../../models/types";
-import { type HumiditySchema } from "../../models/schema";
+import { createRepositoryConnection, humidity, type SelectHumidity } from "@ouroboros/weathercore-database";
 import { eq } from "drizzle-orm";
-import { createRepositoryConnection } from "../../connections/connection.ts";
 
 export const HumidityRepository = async (connectionString?: string) => {
-  const connection = createRepositoryConnection<HumiditySchema>({
+  const connection = createRepositoryConnection({
     connectionNumber: 5,
     connectionString: connectionString,
     schema: humidity,
@@ -13,13 +10,13 @@ export const HumidityRepository = async (connectionString?: string) => {
 
   return {
     async findHumidityReadingsByStationId(
-      station_id: Exclude<Humidity["station_id"], undefined | null>,
-    ): Promise<Humidity[] | undefined> {
+      station_id: Exclude<SelectHumidity["station_id"], undefined | null>,
+    ): Promise<SelectHumidity[] | undefined> {
       return await connection.query.schema.findMany({
         where: eq(humidity.station_id, station_id),
       });
     },
-    async upsertHumidityReadings(record: Humidity[]): Promise<Humidity[]> {
+    async upsertHumidityReadings(record: SelectHumidity[]): Promise<SelectHumidity[]> {
       return await connection.transaction(async (tx: any) => {
         return tx
           .insert(humidity)

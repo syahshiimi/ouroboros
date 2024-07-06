@@ -1,11 +1,8 @@
+import { createRepositoryConnection, uv, type SelectUV } from "@ouroboros/weathercore-database";
 import { eq } from "drizzle-orm";
-import { uv } from "../../models/db/uv";
-import type { UV } from "../../models/types";
-import type { UvSchema } from "../../models/schema.ts";
-import { createRepositoryConnection } from "../../connections/connection.ts";
 
 export const UVRepository = async (connectionString?: string) => {
-  const connection = createRepositoryConnection<UvSchema>({
+  const connection = createRepositoryConnection({
     connectionNumber: 5,
     connectionString: connectionString,
     schema: uv,
@@ -13,18 +10,18 @@ export const UVRepository = async (connectionString?: string) => {
 
   return {
     async findLatestUvReadingById(
-      id: Exclude<UV["id"], undefined | null>,
-    ): Promise<UV | undefined | null> {
+      id: Exclude<SelectUV["id"], undefined | null>,
+    ): Promise<SelectUV | undefined | null> {
       return await connection.query.schema.findFirst({
         where: eq(uv.id, id),
       });
     },
-    async upsertUvReading(record: UV[]): Promise<UV[]> {
+    async upsertUvReading(record: SelectUV[]): Promise<SelectUV[]> {
       return await connection.transaction(async (tx) => {
         return tx.insert(uv).values(record).onConflictDoNothing().returning();
       });
     },
-    async deleteUvReadingById(id: Exclude<UV["id"], undefined | null>) {
+    async deleteUvReadingById(id: Exclude<SelectUV["id"], undefined | null>) {
       const deletedRow = await connection
         .delete(uv)
         .where(eq(uv.id, id))
@@ -32,7 +29,7 @@ export const UVRepository = async (connectionString?: string) => {
 
       return deletedRow.length > 1 ? null : deletedRow[0];
     },
-    async deleteAllUvReadings(): Promise<UV[]> {
+    async deleteAllUvReadings(): Promise<SelectUV[]> {
       return connection.delete(uv).returning();
     },
   };

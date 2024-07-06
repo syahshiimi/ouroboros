@@ -1,11 +1,8 @@
+import { createRepositoryConnection, stations, type InsertStations, type SelectStations } from "@ouroboros/weathercore-database";
 import { eq } from "drizzle-orm";
-import { stations } from "../../models/db/station";
-import type { Stations } from "../../models/types";
-import type { StationSchema } from "../../models/schema";
-import { createRepositoryConnection } from "../../connections/connection.ts";
 
 export const StationsRepository = async (connectionString?: string) => {
-  const connection = createRepositoryConnection<StationSchema>({
+  const connection = createRepositoryConnection({
     connectionNumber: 5,
     connectionString: connectionString,
     schema: stations,
@@ -13,16 +10,16 @@ export const StationsRepository = async (connectionString?: string) => {
 
   return {
     async findStationByStationId(
-      station_id: Exclude<Stations["station_id"], undefined | null>,
-    ): Promise<Stations | undefined | null> {
+      station_id: Exclude<SelectStations["station_id"], undefined | null>,
+    ): Promise<SelectStations | undefined | null> {
       return await connection.query.schema.findFirst({
         where: eq(stations.station_id, station_id),
       });
     },
-    async getAllStations(): Promise<Stations[]> {
+    async getAllStations(): Promise<SelectStations[]> {
       return await connection.query.schema.findMany();
     },
-    async upsertStationDetails(record: Stations[]): Promise<Stations[]> {
+    async upsertStationDetails(record: InsertStations[]): Promise<InsertStations[]> {
       return await connection.transaction(async (tx) => {
         return tx
           .insert(stations)
@@ -31,7 +28,7 @@ export const StationsRepository = async (connectionString?: string) => {
           .returning();
       });
     },
-    async deleteAllStations(): Promise<Stations[]> {
+    async deleteAllStations(): Promise<InsertStations[]> {
       return connection.delete(stations).returning();
     },
   };
