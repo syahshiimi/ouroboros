@@ -5,7 +5,11 @@ import { createDbConnection, exitDbConnection } from './connections/connection';
 export const main = async () => {
   const sql = drizzle(createDbConnection(1))
 
-  await migrate(sql, { migrationsFolder: "src/data-access/migrations" })
+  await migrate(sql, {
+    migrationsFolder: "src/data-access/migrations",
+    migrationsTable: 'drizzle_migrations',
+    migrationsSchema: 'public'
+  })
   await exitDbConnection()
 }
 
