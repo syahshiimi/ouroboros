@@ -17,6 +17,13 @@ const createDbConnection = (
   return postgres(connectionString, { max: connection });
 };
 
+/**
+ * Creates the connection for a repository service for a table.
+ *
+ * @param {object} args configuration arguments.
+ * @param {number} args.connectionNumber The connection connectors to the database.
+ * @param {string} args.connectionString The connection string to the table.
+ **/
 export const createRepositoryConnection = <T extends PgTable>(args: {
   connectionNumber?: number;
   connectionString?: string;
@@ -28,13 +35,12 @@ export const createRepositoryConnection = <T extends PgTable>(args: {
   );
 
   const { schema } = args;
-  // return drizzleConnection<T>(args.schema, dbConnection);
   return drizzle(dbConnection, { schema: { schema } });
 };
 
 export /**
  * Exits the DB conenction gracefully.
  */
-function exitDbConnection() {
+  function exitDbConnection() {
   return createDbConnection().end();
 }

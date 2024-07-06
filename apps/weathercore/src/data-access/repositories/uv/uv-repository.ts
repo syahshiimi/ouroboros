@@ -4,7 +4,7 @@ import type { UV } from "../../models/types";
 import type { UvSchema } from "../../models/schema.ts";
 import { createRepositoryConnection } from "../../connections/connection.ts";
 
-export const UVRepository = async (connectionString: string) => {
+export const UVRepository = async (connectionString?: string) => {
   const connection = createRepositoryConnection<UvSchema>({
     connectionNumber: 5,
     connectionString: connectionString,
