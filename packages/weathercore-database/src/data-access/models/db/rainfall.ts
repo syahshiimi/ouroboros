@@ -6,7 +6,7 @@ import {
   decimal,
   primaryKey,
 } from "drizzle-orm/pg-core";
-import { stations } from "./station";
+import { stations } from "./station.js";
 
 export const rainfall = pgTable(
   "rainfall",
