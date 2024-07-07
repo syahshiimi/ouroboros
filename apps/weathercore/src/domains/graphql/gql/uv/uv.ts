@@ -13,8 +13,6 @@ const UvInput = builder.inputType("UvInput", {
   }),
 });
 
-const uvService = await UVRepository();
-
 SelectUvType.implement({
   fields: (t) => ({
     id: t.exposeString("id"),

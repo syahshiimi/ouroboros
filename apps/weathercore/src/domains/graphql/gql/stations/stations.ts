@@ -2,6 +2,8 @@ import { StationsRepository } from "@ouroboros/weathercore-database/repository";
 import { builder } from "../../builder";
 import { InsertStationType, SelectStationsType } from "../../types.ts";
 
+const stationService = await StationsRepository();
+
 InsertStationType.implement({
   fields: (t) => ({
     id: t.exposeString("id"),
@@ -30,8 +32,6 @@ const StationsInput = builder.inputType("StationsInput", {
     latitude: t.float({ required: true }),
   }),
 });
-
-const stationService = await StationsRepository();
 
 builder.queryField("findStationsByStationId", (t) =>
   t.field({

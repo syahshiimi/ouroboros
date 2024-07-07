@@ -33,8 +33,6 @@ InsertRainfallType.implement({
   }),
 });
 
-const rainfallService = await RainfallRepository();
-
 builder.queryField("findLatestRainfallByStationId", (t) =>
   t.field({
     type: SelectRainfallType,

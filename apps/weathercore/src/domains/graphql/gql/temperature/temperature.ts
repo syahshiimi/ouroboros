@@ -33,8 +33,6 @@ InsertTemperatureType.implement({
   }),
 });
 
-const temperatureService = await TemperatureRepository();
-
 builder.queryField("findLatestTemperatureReadingByStationid", (t) =>
   t.field({
     type: SelectTemperatureType,

@@ -61,8 +61,6 @@ InsertFetchJobsType.implement({
   }),
 });
 
-const fetchService = await FetchJobsRepository();
-
 builder.queryField("findFetchJobsTaskById", (t) =>
   t.field({
     type: SelectFetchJobsType,

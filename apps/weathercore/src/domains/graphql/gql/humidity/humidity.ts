@@ -33,8 +33,6 @@ InsertHumidityType.implement({
   }),
 });
 
-const humidityService = await HumidityRepository();
-
 builder.queryField("findHumidityReadingsByStationId", (t) =>
   t.field({
     type: [SelectHumidityType],
