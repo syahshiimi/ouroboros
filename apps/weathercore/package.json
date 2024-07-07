@@ -3,6 +3,7 @@
   "module": "index.ts",
   "scripts": {
     "build": "bun build --entrypoints ./index.ts --outdir ./out --target node --splitting",
+    "build:migrate": "bun build --entrypoints ./src/data-access/migration.ts --outdir ./out --target node --splitting",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate",
     "push": "dotenv -e .env.local drizzle-kit push",
