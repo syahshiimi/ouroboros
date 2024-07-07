@@ -4,7 +4,7 @@ services:
     user: 1001:1001
     image: syahshiimi/ouroboros-feeder-worker:main
     env_file:
-      - .env.docker
+      - .env
     networks:
       - ouroboros-local
   feeder-api:
@@ -18,7 +18,7 @@ services:
       - POSTGRES_SEEDS=postgresql
     image: syahshiimi/ouroboros-feeder-api:main
     env_file:
-      - .env.docker
+      - .env
     ports:
       - published: 4000
         target: 4000
