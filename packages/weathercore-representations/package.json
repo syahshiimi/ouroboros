@@ -1,7 +1,8 @@
 {
   "name": "@ouroboros/weathercore-representations",
   "version": "1.0.0",
-  "description": "weathercore-representations are client-side TypeScript representations of weathercore database schema, generated via codegen",
+  "private": true,
+  "description": "weathercore-representations are GraphQL object types and schemas based for clients. It is generated via codegen",
   "exports": {
     ".": "./out/index.js"
   },
@@ -10,7 +11,7 @@
   },
   "type": "module",
   "keywords": [],
-  "author": "",
+  "author": "syahshiimi",
   "license": "ISC",
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:*",

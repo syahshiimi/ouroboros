@@ -12,7 +12,6 @@ and abstracted in the `/utils` folder, which you may not need to care about.
 
 ## Conceptual Context
 When an API is designed, we have no way to indicate or conform our API specifications to ensure behavioural expectations  
-when working against it. This essentially creates a binding contract or layer, between our API and the workflow domain.
+when working against it. This essentially creates a binding contract or layer, between our APIs, services and the workflow domains.
 
-This binding contract effectively ensures not just type-safety when fetching against an external API but ensures  
-validity in _what_ we should expect from an endpoint.
+This binding contract effectively ensures not just type-safety when fetching against an external API but ensures validity in _what_ we should expect from an endpoint.
