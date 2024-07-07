@@ -3,6 +3,8 @@ import { FetchJobsType } from "../../types";
 import { topicsEnum } from "../../enums.ts";
 import { FetchJobsRepository } from "../../../../data-access/repositories/fetch-jobs/fetch-jobs-repository.ts";
 
+const fetchService = await FetchJobsRepository();
+
 const FetchJobsInput = builder.inputType("FetchJobsInput", {
   fields: (t) => ({
     topic: t.field({
@@ -45,8 +47,6 @@ FetchJobsType.implement({
     workflow_id: t.exposeString("workflow_id"),
   }),
 });
-
-const fetchService = await FetchJobsRepository();
 
 builder.queryField("findFetchJobsTaskById", (t) =>
   t.field({

@@ -2,6 +2,8 @@ import { RainfallRepository } from "../../../../data-access/repositories/rainfal
 import { builder } from "../../builder";
 import { RainfallType } from "../../types";
 
+const rainfallService = await RainfallRepository();
+
 const RainfallInput = builder.inputType("RainfallInput", {
   fields: (t) => ({
     station_id: t.string({ required: true }),
@@ -20,8 +22,6 @@ RainfallType.implement({
     rainfall_value: t.exposeString("rainfall_value"),
   }),
 });
-
-const rainfallService = await RainfallRepository();
 
 builder.queryField("findLatestRainfallByStationId", (t) =>
   t.field({

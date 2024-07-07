@@ -2,6 +2,8 @@ import { HumidityRepository } from "../../../../data-access/repositories/humidit
 import { builder } from "../../builder";
 import { HumidityType } from "../../types";
 
+const humidityService = await HumidityRepository();
+
 const HumidityInput = builder.inputType("HumidityInput", {
   fields: (t) => ({
     station_id: t.string({ required: true }),
@@ -20,8 +22,6 @@ HumidityType.implement({
     file_name: t.exposeString("file_name"),
   }),
 });
-
-const humidityService = await HumidityRepository();
 
 builder.queryField("findHumidityReadingsByStationId", (t) =>
   t.field({

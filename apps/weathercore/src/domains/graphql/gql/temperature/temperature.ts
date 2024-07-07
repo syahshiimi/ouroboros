@@ -2,6 +2,8 @@ import { TemperatureRepository } from "../../../../data-access/repositories/temp
 import { builder } from "../../builder";
 import { TemperatureType } from "../../types";
 
+const temperatureService = await TemperatureRepository();
+
 const TemperatureInput = builder.inputType("TemperatureInput", {
   fields: (t) => ({
     station_id: t.string({ required: true }),
@@ -20,8 +22,6 @@ TemperatureType.implement({
     file_name: t.exposeString("file_name"),
   }),
 });
-
-const temperatureService = await TemperatureRepository();
 
 builder.queryField("findLatestTemperatureReadingByStationid", (t) =>
   t.field({

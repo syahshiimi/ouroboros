@@ -2,6 +2,8 @@ import { UVRepository } from "../../../../data-access/repositories/uv/uv-reposit
 import { builder } from "../../builder.ts";
 import { UvType } from "../../types.ts";
 
+const uvService = await UVRepository();
+
 const UvInput = builder.inputType("UvInput", {
   fields: (t) => ({
     uv_index: t.int({ required: true }),
@@ -10,8 +12,6 @@ const UvInput = builder.inputType("UvInput", {
     file_name: t.string({ required: true }),
   }),
 });
-
-const uvService = await UVRepository();
 
 UvType.implement({
   fields: (t) => ({
