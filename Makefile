@@ -15,6 +15,9 @@ build-feeder-api:
 build-weathercore:
 	docker build -f apps/weathercore/Dockerfile -t syahshiimi/ouroboros-weathercore:${GIT_BRANCH} .
 
+build-migrations:
+	docker build -f apps/weathercore/migration.Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH} .
+
 push-feeder-api:
 	docker push syahshiimi/ouroboros-feeder-api:${GIT_BRANCH}
 

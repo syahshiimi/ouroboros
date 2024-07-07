@@ -29,7 +29,7 @@ services:
       - ouroboros-local
   weathercore-migrations:
     container_name: weathercore-migrations
-    image: syahshiimi/weatherchore-migration:latest
+    image: syahshiimi/ouroboros-weathercore-migrations:main
     depends_on:
       timescale:
         condition: service_started
