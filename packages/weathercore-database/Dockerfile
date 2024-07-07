@@ -21,7 +21,7 @@ RUN pnpm config set store-dir ~/.pnpm-store
 FROM base as builder
 RUN apt-get update
 WORKDIR /app
-COPY . .
+COPY ../../apps/weathercore .
 RUN turbo prune @ouroboros/weathercore --docker
 
 # Prepare the build step.
@@ -30,7 +30,7 @@ RUN apt-get update
 WORKDIR /app
 
 # Add lockfile and package.json
-COPY .gitignore .gitignore
+COPY ../../apps/weathercore/.gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml

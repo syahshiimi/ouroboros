@@ -13,7 +13,7 @@ module.exports = {
   extends: ["@ouroboros/eslint-config/library.js"],
     rules: {
     // recommended for safety
-    '@typescript-eslint/no-floating-promises': 'error', // forgetting to await Activities and Workflow APIs is bad
+    '@typescript-eslint/no-floating-promises': 'error',
     // relaxed rules, for convenience
     '@typescript-eslint/no-unused-vars': [
       'warn',
