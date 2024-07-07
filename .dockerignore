@@ -12,3 +12,5 @@ helm-charts
 .idea
 coverage*
 out/
+.env
+.env.local
