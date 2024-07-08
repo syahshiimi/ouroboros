@@ -39,6 +39,8 @@ services:
       timescale:
         condition: service_healthy
     user: 1001:1001
+    env_file:
+      - .env
     networks:
       - ouroboros-local
 
