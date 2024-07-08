@@ -6,7 +6,7 @@
     "build:migrate": "bun build --entrypoints ./src/data-access/migration.ts --outdir ./out --target node --splitting",
     "build:migrate:cli": "bun build  ./src/data-access/migration.ts --compile --outfile migratecli  ",
     "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate",
+    "migrate": "dotenv -e .env.local drizzle-kit migrate",
     "push": "dotenv -e .env.local drizzle-kit push",
     "drop": "drizzle-kit drop",
     "dev": "bun --env-file=.env.local run --watch ./index.ts",
