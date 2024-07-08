@@ -30,7 +30,6 @@ FROM base as installer
 RUN apt-get update
 WORKDIR /app
 
-
 # Add lockfile and package.json
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
@@ -51,14 +50,8 @@ RUN turbo build --filter=@ouroboros/weathercore
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 
 # Final iamge.
-# FROM base as runner
 FROM oven/bun:distroless as runner
 WORKDIR /app
-
-# Create user groups.
-# RUN groupadd --system --gid 1001 weathercore
-# RUN adduser --system --uid 1001 weathercore
-# USER weathercore
 
 # Copy relevant build artifacts only.
 COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/out/index.js .
@@ -68,5 +61,4 @@ ENV NODE_ENV=production
 ENV PORT 3000
 EXPOSE $PORT
 
-# ENTRYPOINT [ "bun", "run", "index.js" ]
 CMD [ "./index.js" ]

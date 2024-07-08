@@ -49,18 +49,16 @@ RUN turbo build --filter=@ouroboros/weathercore
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 
 # Final iamge.
-FROM base as runner
+FROM oven/bun:distroless as runner
+
 WORKDIR /app
-
-#Create user groups.
-RUN addgroup --system --gid 1001 weathercore
-RUN adduser --system --uid 1001 weathercore
-USER weathercore
-
-COPY --from=installer --chown=weathercore:weathercore /app .
+# Copy relevant build artifacts only.
+COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/src/data-access/migrations ./src/data-access/migrations/
+COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/out/migration.js .
+COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/package.json package.json
 
 ENV NODE_ENV=production
 ENV PORT 3000
 EXPOSE $PORT
 
-CMD [ "pnpm", "db:migrate" ]
+CMD ["./migration.js"]
