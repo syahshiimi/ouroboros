@@ -13,12 +13,18 @@ export default function Home() {
         <h1 className={`text-h2 text-white`}>Humidity Forecast</h1>
         <h2 className={`text-body text-white`}>{date}</h2>
       </section>
-      <section className={`flex-grow flex items-center justify-center z-[-99`}>
-        <SG className={`fixed bg-blue-300 max-h-[54rem]`} />
-      </section>
-      <section className={`text-menu-t text-white`}>
-        <p className={`fixed left-[27%] bottom-[50%] text-nowrap`}>Sticky.</p>
-        <p className={`fixed right-[30%] bottom-[48%] text-nowrap`}>Sticky.</p>
+      <section
+        className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
+      >
+        <div className={`h-fit w-fit relative`}>
+          <SG className={`bg-blue-300 min-h-[58rem]`} />
+          <p className={`absolute bottom-[49%] left-[12%] text-nowrap`}>
+            Sticky
+          </p>
+          <p className={`absolute right-[15%] bottom-[52%] text-nowrap`}>
+            Sticky
+          </p>
+        </div>
       </section>
       <section className={`w-full z-20`}>
         <h2 className={`text-menu-t text-center pb-4 text-green-200`}>
