@@ -10,27 +10,18 @@ export default function Home() {
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
       <section className={`flex flex-col gap-4 z-20`}>
-        <h1 className={`text-6xl text-h1 text-white`}>Humidity Forecast</h1>
+        <h1 className={`text-h2 text-white`}>Humidity Forecast</h1>
         <h2 className={`text-body text-white`}>{date}</h2>
       </section>
       <section className={`flex-grow flex items-center justify-center z-[-99`}>
-        <SG className={`fixed bg-red-700 max-h-[54rem]`} />
+        <SG className={`fixed bg-blue-300 max-h-[54rem]`} />
       </section>
-      <section className={`text-furniture`}>
-        <p
-          className={`fixed left-[30%] bottom-[50%] text-white text-2xl text-nowrap`}
-        >
-          Sticky.
-        </p>
-        <p
-          className={`fixed right-[30%] bottom-[48%] text-white text-2xl text-nowrap`}
-        >
-          Sticky.
-        </p>
+      <section className={`text-menu-t text-white`}>
+        <p className={`fixed left-[27%] bottom-[50%] text-nowrap`}>Sticky.</p>
+        <p className={`fixed right-[30%] bottom-[48%] text-nowrap`}>Sticky.</p>
       </section>
       <section className={`w-full z-20`}>
-        <h2 className={`text-menu text-white text-center pb-4`}>
-          {/*I could feel the lick of the wind.*/}
+        <h2 className={`text-menu-t text-center pb-4 text-green-200`}>
           {HumidityText[2]}
         </h2>
       </section>
