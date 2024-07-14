@@ -1,12 +1,12 @@
 ARG NODE_VERSION=20
 
-FROM node:${NODE_VERSION}-alpine AS base
+FROM node:${NODE_VERSION}-bullseye AS base
 
 ARG BUN_VERSION=1.1.16
 
 # Install bun and other binaries.
 ENV PATH="${PATH}:/root/.bun/bin"
-RUN apk add --no-cache libc6-compat && apk add bash curl unzip && \
+RUN apt-get update  && apt-get install bash curl unzip -y && \
   curl https://bun.sh/install | bash -s -- bun-v${BUN_VERSION} 
 
 # Install pnpm.
@@ -19,14 +19,14 @@ RUN pnpm config set store-dir ~/.pnpm-store
 
 # Prune projects.
 FROM base as builder
-RUN apk update
+RUN apt-get update
 WORKDIR /app
 COPY . .
 RUN turbo prune @ouroboros/weathercore --docker
 
 # Prepare the build step.
 FROM base as installer
-RUN apk update
+RUN apt-get update
 WORKDIR /app
 
 # Add lockfile and package.json

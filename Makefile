@@ -1,6 +1,6 @@
 # Define the function to get the branch name
 define get_branch
-$(shell git rev-parse --abbrev-ref HEAD)
+$(shell git rev-parse --abbrev-ref HEAD | sed 's/[^a-zA-Z0-9._-]/-/g')
 endef
 
 # Store the branch name in a variable
@@ -26,3 +26,6 @@ push-feeder-worker:
 
 push-weathercore:
 	docker push syahshiimi/ouroboros-weathercore:${GIT_BRANCH}
+
+push-weathercore-migrations:
+	docker push syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}
