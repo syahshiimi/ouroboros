@@ -26,3 +26,6 @@ push-feeder-worker:
 
 push-weathercore:
 	docker push syahshiimi/ouroboros-weathercore:${GIT_BRANCH}
+
+push-weathercore-migrations:
+	docker push syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}
