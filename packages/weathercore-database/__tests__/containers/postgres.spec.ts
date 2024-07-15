@@ -6,13 +6,18 @@ import { describe, it, beforeAll, afterAll, expect } from "bun:test";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
+import { Wait } from "testcontainers";
 
 describe("PostgreSQL Container Test", async () => {
   let container: StartedPostgreSqlContainer;
   let client: postgres.Sql;
 
   beforeAll(async () => {
-    container = await new PostgreSqlContainer().start();
+    container = await new PostgreSqlContainer()
+      .withStartupTimeout(12000)
+      .withWaitStrategy(Wait.forLogMessage("Ready to accept connections"))
+      .start();
+
     client = postgres({
       host: container.getHost(),
       port: container.getPort(),
