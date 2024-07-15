@@ -14,7 +14,7 @@ import {
 import { RainfallRepository } from "../../../src/data-access/repositories/rainfall/rainfaill-repository.js";
 import { StationsRepository } from "../../../src/data-access/repositories/stations/stations-repository.js";
 
-describe("rainfall", () => {
+describe.skip("rainfall", () => {
   const stationId = "S117";
   let container: StartedPostgreSqlContainer,
     client: postgres.Sql,

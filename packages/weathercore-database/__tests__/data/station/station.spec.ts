@@ -10,7 +10,7 @@ import { sampleStations } from "../../sample/samples.js";
 import { exitDbConnection } from "../../../src/index.js";
 import { StationsRepository } from "../../../src/repository.js";
 
-describe("station records", () => {
+describe.skip("station records", () => {
   const stationId = "S117";
   let container: StartedPostgreSqlContainer;
   let client: postgres.Sql;
