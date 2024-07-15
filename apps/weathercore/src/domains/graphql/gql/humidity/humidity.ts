@@ -1,6 +1,6 @@
 import { HumidityRepository } from "@ouroboros/weathercore-database/repository";
-import { builder } from "../../builder";
-import { InsertHumidityType, SelectHumidityType } from "../../types.ts";
+import { builder } from "../builder.ts";
+import { InsertHumidityType, SelectHumidityType } from "../types.ts";
 
 const humidityService = await HumidityRepository();
 

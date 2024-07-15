@@ -1,6 +1,6 @@
 import { TemperatureRepository } from "@ouroboros/weathercore-database/repository";
-import { builder } from "../../builder";
-import { InsertTemperatureType, SelectTemperatureType } from "../../types.ts";
+import { builder } from "../builder.ts";
+import { InsertTemperatureType, SelectTemperatureType } from "../types.ts";
 
 const temperatureService = await TemperatureRepository();
 

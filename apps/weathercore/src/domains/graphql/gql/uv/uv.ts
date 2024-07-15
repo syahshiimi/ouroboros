@@ -1,6 +1,6 @@
 import { UVRepository } from "@ouroboros/weathercore-database/repository";
-import { builder } from "../../builder.ts";
-import { InsertUvType, SelectUvType } from "../../types.ts";
+import { builder } from "../builder.ts";
+import { InsertUvType, SelectUvType } from "../types.ts";
 
 const uvService = await UVRepository();
 

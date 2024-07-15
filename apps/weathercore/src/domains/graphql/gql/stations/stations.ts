@@ -1,6 +1,6 @@
 import { StationsRepository } from "@ouroboros/weathercore-database/repository";
-import { builder } from "../../builder";
-import { InsertStationType, SelectStationsType } from "../../types.ts";
+import { builder } from "../builder.ts";
+import { InsertStationType, SelectStationsType } from "../types.ts";
 
 const stationService = await StationsRepository();
 

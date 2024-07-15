@@ -12,7 +12,7 @@ import type {
   SelectTemperature,
   SelectUV,
 } from "@ouroboros/weathercore-database";
-import { builder } from "./builder";
+import { builder } from "./builder.ts";
 
 export const SelectFetchJobsType =
   builder.objectRef<SelectFetchJobs>("SelectFetchJobs");

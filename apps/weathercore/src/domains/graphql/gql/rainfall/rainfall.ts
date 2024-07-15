@@ -1,6 +1,6 @@
 import { RainfallRepository } from "@ouroboros/weathercore-database/repository";
-import { builder } from "../../builder";
-import { InsertRainfallType, SelectRainfallType } from "../../types.ts";
+import { builder } from "../builder.ts";
+import { InsertRainfallType, SelectRainfallType } from "../types.ts";
 
 const rainfallService = await RainfallRepository();
 
