@@ -14,7 +14,10 @@
   },
   "scripts": {
     "build": "tsc",
+    "build:migrate": "bun build --entrypoints ./src/data-access/migration.ts --outdir ./out --target node --splitting",
+    "build:migrate:cli": "bun build  ./src/data-access/migration.ts --compile --outfile migratecli  ",
     "generate": "drizzle-kit generate",
+    "push": "dotenv -e .env.local drizzle-kit push",
     "migrate": "drizzle-kit migrate",
     "drop": "drizzle-kit drop",
     "db:check": "drizzle-kit check",
