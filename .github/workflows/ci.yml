@@ -45,10 +45,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # TODO: We want to be able to run the test on CI but bun is having issues
-      # running testcontainers.
-      - name: Test
-        run: pnpm test
-
       - name: Build
         run: pnpm build
+
+      - name: Test
+        run: pnpm test
