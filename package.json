@@ -11,7 +11,7 @@
     "schemagen": "turbo run schemagen",
     "test": "turbo run test",
     "db:migrate": "turbo run migrate",
-    "postinstall": "rm -rf ./node_modules/cpu-features"
+    "postinstall": "rm -rf node_modules/.pnpm/cpu-features@0.0.10"
   },
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:*",
