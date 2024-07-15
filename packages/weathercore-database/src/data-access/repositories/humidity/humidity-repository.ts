@@ -14,7 +14,7 @@ export const HumidityRepository = async (connectionString?: string) => {
     async findHumidityReadingsByStationId(
       station_id: Exclude<SelectHumidity["station_id"], undefined | null>,
     ): Promise<SelectHumidity[] | undefined> {
-      return await connection.query.schema.findMany({
+      return connection.query.schema.findMany({
         where: eq(humidity.station_id, station_id),
       });
     },

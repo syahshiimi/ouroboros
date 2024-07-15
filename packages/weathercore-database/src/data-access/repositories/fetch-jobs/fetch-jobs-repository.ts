@@ -14,14 +14,14 @@ export const FetchJobsRepository = async (connectionString?: string) => {
     async findFetchJobsTaskById(
       id: Exclude<SelectFetchJobs["id"], undefined | null>,
     ) {
-      return await connection.query.schema.findFirst({
+      return connection.query.schema.findFirst({
         where: eq(fetchJobs.id, id),
       });
     },
     async findFetchJobsTasksByTopic(
       fetch_job_type_id: Exclude<SelectFetchJobs["topic"], undefined | null>,
     ) {
-      return await connection.query.schema.findFirst({
+      return connection.query.schema.findFirst({
         where: eq(fetchJobs.topic, fetch_job_type_id),
       });
     },
