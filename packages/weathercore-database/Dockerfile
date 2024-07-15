@@ -30,7 +30,7 @@ RUN apt-get update
 WORKDIR /app
 
 # Add lockfile and package.json
-COPY ../../packages/weathercore-database/.gitignore .gitignore
+COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
@@ -45,7 +45,8 @@ ENV NODE_ENV=production
 
 # Build the project
 COPY turbo.json turbo.json
-RUN turbo build --filter=@ouroboros/weathercore-database
+# Run the migration build script.
+RUN turbo build:migrate --filter=@ouroboros/weathercore-database
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 
 # Final iamge.
@@ -53,9 +54,9 @@ FROM oven/bun:distroless as runner
 
 WORKDIR /app
 # Copy relevant build artifacts only.
-COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/src/data-access/migrations ./src/data-access/migrations/
-COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/out/migration.js .
-COPY --from=installer --chown=weathercore:weathercore /app/apps/weathercore/package.json package.json
+COPY --from=installer --chown=weathercore:weathercore /app/packages/weathercore-database/src/data-access/migrations ./src/data-access/migrations/
+COPY --from=installer --chown=weathercore:weathercore /app/packages/weathercore-database/out/migration.js .
+COPY --from=installer --chown=weathercore:weathercore /app/packages/weathercore-database/package.json package.json
 
 ENV NODE_ENV=production
 ENV PORT 3000
