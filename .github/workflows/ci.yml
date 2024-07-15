@@ -43,8 +43,8 @@ jobs:
 
       # TODO: We want to be able to run the test on CI but bun is having issues
       # running testcontainers.
-#      - name: Test
-#        run: pnpm test
+      - name: Test
+        run: pnpm test
 
       - name: Build
         run: pnpm build
