@@ -1,6 +1,6 @@
-import { TemperatureRepository } from "../../../../data-access/repositories/temperature/temperature-repository";
-import { builder } from "../../builder";
-import { TemperatureType } from "../../types";
+import { TemperatureRepository } from "@ouroboros/weathercore-database/repository";
+import { builder } from "../builder.ts";
+import { InsertTemperatureType, SelectTemperatureType } from "../types.ts";
 
 const temperatureService = await TemperatureRepository();
 
@@ -13,7 +13,17 @@ const TemperatureInput = builder.inputType("TemperatureInput", {
   }),
 });
 
-TemperatureType.implement({
+SelectTemperatureType.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
+    station_id: t.exposeString("station_id"),
+    timestamp: t.exposeString("timestamp"),
+    reading: t.exposeString("reading"),
+    file_name: t.exposeString("file_name"),
+  }),
+});
+
+InsertTemperatureType.implement({
   fields: (t) => ({
     id: t.exposeString("id"),
     station_id: t.exposeString("station_id"),
@@ -25,35 +35,39 @@ TemperatureType.implement({
 
 builder.queryField("findLatestTemperatureReadingByStationid", (t) =>
   t.field({
-    type: TemperatureType,
+    type: SelectTemperatureType,
     description: "Finds the latest temperature reading by the station_id.",
     nullable: true,
     args: {
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await temperatureService.findLatestTemperatureReadingByStationId(args.station_id);
+      return await temperatureService.findLatestTemperatureReadingByStationId(
+        args.station_id,
+      );
     },
   }),
 );
 
 builder.queryField("findTemperatureReadingByStationid", (t) =>
   t.field({
-    type: [TemperatureType],
+    type: [SelectTemperatureType],
     description: "Finds the temperature reading by the station_id.",
     nullable: true,
     args: {
       station_id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await temperatureService.findTemperatureReadingsByStationId(args.station_id);
+      return await temperatureService.findTemperatureReadingsByStationId(
+        args.station_id,
+      );
     },
   }),
 );
 
 builder.mutationField("upsertTemperatureReadings", (t) =>
   t.field({
-    type: [TemperatureType],
+    type: [InsertTemperatureType],
     description: "Inserts the temperature readings into the temperature table.",
     nullable: true,
     args: {
@@ -67,7 +81,7 @@ builder.mutationField("upsertTemperatureReadings", (t) =>
 
 builder.mutationField("deleteTemperatureReadingById", (t) =>
   t.field({
-    type: TemperatureType,
+    type: InsertTemperatureType,
     description: "Deletes the temperature readings by id.",
     args: {
       id: t.arg.string({ required: true }),
@@ -80,7 +94,7 @@ builder.mutationField("deleteTemperatureReadingById", (t) =>
 
 builder.mutationField("deleteAllTemperatureReadings", (t) =>
   t.field({
-    type: [TemperatureType],
+    type: [InsertTemperatureType],
     description: "Deletes all temperature readings.",
     resolve: async () => {
       return await temperatureService.deleteAllTemperatureReadings();

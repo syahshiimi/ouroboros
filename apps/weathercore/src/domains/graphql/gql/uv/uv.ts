@@ -1,6 +1,6 @@
-import { UVRepository } from "../../../../data-access/repositories/uv/uv-repository.ts";
-import { builder } from "../../builder.ts";
-import { UvType } from "../../types.ts";
+import { UVRepository } from "@ouroboros/weathercore-database/repository";
+import { builder } from "../builder.ts";
+import { InsertUvType, SelectUvType } from "../types.ts";
 
 const uvService = await UVRepository();
 
@@ -13,7 +13,17 @@ const UvInput = builder.inputType("UvInput", {
   }),
 });
 
-UvType.implement({
+SelectUvType.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
+    uv_index: t.exposeInt("uv_index"),
+    timestamp: t.exposeString("timestamp"),
+    update_timestamp: t.exposeString("update_timestamp"),
+    file_name: t.exposeString("file_name"),
+  }),
+});
+
+InsertUvType.implement({
   fields: (t) => ({
     id: t.exposeString("id"),
     uv_index: t.exposeInt("uv_index"),
@@ -25,7 +35,7 @@ UvType.implement({
 
 builder.queryField("findLatestUVReadingById", (t) =>
   t.field({
-    type: UvType,
+    type: SelectUvType,
     description: "Finds a latest UV readinbg by the ID",
     nullable: true,
     args: {
@@ -39,7 +49,7 @@ builder.queryField("findLatestUVReadingById", (t) =>
 
 builder.mutationField("upsertUvReadings", (t) =>
   t.field({
-    type: [UvType],
+    type: [InsertUvType],
     description: "Batch upserts UV records into the UV table",
     args: {
       input: t.arg({ type: [UvInput], required: true }),
@@ -52,7 +62,7 @@ builder.mutationField("upsertUvReadings", (t) =>
 
 builder.mutationField("deleteAllUvReadings", (t) =>
   t.field({
-    type: [UvType],
+    type: [InsertUvType],
     description: "Deletes all UV readings.",
     resolve: async () => {
       return await uvService.deleteAllUvReadings();

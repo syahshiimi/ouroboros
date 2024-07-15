@@ -41,14 +41,14 @@ push-manifest-weathercore:
 
 # weathercore-migrations
 build-weathercore-migrations-amd64:
-	docker build -f apps/weathercore/migration.Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-amd64 --platform linux/amd64 .
+	docker build -f packages/weathercore-database/Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-amd64 --platform linux/amd64 .
 
 build-weathercore-migrations-aarch64:
-	docker build -f apps/weathercore/migration.Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-aarch64 --platform linux/arm64 .
+	docker build -f packages/weathercore-database/Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-aarch64 --platform linux/arm64 .
 
 build-weathercore-migrations:
-	docker build -f apps/weathercore/migration.Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-amd64 --platform linux/amd64 .
-	docker build -f apps/weathercore/migration.Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-aarch64 --platform linux/arm64 .
+	docker build -f packages/weathercore-database/Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-amd64 --platform linux/amd64 .
+	docker build -f packages/weathercore-database/Dockerfile -t syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-aarch64 --platform linux/arm64 .
 
 push-weathercore-migrations-amd64:
 	docker push syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-amd64

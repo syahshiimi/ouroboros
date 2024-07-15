@@ -14,6 +14,10 @@
         "out/**"
       ]
     },
+    "build:migrate": {
+      "cache": false,
+      "persistent": false
+    },
     "lint": {
       "dependsOn": [
         "^lint"

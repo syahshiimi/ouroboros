@@ -1,0 +1,43 @@
+{
+  "name": "@ouroboros/weathercore-database",
+  "type": "module",
+  "private": "true",
+  "exports": {
+    ".": {
+      "types": "./out/src/index.d.ts",
+      "default": "./out/src/index.js"
+    },
+    "./repository": {
+      "types": "./out/src/repository.d.ts",
+      "default": "./out/src/repository.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:migrate": "bun build --entrypoints ./src/data-access/migration.ts --outdir ./out --target node --splitting",
+    "build:migrate:cli": "bun build  ./src/data-access/migration.ts --compile --outfile migratecli  ",
+    "generate": "drizzle-kit generate",
+    "push": "dotenv -e .env.local drizzle-kit push",
+    "migrate": "drizzle-kit migrate",
+    "migrate:local": "dotenv -e .env.local drizzle-kit migrate",
+    "drop": "drizzle-kit drop",
+    "db:check": "drizzle-kit check",
+    "dev": "tsc --watch",
+    "test": "bun test",
+    "lint": "eslint . "
+  },
+  "devDependencies": {
+    "@ouroboros/eslint-config": "workspace:*",
+    "@ouroboros/typescript-config": "workspace:*",
+    "@testcontainers/postgresql": "^10.10.1",
+    "@types/bun": "latest",
+    "drizzle-kit": "^0.21.4",
+    "testcontainers": "^10.10.1",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.30.10",
+    "drizzle-zod": "^0.5.1",
+    "postgres": "^3.4.4"
+  }
+}

@@ -5,6 +5,7 @@ const ALLOWED_NODE_BUILTINS = new Set(['assert']);
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
+  ignorePatterns: ["*.config.ts"],
   parserOptions: {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,

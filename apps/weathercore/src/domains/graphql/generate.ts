@@ -1,5 +1,5 @@
 import { lexicographicSortSchema, printSchema } from "graphql";
-import { schema } from "./schema";
+import { schema } from "./gql/schema.ts";
 import { writeFileSync } from "fs";
 import path from "path";
 

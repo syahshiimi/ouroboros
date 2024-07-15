@@ -10,7 +10,7 @@ jobs:
   build:
     name: Build and Test
     timeout-minutes: 15
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     # To use Remote Caching, uncomment the next lines and follow the steps below.
     env:
       DB_HOST: ${{ secrets.DB_HOST }}
@@ -18,6 +18,8 @@ jobs:
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_NAME: ${{ secrets.DB_NAME }}
+      R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+      R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
 
     steps:
       - name: Check out code
@@ -41,10 +43,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # TODO: We want to be able to run the test on CI but bun is having issues
-      # running testcontainers.
-#      - name: Test
-#        run: pnpm test
-
       - name: Build
         run: pnpm build
+
+      - name: Test
+        run: pnpm test

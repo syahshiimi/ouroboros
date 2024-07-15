@@ -1,8 +1,28 @@
-import { builder } from "../../builder";
-import { StationsType } from "../../types";
-import { StationsRepository } from "../../../../data-access/repositories/stations/stations-repository.ts";
+import { StationsRepository } from "@ouroboros/weathercore-database/repository";
+import { builder } from "../builder.ts";
+import { InsertStationType, SelectStationsType } from "../types.ts";
 
 const stationService = await StationsRepository();
+
+InsertStationType.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
+    station_id: t.exposeString("station_id"),
+    location_name: t.exposeString("location_name"),
+    longitude: t.exposeFloat("longitude"),
+    latitude: t.exposeFloat("latitude"),
+  }),
+});
+
+SelectStationsType.implement({
+  fields: (t) => ({
+    id: t.exposeString("id"),
+    station_id: t.exposeString("station_id"),
+    location_name: t.exposeString("location_name"),
+    longitude: t.exposeFloat("longitude"),
+    latitude: t.exposeFloat("latitude"),
+  }),
+});
 
 const StationsInput = builder.inputType("StationsInput", {
   fields: (t) => ({
@@ -13,19 +33,9 @@ const StationsInput = builder.inputType("StationsInput", {
   }),
 });
 
-StationsType.implement({
-  fields: (t) => ({
-    id: t.exposeString("id"),
-    station_id: t.exposeString("station_id"),
-    location_name: t.exposeString("location_name"),
-    longitude: t.exposeFloat("longitude"),
-    latitude: t.exposeFloat("latitude"),
-  }),
-});
-
 builder.queryField("findStationsByStationId", (t) =>
   t.field({
-    type: StationsType,
+    type: SelectStationsType,
     description: "Finds a station by station_id.",
     nullable: true,
     args: {
@@ -39,7 +49,7 @@ builder.queryField("findStationsByStationId", (t) =>
 
 builder.queryField("getAllStations", (t) =>
   t.field({
-    type: [StationsType],
+    type: [SelectStationsType],
     description: "Finds all stations.",
     resolve: () => {
       return stationService.getAllStations();
@@ -49,7 +59,7 @@ builder.queryField("getAllStations", (t) =>
 
 builder.mutationField("upsertStation", (t) =>
   t.field({
-    type: [StationsType],
+    type: [InsertStationType],
     description: "Inserts a station record into the stations table.",
     args: {
       input: t.arg({ type: [StationsInput], required: true }),
@@ -62,7 +72,7 @@ builder.mutationField("upsertStation", (t) =>
 
 builder.mutationField("deleteAllStations", (t) =>
   t.field({
-    type: [StationsType],
+    type: [InsertStationType],
     description: "Deletes all station record.",
     resolve: () => {
       return stationService.deleteAllStations();
