@@ -11,7 +11,7 @@ import { sampleHumidity, sampleStations } from "../../sample/samples.js";
 import { StationsRepository } from "../../../src/data-access/repositories/stations/stations-repository.js";
 import { HumidityRepository } from "../../../src/data-access/repositories/humidity/humidity-repository.js";
 
-describe.skip("humidity records", () => {
+describe("humidity records", () => {
   const stationId = "S117";
   let container: StartedPostgreSqlContainer;
   let client: postgres.Sql;

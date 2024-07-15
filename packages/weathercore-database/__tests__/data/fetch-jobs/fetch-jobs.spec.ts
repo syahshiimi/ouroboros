@@ -9,7 +9,7 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import { sampleFetchJob } from "../../sample/samples.js";
 import { FetchJobsRepository } from "../../../src/data-access/repositories/fetch-jobs/fetch-jobs-repository.js";
 
-describe.skip("upsert fetch jobs table", async () => {
+describe("upsert fetch jobs table", async () => {
   let container: StartedPostgreSqlContainer;
   let client: postgres.Sql;
   let fetchJobsService: Awaited<ReturnType<typeof FetchJobsRepository>>;

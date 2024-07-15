@@ -10,7 +10,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { sampleStations, sampleUv } from "../../sample/samples.js";
 import { StationsRepository, UVRepository } from "../../../src/repository.js";
 
-describe.skip("uv readings", () => {
+describe("uv readings", () => {
   let container: StartedPostgreSqlContainer;
   let client: postgres.Sql;
   let uvService: Awaited<ReturnType<typeof UVRepository>>;

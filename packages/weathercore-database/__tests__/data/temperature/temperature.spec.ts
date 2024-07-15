@@ -13,7 +13,7 @@ import {
   TemperatureRepository,
 } from "../../../src/repository.js";
 
-describe.skip("temperature readings", () => {
+describe("temperature readings", () => {
   const stationId = "S117";
   let container: StartedPostgreSqlContainer;
   let client: postgres.Sql;
