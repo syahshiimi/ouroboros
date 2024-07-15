@@ -23,4 +23,5 @@
     "outDir": "./out"
   },
   "include": ["src/**/*.ts","**/*.spec.ts","./*.config.ts"],
+  "exclude": ["./__tests__/**/*.spec.ts"]
 }
