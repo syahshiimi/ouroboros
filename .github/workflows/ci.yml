@@ -52,5 +52,5 @@ jobs:
       - name: Test
         run: pnpm test
         env:
-          TESTCONTAINERS_RYUK_DISABLED: ${{ vars.TESTCONTAINERS_RYUK_DISABLED }}
-          TESTCONTAINERS_RYUK_PRIVILEGED: ${{ vars.TESTCONTAINERS_RYUK_PRIVILEGED }}
+          TESTCONTAINERS_RYUK_DISABLED: true
+          TESTCONTAINERS_RYUK_PRIVILEGED: true
