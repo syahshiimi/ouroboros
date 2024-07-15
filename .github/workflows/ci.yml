@@ -22,8 +22,7 @@ jobs:
       R2_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY }}
       R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
       R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
-      TESTCONTAINERS_RYUK_DISABLED: ${{ vars.TESTCONTAINERS_RYUK_DISABLED }}
-      TESTCONTAINERS_RYUK_PRIVILEGED: ${{ vars.TESTCONTAINERS_RYUK_PRIVILEGED }}
+
 
     steps:
       - name: Check out code
@@ -51,4 +50,7 @@ jobs:
         run: pnpm build
 
       - name: Test
-        run: TESTCONTAINERS_RYUK_DISABLED=true pnpm test
+        run: pnpm test
+        env:
+          TESTCONTAINERS_RYUK_DISABLED: ${{ vars.TESTCONTAINERS_RYUK_DISABLED }}
+          TESTCONTAINERS_RYUK_PRIVILEGED: ${{ vars.TESTCONTAINERS_RYUK_PRIVILEGED }}
