@@ -2,11 +2,10 @@ import {
   PostgreSqlContainer,
   StartedPostgreSqlContainer,
 } from "@testcontainers/postgresql";
-import { describe, it, beforeAll, afterAll, expect } from "bun:test";
+import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { Wait } from "testcontainers";
 
 describe("PostgreSQL Container Test", async () => {
   let container: StartedPostgreSqlContainer;
@@ -15,7 +14,6 @@ describe("PostgreSQL Container Test", async () => {
   beforeAll(async () => {
     container = await new PostgreSqlContainer()
       .withStartupTimeout(12000)
-      .withWaitStrategy(Wait.forLogMessage("Ready to accept connections"))
       .start();
 
     client = postgres({
@@ -46,9 +44,7 @@ describe("PostgreSQL Container Test", async () => {
   });
 
   it("should run migration", async () => {
-    const pg = client;
-
-    const query = await pg`select * from humidity`;
+    const query = await client`select *from humidity`;
     expect(query).toBeTruthy();
     expect(Array.isArray(query)).toBe(true);
   });
