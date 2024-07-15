@@ -25,7 +25,6 @@
       "env": ["R2_*", "DB_*", "GRAPHQL_*", "TEMPORAL_*", "NODE_ENV"]
     },
     "test": {
-      "dependsOn": ["^build"],
       "cache": false,
       "persistent": false
     },
