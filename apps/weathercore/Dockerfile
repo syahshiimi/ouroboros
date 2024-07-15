@@ -7,7 +7,7 @@ ARG BUN_VERSION=1.1.16
 # Install bun.
 ENV PATH="${PATH}:/root/.bun/bin"
 # We will use bun for runtime only, not to install the package.
-RUN apt-get update && apt-get install -y bash curl unzip && \
+RUN apt-get update && apt-get install -y bash curl unzip  && \
   curl https://bun.sh/install | bash -s -- bun-v${BUN_VERSION} 
 
 # Install pnpm
