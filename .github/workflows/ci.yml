@@ -47,8 +47,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Setup Docker
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+
       - name: Build
         run: pnpm build
 
       - name: Test
-        run: TESTCONTAINERS_RYUK_DISABLED=true pnpm test
+        run:  pnpm test
