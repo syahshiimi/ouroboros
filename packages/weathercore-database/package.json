@@ -23,7 +23,7 @@
     "drop": "drizzle-kit drop",
     "db:check": "drizzle-kit check",
     "dev": "tsc --watch",
-    "test": "dotenv -e .env.local bun test",
+    "test": "bun test",
     "lint": "eslint . "
   },
   "devDependencies": {
