@@ -19,6 +19,7 @@
     "generate": "drizzle-kit generate",
     "push": "dotenv -e .env.local drizzle-kit push",
     "migrate": "drizzle-kit migrate",
+    "migrate:local": "dotenv -e .env.local drizzle-kit migrate",
     "drop": "drizzle-kit drop",
     "db:check": "drizzle-kit check",
     "dev": "tsc --watch",
