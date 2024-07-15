@@ -11,17 +11,18 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   extends: ["@ouroboros/eslint-config/library.js"],
-    rules: {
-    // recommended for safety
-    '@typescript-eslint/no-floating-promises': 'error',
-    // relaxed rules, for convenience
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-      },
-    ],
-    '@typescript-eslint/no-explicit-any': 'off',
+  rules: {
+   // recommended for safety
+   '@typescript-eslint/no-floating-promises': 'error',
+   // relaxed rules, for convenience
+   '@typescript-eslint/no-unused-vars': [
+     'warn',
+     {
+       argsIgnorePattern: '^_',
+       varsIgnorePattern: '^_',
+     },
+   ],
+   '@typescript-eslint/no-explicit-any': 'off',
   },
+  ignorePatterns: ["__tests__/*"],
 };
