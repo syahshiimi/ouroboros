@@ -10,7 +10,8 @@
     "codegen": "turbo run codegen",
     "schemagen": "turbo run schemagen",
     "test": "turbo run test",
-    "db:migrate": "turbo run migrate"
+    "db:migrate": "turbo run migrate",
+    "postinstall": "rm -rf ./node_modules/cpu-features"
   },
   "devDependencies": {
     "@ouroboros/eslint-config": "workspace:*",
