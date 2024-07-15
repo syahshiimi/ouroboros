@@ -6,7 +6,7 @@ ARG BUN_VERSION=1.1.16
 
 # Install bun and other binaries.
 ENV PATH="${PATH}:/root/.bun/bin"
-RUN apt-get update && apt-get install -y bash curl unzip qemu qemu-user-static && \
+RUN apt-get update && apt-get install -y bash curl unzip && \
   curl https://bun.sh/install | bash -s -- bun-v${BUN_VERSION} 
 
 # Install pnpm.
