@@ -29,15 +29,15 @@ push-weathercore:
 
 build-manifest-weathercore:
 	docker manifest create \
-		syahshiimi/ouroboros-weathercore:${GIT_BRANCH}-latest \
+		syahshiimi/ouroboros-weathercore:${GIT_BRANCH} \
 		--amend syahshiimi/ouroboros-weathercore:${GIT_BRANCH}-amd64 \
 		--amend syahshiimi/ouroboros-weathercore:${GIT_BRANCH}-aarch64
 
 inspect-manifest-weathercore:
-	docker manifest inspect syahshiimi/ouroboros-weathercore:${GIT_BRANCH}-latest
+	docker manifest inspect syahshiimi/ouroboros-weathercore:${GIT_BRANCH}
 
 push-manifest-weathercore:
-	docker manifest push syahshiimi/ouroboros-weathercore:${GIT_BRANCH}-latest
+	docker manifest push syahshiimi/ouroboros-weathercore:${GIT_BRANCH}
 
 # weathercore-migrations
 build-weathercore-migrations-amd64:
@@ -62,15 +62,15 @@ push-weathercore-migrations:
 
 build-manifest-weathercore-migrations:
 	docker manifest create \
-		syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-latest \
+		syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH} \
 		--amend syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-amd64 \
 		--amend syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-aarch64
 
 inspect-manifest-weathercore-migrations:
-	docker manifest inspect syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-latest
+	docker manifest inspect syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}
 
 push-manifest-weathercore-migrations:
-	docker manifest push syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}-latest
+	docker manifest push syahshiimi/ouroboros-weathercore-migrations:${GIT_BRANCH}
 
 # feeder-api
 build-feeder-api-amd64:
@@ -95,15 +95,15 @@ push-feeder-api:
 	
 build-manifest-feeder-api:
 	docker manifest create \
-		syahshiimi/ouroboros-feeder-api:${GIT_BRANCH}-latest \
+		syahshiimi/ouroboros-feeder-api:${GIT_BRANCH} \
 		--amend syahshiimi/ouroboros-feeder-api:${GIT_BRANCH}-amd64 \
 		--amend syahshiimi/ouroboros-feeder-api:${GIT_BRANCH}-aarch64
 
 inspect-manifest-feeder-api:
-	docker manifest inspect syahshiimi/ouroboros-feeder-api:${GIT_BRANCH}-latest
+	docker manifest inspect syahshiimi/ouroboros-feeder-api:${GIT_BRANCH}
 
 push-manifest-feeder-api:
-	docker manifest push syahshiimi/ouroboros-feeder-api:${GIT_BRANCH}-latest
+	docker manifest push syahshiimi/ouroboros-feeder-api:${GIT_BRANCH}
 
 # feeder-worker
 build-feeder-worker:
@@ -134,12 +134,12 @@ push-feeder-worker:
 	
 build-manifest-feeder-worker:
 	docker manifest create \
-		syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH}-latest \
+		syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH} \
 		--amend syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH}-amd64 \
 		--amend syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH}-aarch64
 
 inspect-manifest-feeder-worker:
-	docker manifest inspect syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH}-latest
+	docker manifest inspect syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH}
 
 push-manifest-feeder-worker:
-	docker manifest push syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH}-latest
+	docker manifest push syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH}
