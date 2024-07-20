@@ -3,6 +3,7 @@ services:
     container_name: feeder-worker
     user: 1001:1001
     image: syahshiimi/ouroboros-feeder-worker:main
+    restart: unless-stopped
     env_file:
       - .env
     networks:
@@ -17,6 +18,7 @@ services:
       - POSTGRES_PWD=${TEMPORAL_POSTGRES_PASSWORD}
       - POSTGRES_SEEDS=postgresql
     image: syahshiimi/ouroboros-feeder-api:main
+    restart: unless-stopped
     env_file:
       - .env
     ports:
