@@ -1,0 +1,20 @@
+{
+  "name": "@ouroboros/the-weather-is-an-infinite-state-machine",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --env-file=.env.local run --watch ./index.ts",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@ouroboros/eslint-config": "workspace:*",
+    "@ouroboros/typescript-config": "workspace:*",
+    "@faker-js/faker": "^8.4.1",
+    "@types/bun": "latest",
+    "vitest": "^1.6.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
