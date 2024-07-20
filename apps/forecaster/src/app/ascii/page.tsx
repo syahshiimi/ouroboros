@@ -1,6 +1,11 @@
 export default function ascii() {
   const WeatherDerivative = {
-    create: function (location, season, strikeLevel, purchasePrice) {
+    create: function (
+      location: any,
+      season: any,
+      strikeLevel: any,
+      purchasePrice: any,
+    ) {
       return {
         location: location,
         season: season,
@@ -10,7 +15,13 @@ export default function ascii() {
       };
     },
 
-    generateContract: function (derivative) {
+    generateContract: function (derivative: {
+      season: any;
+      strikeLevel: any;
+      payoutMultiplier: number;
+      location: any;
+      purchasePrice: number;
+    }) {
       return `
 Weather Derivative Contract: Monsoon Rainfall Hedge
 
@@ -27,7 +38,7 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
   };
 
   const MarketParticipant = {
-    purchase: function (name, derivative) {
+    purchase: function (name: any, derivative: any) {
       console.log(`${name} has purchased the following weather derivative:`);
       console.log(WeatherDerivative.generateContract(derivative));
     },

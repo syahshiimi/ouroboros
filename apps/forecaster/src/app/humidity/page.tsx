@@ -12,7 +12,10 @@ export default function Humidity() {
   if (isError) return <p>Error fetching data</p>;
 
   const readings = data.data.items[0].readings;
-  const sum = readings.reduce((acc: any, curr: any) => acc + curr.value, 0);
+  const sum = readings.reduce(
+    (acc: number, curr: { value: number }) => acc + curr.value,
+    0,
+  );
   const length = readings.length;
   const averageHumidity = Math.round(sum / length);
 
