@@ -48,7 +48,8 @@ export default function Humidity() {
         </div>
       </section>
       <section className={`w-full z-20`}>
-        <h2 className={`text-menu-t text-center pb-4 text-green-200`}>
+        {/*TODO: Make the text a marquee.*/}
+        <h2 className={`text-menu-t text-center pb-4 text-white`}>
           {getHumidityText(averageHumidity)}
         </h2>
       </section>
