@@ -186,6 +186,9 @@ importers:
       typescript:
         specifier: ^5
         version: 5.5.3
+      vitest:
+        specifier: ^1.6.0
+        version: 1.6.0(@types/node@20.14.10)(terser@5.31.2)
 
   apps/weathercore:
     dependencies:
