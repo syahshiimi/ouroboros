@@ -29,11 +29,20 @@ export default function Humidity() {
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
         <div className={`h-fit w-fit relative`}>
-          <SG className={`bg-blue-300 min-h-[58rem]`} />
-          <p className={`absolute bottom-[49%] left-[12%] text-nowrap`}>
-            Sticky
+          <SG className={`bg-violet-800 min-h-[58rem]`} />
+          <p className={`absolute bottom-[51%] left-[12%] text-nowrap`}>
+            {averageHumidity}%
           </p>
           <p className={`absolute right-[15%] bottom-[52%] text-nowrap`}>
+            {averageHumidity}%
+          </p>
+          <p className={`absolute right-[52%] bottom-[39%] text-nowrap`}>
+            {averageHumidity}%
+          </p>
+          <p className={`absolute right-[58%] bottom-[80%] text-nowrap`}>
+            {averageHumidity}%
+          </p>
+          <p className={`absolute right-[52%] bottom-[60%] text-nowrap`}>
             {averageHumidity}%
           </p>
         </div>
