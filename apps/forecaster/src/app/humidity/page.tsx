@@ -4,6 +4,7 @@ import SG from "../../../public/sg_2.svg";
 import { useDataHook } from "@/hooks/useDataHook";
 import { getHumidityText } from "@/utils/topics/getHumidity";
 import DateComponent from "@/components/date";
+import { Status } from "@/components/status";
 
 export default function Humidity() {
   const { data, isLoading, isError } = useDataHook("humidity");
@@ -28,24 +29,7 @@ export default function Humidity() {
       <section
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
-        <div className={`h-fit w-fit relative`}>
-          <SG className={`bg-violet-800 min-h-[58rem]`} />
-          <p className={`absolute bottom-[51%] left-[12%] text-nowrap`}>
-            {averageHumidity}%
-          </p>
-          <p className={`absolute right-[15%] bottom-[52%] text-nowrap`}>
-            {averageHumidity}%
-          </p>
-          <p className={`absolute right-[52%] bottom-[39%] text-nowrap`}>
-            {averageHumidity}%
-          </p>
-          <p className={`absolute right-[58%] bottom-[80%] text-nowrap`}>
-            {averageHumidity}%
-          </p>
-          <p className={`absolute right-[52%] bottom-[60%] text-nowrap`}>
-            {averageHumidity}%
-          </p>
-        </div>
+        <Status input={averageHumidity}></Status>
       </section>
       <section className={`w-full z-20`}>
         {/*TODO: Make the text a marquee.*/}
