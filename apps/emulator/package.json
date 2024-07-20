@@ -1,0 +1,14 @@
+{
+  "name": "the-weather-is-an-infinite-state-machine",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --env-file=.env.local run --watch ./index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
