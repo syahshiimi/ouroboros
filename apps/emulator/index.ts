@@ -1,3 +1,5 @@
+import { Faker, faker } from "@faker-js/faker";
+
 export default function ascii() {
   const WeatherDerivative = {
     create: function (
@@ -32,7 +34,7 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
 5. Location: ${derivative.location}
 6. Measurement Authority: [Designated meteorological agency]
 7. Settlement: Payout to be made within 5 business days after the end of the contract period.
-8. Purchase Price: $${derivative.purchasePrice.toFixed(2)}
+8. Purchase Price: $${derivative.purchasePrice}
     `;
     },
   };
@@ -46,10 +48,10 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
 
   // Demo
   const newDerivative = WeatherDerivative.create(
-    "Mumbai, India",
+    faker.location.country(),
     "Summer 2024",
     10,
-    1000,
+    faker.finance.amount({ min: 1200, max: 8500 }),
   );
 
   console.log("Creating a new weather derivative");
@@ -58,9 +60,10 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
   const contract = WeatherDerivative.generateContract(newDerivative);
   console.log(contract);
 
-  MarketParticipant.purchase("Raj Investments Ltd", newDerivative);
+  MarketParticipant.purchase(faker.company.name(), newDerivative);
 
-  console.log(`
+  setTimeout(() => {
+    console.log(`
          .-~~~-.
   .- ~ ~-(       )_ _
  /                    ~ -.
@@ -81,7 +84,10 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
     |   DERIVATIVE WAS SOLD.  |
     |_________________________|
       `);
-  console.log(`
+  }, 500);
+
+  setTimeout(() => {
+    console.log(`
        ☀️   ☁️   ☁️  ☀️  
     __/\\/\\__/\\/\\__/\\/\\__
      )  ☂️   ☂️   ☂️   (  
@@ -100,6 +106,13 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
    SOUTHEAST ASIAN WEATHER
        DERIVATIVE
     `);
+  }, 1000);
 }
 
-ascii();
+const main = () => {
+  setInterval(() => {
+    ascii();
+  }, 5000);
+};
+
+main();
