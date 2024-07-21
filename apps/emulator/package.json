@@ -1,11 +1,12 @@
 {
-  "name": "the-weather-is-an-infinite-state-machine",
+  "name": "@ouroboros/the-weather-is-an-infinite-state-machine",
   "module": "index.ts",
   "type": "module",
   "scripts": {
     "dev": "bun --env-file=.env.local run --watch ./index.ts"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/bun": "latest"
   },
   "peerDependencies": {
