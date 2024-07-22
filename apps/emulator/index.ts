@@ -1,68 +1,36 @@
 import { Faker, faker } from "@faker-js/faker";
+import { WeatherDerivative } from "./src/domains/derivatives/derivative.ts";
+import { MarketParticipant } from "./src/domains/participant/participant.ts";
 
-export default function ascii() {
-  const WeatherDerivative = {
-    create: function (
-      location: any,
-      season: any,
-      strikeLevel: any,
-      purchasePrice: any,
-    ) {
-      return {
-        location: location,
-        season: season,
-        strikeLevel: strikeLevel,
-        purchasePrice: purchasePrice,
-        payoutMultiplier: 2, // 200% of purchase price
-      };
-    },
-
-    generateContract: function (derivative: {
-      season: any;
-      strikeLevel: any;
-      payoutMultiplier: number;
-      location: any;
-      purchasePrice: number;
-    }) {
-      return `
-Weather Derivative Contract: Monsoon Rainfall Hedge
-
-1. Underlying Event: Cumulative rainfall during the ${derivative.season} monsoon season.
-2. Strike Level: ${derivative.strikeLevel} mm of rainfall
-3. Payout Structure: If cumulative rainfall exceeds the strike level, the buyer receives a payout of ${derivative.payoutMultiplier * 100}% of the purchase price of this derivative.
-4. Contract Period: ${derivative.season}
-5. Location: ${derivative.location}
-6. Measurement Authority: [Designated meteorological agency]
-7. Settlement: Payout to be made within 5 business days after the end of the contract period.
-8. Purchase Price: $${derivative.purchasePrice}
-    `;
-    },
-  };
-
-  const MarketParticipant = {
-    purchase: function (name: any, derivative: any) {
-      console.log(`${name} has purchased the following weather derivative:`);
-      console.log(WeatherDerivative.generateContract(derivative));
-    },
-  };
-
-  // Demo
+/**
+ * The market participant service responsible for
+ * 1. The creation of a market participant
+ * 2. The emulated return/response of purchasing weather derivatives.
+ *
+ * Formerly known as the _Agent Trade Book_.
+ */
+export default function marketParticipant() {
+  const marketParticipantName = faker.company.name();
+  const derivativeLocation = faker.location.country();
   const newDerivative = WeatherDerivative.create(
-    faker.location.country(),
+    derivativeLocation,
     "Summer 2024",
     10,
-    faker.finance.amount({ min: 1200, max: 8500 }),
+    Number(faker.finance.amount({ min: 1200, max: 8500 })),
+    // TODO: We can randomise this between the topics of 1) Temperature, 2) Rainfall, 3) Humidity.
+    "Temperature",
   );
-
-  console.log("Creating a new weather derivative");
-  console.log(newDerivative);
-
   const contract = WeatherDerivative.generateContract(newDerivative);
-  console.log(contract);
 
-  MarketParticipant.purchase(faker.company.name(), newDerivative);
+  console.log("Creating a new weather derivative", newDerivative);
+  console.log(`${newDerivative.topic} hedge contractual details`, contract);
 
+  MarketParticipant.purchase(marketParticipantName, newDerivative);
+
+  // Visual representation of a _successful_ transaction.
   setTimeout(() => {
+    // TODO: Let's have each topic produce three separate graphics.
+    // Therefore, if there are three topics, we should have a total of 9 graphics.
     console.log(`
          .-~~~-.
   .- ~ ~-(       )_ _
@@ -86,7 +54,10 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
       `);
   }, 500);
 
+  // Visual representation of the derivative produced.
   setTimeout(() => {
+    // TODO: Let's have each topic produce three separate graphics.
+    // Therefore, if there are three topics, we should have a total of 9 graphics.
     console.log(`
        ☀️   ☁️   ☁️  ☀️  
     __/\\/\\__/\\/\\__/\\/\\__
@@ -103,7 +74,7 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
     ~~|  |~~|   |~~|  |~~
     🌿 🌴  🌿 🌴 🌿 🌴 🌿
 
-   SOUTHEAST ASIAN WEATHER
+     ${derivativeLocation} WEATHER
        DERIVATIVE
     `);
   }, 1000);
@@ -111,7 +82,7 @@ Weather Derivative Contract: Monsoon Rainfall Hedge
 
 const main = () => {
   setInterval(() => {
-    ascii();
+    marketParticipant();
   }, 5000);
 };
 
