@@ -1,6 +1,7 @@
-import { Faker, faker } from "@faker-js/faker";
-import { WeatherDerivative } from "./src/domains/derivatives/derivative.ts";
-import { MarketParticipant } from "./src/domains/participant/participant.ts";
+import { faker } from "@faker-js/faker";
+import { WeatherDerivative } from "./src/domains/derivatives";
+import { MarketParticipant } from "./src/domains/participant";
+import { derivativeGraphics } from "./src/domains/derivatives/graphics.ts";
 
 /**
  * The market participant service responsible for
@@ -20,38 +21,17 @@ export default function marketParticipant() {
     // TODO: We can randomise this between the topics of 1) Temperature, 2) Rainfall, 3) Humidity.
     "Temperature",
   );
+  const seedNumber = Math.floor(Math.random() * (4 - 1 + 1));
   const contract = WeatherDerivative.generateContract(newDerivative);
 
   console.log("Creating a new weather derivative", newDerivative);
   console.log(`${newDerivative.topic} hedge contractual details`, contract);
 
-  MarketParticipant.purchase(marketParticipantName, newDerivative);
+  MarketParticipant.purchase(marketParticipantName);
 
   // Visual representation of a _successful_ transaction.
   setTimeout(() => {
-    // TODO: Let's have each topic produce three separate graphics.
-    // Therefore, if there are three topics, we should have a total of 9 graphics.
-    console.log(`
-         .-~~~-.
-  .- ~ ~-(       )_ _
- /                    ~ -.
-|                          \\
- \\                         .'
-   ~- . _____________ . -~
-         \\\\\\\\\\\\\\\\\\\\
-          \\\\\\\\\\\\\\\\\\
-           \\\\\\\\\\\\\\\\
-            \\\\\\\\\\\\\\
-             \\\\\\\\\\\\
-              \\\\\\\\\\
-               \\\\\\\\
-                \\\\\\
-     _________________________
-    |                         |
-    |   A MONSOON RAINFALL    |
-    |   DERIVATIVE WAS SOLD.  |
-    |_________________________|
-      `);
+    console.log(derivativeGraphics.getVisuals(seedNumber, "temperature"));
   }, 500);
 
   // Visual representation of the derivative produced.
