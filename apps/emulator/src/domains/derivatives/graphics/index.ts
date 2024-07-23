@@ -1,10 +1,12 @@
 import { rainfall } from "./rainfall.ts";
 import { temperature } from "./temperature.ts";
+import { humidity } from "./humidity.ts";
 
 export const derivativeGraphics = {
   graphics: {
     rainfall: rainfall,
     temperature: temperature,
+    humidity: humidity,
   },
   getVisuals: function <T extends keyof typeof this.graphics>(
     index: number,
