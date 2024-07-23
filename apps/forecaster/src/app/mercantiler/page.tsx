@@ -1,7 +1,12 @@
 "use client";
 export default function MercantilerDerivativeGenerator() {
   const WeatherDerivative = {
-    create: function (location, season, temperatureThreshold, contractValue) {
+    create: function (
+      location: any,
+      season: any,
+      temperatureThreshold: any,
+      contractValue: any,
+    ) {
       return {
         location: location,
         season: season,
@@ -11,7 +16,13 @@ export default function MercantilerDerivativeGenerator() {
       };
     },
 
-    generateContract: function (derivative) {
+    generateContract: function (derivative: {
+      season: any;
+      location: any;
+      temperatureThreshold: any;
+      payoutMultiplier: number;
+      contractValue: number;
+    }) {
       return `
 Temperature Increase Derivative Contract
 
@@ -28,7 +39,7 @@ Temperature Increase Derivative Contract
   };
 
   const Mercantiler = {
-    generateDerivative: function (currentTemperature, location) {
+    generateDerivative: function (currentTemperature: number, location: any) {
       const temperatureThreshold = currentTemperature + 2; // Set threshold 2°C above current
       const contractValue = 1000 + currentTemperature * 10; // Example pricing model
       const season = "Summer 2024"; // Example season
@@ -46,7 +57,11 @@ Temperature Increase Derivative Contract
 
       return newDerivative;
     },
-    publishGraphic: function (derivative) {
+    publishGraphic: function (derivative: {
+      temperatureThreshold: number;
+      location: any;
+      contractValue: number;
+    }) {
       const currentTemp = derivative.temperatureThreshold - 2;
       console.log(`
   Temperature Increase Derivative for ${derivative.location}
