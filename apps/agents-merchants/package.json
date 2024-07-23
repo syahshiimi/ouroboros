@@ -1,9 +1,9 @@
 {
   "name": "@ouroboros/agents-merchants",
-  "module": "agent.ts",
+  "module": "src/agent.ts",
   "type": "module",
   "scripts": {
-    "dev:agents": "bun --env-file=.env.local run --watch agent.ts",
+    "dev:agents": "bun run --watch src/agent.ts",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint ."
