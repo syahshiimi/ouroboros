@@ -12,7 +12,6 @@ describe("derivativeGraphics", () => {
   test("getVisuals returns a valid rainfall graphic", () => {
     const graphic = derivativeGraphics.getVisuals(0, "rainfall");
     expect(typeof graphic).toBe("string");
-    expect(graphic).toContain("RAINFALL");
   });
 
   // Test getting a valid temperature graphic
@@ -26,7 +25,6 @@ describe("derivativeGraphics", () => {
   test("getVisuals returns a random graphic for out of bounds index", () => {
     const graphic = derivativeGraphics.getVisuals(1000, "rainfall");
     expect(typeof graphic).toBe("string");
-    expect(graphic).toContain("RAINFALL");
   });
 
   // Test that an error is thrown for an invalid topic

@@ -64,7 +64,7 @@
 export const humidity = [
   `
    ╔═══════════════════╗
-   ║   HUMIDITY NEXUS  ║
+   ║  HUMIDITY NEXUS   ║
    ╠═══════════════════╣
    ║      ▓▒░⚡░▒▓     ║
    ║    ▓▒░     ░▒▓    ║
@@ -74,7 +74,7 @@ export const humidity = [
    ║    ≈≈≈≈≈≈≈≈≈≈≈    ║
    ║   ≈≈≈≈≈≈≈≈≈≈≈≈≈   ║
    ╚═══════════════════╝
-     MOISTURE CAPITAL
+      MOISTURE CAPITAL
     FUTURES INITIALIZED
   `,
 
@@ -84,11 +84,11 @@ export const humidity = [
    ├─────────────────┤
    │  ☵☵☵   ∞   ☵☵☵  │
    │ ☵   ☵ ┼╥┼ ☵   ☵ │
-   │☵  ┌─┐ ╠╣ ┌─┐  ☵│
-   │  ┌┘ └┐║║┌┘ └┐  │
-   │ ┌┘$ $└╚╝└$ $┐ │
-   │ └┐$ $    $ $┌┘ │
-   │  └──┘    └──┘  │
+   │☵  ┌─┐ ╠╣ ┌─┐  ☵ │
+   │  ┌┘ └┐║║┌┘ └┐   │
+   │ ┌┘$ $└╚╝└$ $┐   │
+   │ └┐$ $    $ $┌┘  │
+   │  └──┘    └──┘   │
    └─────────────────┘
     VAPOR EQUITY SWAP
      RISK TRANSFERRED
@@ -114,13 +114,14 @@ export const humidity = [
    ┏━━━━━━━━━━━━━━━━━┓
    ┃ DEW POINT NEXUS ┃
    ┣━━━━━━━━━━━━━━━━━┫
-   ┃ ╭─╮  ╭─╮  ╭─╮   ┃
-   ┃ │$│╳╳│$│╳╳│$│   ┃
-   ┃ ╰─╯  ╰─╯  ╰─╯   ┃
-   ┃   ▼▼▼  ▼▼▼  ▼▼▼ ┃
+   ┃  ╭─╮  ╭─╮  ╭─╮  ┃
+   ┃  │$│╳╳│$│╳╳│$│  ┃
+   ┃  ╰─╯  ╰─╯  ╰─╯  ┃
+   ┃  ▼▼▼  ▼▼▼  ▼▼▼  ┃
    ┃ ≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋ ┃
    ┃≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋≋┃
-   ┃ HUMIDITY SINGULARITY┃
+   ┃    HUMIDITY     ┃ 
+   ┃   SINGULARITY   ┃
    ┗━━━━━━━━━━━━━━━━━┛
      MARKET SATURATION
       EVENT HORIZON

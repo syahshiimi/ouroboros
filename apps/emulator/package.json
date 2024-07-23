@@ -5,13 +5,15 @@
   "scripts": {
     "dev": "bun --env-file=.env.local run --watch ./index.ts",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint ."
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@ouroboros/eslint-config": "workspace:*",
     "@ouroboros/typescript-config": "workspace:*",
-    "@faker-js/faker": "^8.4.1",
     "@types/bun": "latest",
+    "@vitest/coverage-v8": "^1.6.0",
     "vitest": "^1.6.0"
   },
   "peerDependencies": {
