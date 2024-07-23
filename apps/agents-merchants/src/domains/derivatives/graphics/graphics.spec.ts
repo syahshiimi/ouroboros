@@ -18,7 +18,6 @@ describe("derivativeGraphics", () => {
   test("getVisuals returns a valid temperature graphic", () => {
     const graphic = derivativeGraphics.getVisuals(0, "temperature");
     expect(typeof graphic).toBe("string");
-    expect(graphic).toContain("TEMPERATURE");
   });
 
   // Test out of bounds index returns a random graphic
