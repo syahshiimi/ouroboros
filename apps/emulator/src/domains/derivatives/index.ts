@@ -1,4 +1,4 @@
-interface Derivative {
+interface Index {
   location: string;
   season: string;
   strikeLevel: number;
@@ -15,7 +15,7 @@ interface Derivative {
  * @method generateContract - Constructs the contract object, referencing the object constructed
  * by the .create method.
  *
- * Currently ,it is only producing a Rainfall Weather Derivative
+ * Currently ,it is only producing a Rainfall Weather Index
  * TODO: Implement the creation of other weather derivatives i.e. temperature, humidity etc.
  */
 export const WeatherDerivative = {
@@ -35,12 +35,12 @@ export const WeatherDerivative = {
       topic: topic,
     };
   },
-  generateContract: function (derivative: Derivative) {
+  generateContract: function (derivative: Index) {
     return contractCreator(derivative);
   },
 };
 
-export const contractCreator = (derivative: Derivative) => {
+export const contractCreator = (derivative: Index) => {
   return `
 Weather Derivative Contract: Monsoon ${derivative.topic} Hedge
 
