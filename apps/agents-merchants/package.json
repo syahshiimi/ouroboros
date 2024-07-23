@@ -1,9 +1,9 @@
 {
-  "name": "@ouroboros/the-weather-is-an-infinite-state-machine",
-  "module": "index.ts",
+  "name": "@ouroboros/agents-merchants",
+  "module": "agent.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun --env-file=.env.local run --watch ./index.ts",
+    "dev:agents": "bun --env-file=.env.local run --watch agent.ts",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint ."

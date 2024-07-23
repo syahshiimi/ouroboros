@@ -18,7 +18,7 @@ interface Index {
  * Currently ,it is only producing a Rainfall Weather Index
  * TODO: Implement the creation of other weather derivatives i.e. temperature, humidity etc.
  */
-export const WeatherDerivative = {
+export const merchant = {
   create: function (
     location: string,
     season: string,
