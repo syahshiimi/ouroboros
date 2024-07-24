@@ -1,4 +1,4 @@
-interface Index {
+export interface Index {
   location: string;
   season: string;
   strikeLevel: number;
@@ -7,40 +7,18 @@ interface Index {
   topic: string;
 }
 
-/**
- * The weather derivative object method that constructs and implements the necessary
- * details for the creation of a weather derivative.
- *
- * @method create - Create a weather derivative asset class.
- * @method generateContract - Constructs the contract object, referencing the object constructed
- * by the .create method.
- *
- * Currently ,it is only producing a Rainfall Weather Index
- * TODO: Implement the creation of other weather derivatives i.e. temperature, humidity etc.
- */
-export const merchant = {
-  create: function (
-    location: string,
-    season: string,
-    strikeLevel: number,
-    purchasePrice: number,
-    topic: string,
-  ) {
-    return {
-      location: location,
-      season: season,
-      strikeLevel: strikeLevel,
-      purchasePrice: purchasePrice,
-      payoutMultiplier: 2, // 200% of purchase price
-      topic: topic,
-    };
-  },
-  generateContract: function (derivative: Index) {
-    return contractCreator(derivative);
-  },
+const derivativeCreator = (derivative: Index) => {
+  return {
+    location: derivative.location,
+    season: derivative.season,
+    strikeLevel: derivative.strikeLevel,
+    purchasePrice: derivative.purchasePrice,
+    payoutMultiplier: 2, // 200% of purchase price
+    topic: derivative.topic,
+  };
 };
 
-export const contractCreator = (derivative: Index) => {
+const contractCreator = (derivative: Index) => {
   return `
 Weather Derivative Contract: Monsoon ${derivative.topic} Hedge
 
@@ -53,4 +31,34 @@ Weather Derivative Contract: Monsoon ${derivative.topic} Hedge
 7. Settlement: Payout to be made within 5 business days after the end of the contract period.
 8. Purchase Price: $${derivative.purchasePrice}
     `;
+};
+
+/**
+ * The weather derivative object method that constructs and implements the necessary
+ * details for the creation of a weather derivative.
+ */
+export const merchant = {
+  create: function (derivative: Index) {
+    const asset = derivativeCreator(derivative);
+    return {
+      result: asset,
+      log: () => {
+        this.log("Creating a new weather derivative", asset, "\n");
+        return asset;
+      },
+    };
+  },
+  generateContract: function (derivative: Index) {
+    const contract = contractCreator(derivative);
+    return {
+      contract: contract,
+      log: () => {
+        this.log(`${derivative.topic} hedge contractual details: \n`, contract);
+        return contract;
+      },
+    };
+  },
+  log: function (...args: unknown[]) {
+    console.log(...args);
+  },
 };
