@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { merchant } from "./domains/derivatives";
+import { type Derivative, merchant } from "./domains/derivatives/derivative.ts";
 import { agents } from "./domains/participant";
 import { derivativeGraphics } from "./domains/derivatives/graphics";
 import { generator } from "./utils/generator.ts";
@@ -12,34 +12,37 @@ import { generator } from "./utils/generator.ts";
  *
  * Formerly known as the _Agent Trade Book_.
  */
-export default function agentEmulation() {
+function agentEmulation() {
+  // TODO: This object initialisiation could be encapsulated
+  // into the merchant.create() method to abstract and encapsulate
+  // it out. This provides the benefit that this emulation() tasks doesn't
+  // need to initialise anything. Let `create()` handle that logic.
   const agentName = faker.company.name();
   const derivativeLocation = faker.location.country();
-  const derivativeOption = "Humidity";
-  const newDerivative = merchant.create(
-    derivativeLocation,
-    "Summer 2024",
-    10,
-    Number(faker.finance.amount({ min: 1200, max: 8500 })),
-    // TODO: We can randomise this between the topics of 1) Temperature, 2) Rainfall, 3) Humidity.
-    derivativeOption,
-  );
+  const derivativeOption = "Temperature";
   const seedNumber = generator(0, 3);
-  const contract = merchant.generateContract(newDerivative);
 
-  console.log("Creating a new weather derivative", newDerivative, "\n");
-  console.log(`${newDerivative.topic} hedge contractual details \n`, contract);
+  const asset: Derivative = {
+    location: derivativeLocation,
+    season: "Summer 2024",
+    strikeLevel: generator(5, 12),
+    purchasePrice: Number(faker.finance.amount({ min: 1200, max: 8500 })),
+    payoutMultiplier: 2,
+    topic: derivativeOption,
+  };
+  const derivative = merchant.create(asset).log();
 
+  merchant.generateContract(derivative).log();
   agents.purchase(agentName);
 
-  // Agents: Visual representation of a _successful_ derivative transaction by agents (Market participants)
   // This is a representation of the actual derivative asset class.
+  // Agents: Visual representation of a _successful_ derivative transaction by agents (Market participants)
   setTimeout(() => {
-    console.log(derivativeGraphics.getVisuals(seedNumber, "humidity"));
+    console.log(derivativeGraphics.getVisuals(seedNumber, "temperature"));
   }, 500);
 
-  // Merchants: Visual representation of the derivative contracts the merchant has produced.
   // This is a representation of the actual contract derivative produced by the merchant.
+  // Merchants: Visual representation of the derivative contracts the merchant has produced.
   setTimeout(() => {
     // TODO: Let's have each topic produce three separate graphics.
     // Therefore, if there are three topics, we should have a total of 9 graphics.
