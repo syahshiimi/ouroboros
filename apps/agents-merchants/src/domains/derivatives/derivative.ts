@@ -1,4 +1,4 @@
-export interface Index {
+export interface Derivative {
   location: string;
   season: string;
   strikeLevel: number;
@@ -7,7 +7,7 @@ export interface Index {
   topic: string;
 }
 
-const derivativeCreator = (derivative: Index) => {
+const derivativeCreator = (derivative: Derivative) => {
   return {
     location: derivative.location,
     season: derivative.season,
@@ -18,7 +18,7 @@ const derivativeCreator = (derivative: Index) => {
   };
 };
 
-const contractCreator = (derivative: Index) => {
+const contractCreator = (derivative: Derivative) => {
   return `
 Weather Derivative Contract: Monsoon ${derivative.topic} Hedge
 
@@ -38,7 +38,7 @@ Weather Derivative Contract: Monsoon ${derivative.topic} Hedge
  * details for the creation of a weather derivative.
  */
 export const merchant = {
-  create: function (derivative: Index) {
+  create: function (derivative: Derivative) {
     const asset = derivativeCreator(derivative);
     return {
       result: asset,
@@ -48,7 +48,7 @@ export const merchant = {
       },
     };
   },
-  generateContract: function (derivative: Index) {
+  generateContract: function (derivative: Derivative) {
     const contract = contractCreator(derivative);
     return {
       contract: contract,
