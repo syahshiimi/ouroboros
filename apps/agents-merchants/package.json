@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev:agents": "bun run --watch src/agent.ts",
+    "dev:merchants": "bun run --watch src/merchant.ts",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint ."
