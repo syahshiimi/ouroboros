@@ -1,22 +1,13 @@
 import { creator } from "./contracts/creator.ts";
 import { derivativeCreator } from "./creator.ts";
 
-export interface Derivative {
-  location: string;
-  season: string;
-  strikeLevel: number;
-  purchasePrice: number;
-  payoutMultiplier: number;
-  topic: string;
-}
-
 /**
  * The weather derivative object method that constructs and implements the necessary
  * details for the creation of a weather derivative.
  */
 export const merchant = {
-  create: function () {
-    const asset = derivativeCreator();
+  create: function (topic: string) {
+    const asset = derivativeCreator(topic);
     return {
       result: asset,
       log: () => {
@@ -25,12 +16,17 @@ export const merchant = {
       },
     };
   },
-  generateContract: function (derivative: Derivative) {
+  generateContract: function (
+    derivative: ReturnType<typeof derivativeCreator>,
+  ) {
     const contract = creator(derivative);
     return {
       contract: contract,
       log: () => {
-        this.log(`${derivative.topic} hedge contractual details: \n`, contract);
+        this.log(
+          `${derivative.weather} hedge contractual details: \n`,
+          contract,
+        );
         return contract;
       },
     };

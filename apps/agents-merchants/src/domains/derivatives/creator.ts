@@ -4,10 +4,10 @@ import { generator } from "../../utils/generator.ts";
 /**
  * The creator object responsible for producing emulated derivatives.
  */
-export const derivativeCreator = () => {
+export const derivativeCreator = (topic: string) => {
   const derivativeLocation = faker.location.country();
   const derivativeSeason = "Summer 2023";
-  const derivativeOption = "Temperature";
+  const derivativeOption = topic.toUpperCase();
   const derivativePrice = Number(
     faker.finance.amount({ min: 1199, max: 8500 }),
   );
@@ -17,6 +17,6 @@ export const derivativeCreator = () => {
     strikeLevel: generator(4, 12),
     purchasePrice: derivativePrice,
     payoutMultiplier: 1, // 200% of purchase price
-    topic: derivativeOption,
+    weather: derivativeOption,
   };
 };
