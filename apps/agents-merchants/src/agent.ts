@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { type Derivative, merchant } from "./domains/derivatives/derivative.ts";
+import { merchant } from "./domains/derivatives/derivative.ts";
 import { agents } from "./domains/participant";
 import { derivativeGraphics } from "./domains/derivatives/graphics";
 import { generator } from "./utils/generator.ts";
@@ -13,24 +13,8 @@ import { generator } from "./utils/generator.ts";
  * Formerly known as the _Agent Trade Book_.
  */
 function agentEmulation() {
-  // TODO: This object initialisiation could be encapsulated
-  // into the merchant.create() method to abstract and encapsulate
-  // it out. This provides the benefit that this emulation() tasks doesn't
-  // need to initialise anything. Let `create()` handle that logic.
   const agentName = faker.company.name();
-  const derivativeLocation = faker.location.country();
-  const derivativeOption = "Temperature";
-  const seedNumber = generator(0, 3);
-
-  const asset: Derivative = {
-    location: derivativeLocation,
-    season: "Summer 2024",
-    strikeLevel: generator(5, 12),
-    purchasePrice: Number(faker.finance.amount({ min: 1200, max: 8500 })),
-    payoutMultiplier: 2,
-    topic: derivativeOption,
-  };
-  const derivative = merchant.create(asset).log();
+  const derivative = merchant.create().log();
 
   merchant.generateContract(derivative).log();
   agents.purchase(agentName);
@@ -38,9 +22,10 @@ function agentEmulation() {
   // This is a representation of the actual derivative asset class.
   // Agents: Visual representation of a _successful_ derivative transaction by agents (Market participants)
   setTimeout(() => {
-    console.log(derivativeGraphics.getVisuals(seedNumber, "temperature"));
+    console.log(derivativeGraphics.getVisuals(generator(0, 3), "temperature"));
   }, 500);
 
+  // TODO: Might want to remove this part... considering this seems to be the responsibiliyt of the merchant to emit.
   // This is a representation of the actual contract derivative produced by the merchant.
   // Merchants: Visual representation of the derivative contracts the merchant has produced.
   setTimeout(() => {
@@ -62,7 +47,7 @@ function agentEmulation() {
     ~~|  |~~|   |~~|  |~~
     🌿 🌴  🌿 🌴 🌿 🌴 🌿
 
-     ${derivativeLocation} WEATHER
+     ${derivative.location} WEATHER
        DERIVATIVE
     `);
   }, 2000);

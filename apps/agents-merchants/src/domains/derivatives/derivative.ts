@@ -1,3 +1,6 @@
+import { faker } from "@faker-js/faker";
+import { generator } from "../../utils/generator.ts";
+
 export interface Derivative {
   location: string;
   season: string;
@@ -7,14 +10,23 @@ export interface Derivative {
   topic: string;
 }
 
-const derivativeCreator = (derivative: Derivative) => {
+/**
+ * The creator object responsible for producing emulated derivatives.
+ */
+const derivativeCreator = () => {
+  const derivativeLocation = faker.location.country();
+  const derivativeSeason = "Summer 2024";
+  const derivativeOption = "Temperature";
+  const derivativePrice = Number(
+    faker.finance.amount({ min: 1200, max: 8500 }),
+  );
   return {
-    location: derivative.location,
-    season: derivative.season,
-    strikeLevel: derivative.strikeLevel,
-    purchasePrice: derivative.purchasePrice,
+    location: derivativeLocation,
+    season: derivativeSeason,
+    strikeLevel: generator(5, 12),
+    purchasePrice: derivativePrice,
     payoutMultiplier: 2, // 200% of purchase price
-    topic: derivative.topic,
+    topic: derivativeOption,
   };
 };
 
@@ -38,8 +50,8 @@ Weather Derivative Contract: Monsoon ${derivative.topic} Hedge
  * details for the creation of a weather derivative.
  */
 export const merchant = {
-  create: function (derivative: Derivative) {
-    const asset = derivativeCreator(derivative);
+  create: function () {
+    const asset = derivativeCreator();
     return {
       result: asset,
       log: () => {
