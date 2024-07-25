@@ -23,10 +23,7 @@ export const merchant = {
     return {
       contract: contract,
       log: () => {
-        this.log(
-          `${derivative.weather} hedge contractual details: \n`,
-          contract,
-        );
+        this.log(contract);
         return contract;
       },
     };
