@@ -3,6 +3,7 @@ import { merchant } from "./domains/derivatives/derivative.ts";
 import { agents } from "./domains/participant";
 import { derivativeGraphics } from "./domains/derivatives/graphics/derivatives.ts";
 import { generator } from "./utils/generator.ts";
+import { seeder } from "./utils/seeder.ts";
 
 /**
  * The agent (market participant) emulation service responsible for
@@ -14,7 +15,8 @@ import { generator } from "./utils/generator.ts";
  */
 function agentEmulation() {
   const agentName = faker.company.name();
-  const derivative = merchant.create().log();
+  const topic = seeder();
+  const derivative = merchant.create(topic).log();
 
   merchant.generateContract(derivative).log();
   agents.purchase(agentName);
@@ -22,7 +24,7 @@ function agentEmulation() {
   // This is a representation of the actual derivative asset class.
   // Agents: Visual representation of a _successful_ derivative transaction by agents (Market participants)
   setTimeout(() => {
-    console.log(derivativeGraphics.getVisuals(generator(0, 3), "temperature"));
+    console.log(derivativeGraphics.getVisuals(generator(0, 3), topic));
   }, 500);
 
   // TODO: Might want to remove this part... considering this seems to be the responsibiliyt of the merchant to emit.
