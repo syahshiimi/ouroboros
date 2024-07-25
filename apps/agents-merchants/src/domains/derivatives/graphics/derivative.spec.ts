@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { derivativeGraphics } from "./index.ts";
+import { derivativeGraphics } from "./derivatives.ts";
 
 describe("derivativeGraphics", () => {
   // Test that the graphics object has the expected properties
