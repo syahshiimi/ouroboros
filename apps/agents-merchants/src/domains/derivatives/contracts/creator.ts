@@ -2,7 +2,8 @@ import type { derivativeCreator } from "../creator.ts";
 
 export const creator = (derivative: ReturnType<typeof derivativeCreator>) => {
   return `
-Weather Derivative Contract: Monsoon ${derivative.weather} Hedge
+A Weather Derivative with the following contractual details are created. \n
+Weather Derivative Contract: ${derivative.weather.toLocaleLowerCase()} Hedge Derivative
 0. Underlying Event: Cumulative ${derivative.weather} during the ${derivative.season} monsoon season.
 1. Strike Level: ${derivative.strikeLevel} mm of rainfall
 2. Payout Structure: If cumulative rainfall exceeds the strike level, the buyer receives a payout of ${derivative.payoutMultiplier * 100}% of the purchase price of this derivative.

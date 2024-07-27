@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { merchant } from "./domains/derivatives/derivative.ts";
-import { agents } from "./domains/participant";
+import { agents } from "./domains/participant/agents";
 import { derivativeGraphics } from "./domains/derivatives/graphics/derivatives.ts";
 import { generator } from "./utils/generator.ts";
 import { seeder } from "./utils/seeder.ts";
@@ -15,11 +15,12 @@ import { seeder } from "./utils/seeder.ts";
  */
 function agentEmulation() {
   const agentName = faker.company.name();
+
   const topic = seeder();
   const derivative = merchant.create(topic).result;
 
   agents.purchase(agentName);
-  merchant.generateContract(derivative).log();
+  merchant.generateContract(derivative);
 
   // This is a representation of the actual derivative asset class.
   // Agents: Visual representation of a _successful_ derivative transaction by agents (Market participants)
