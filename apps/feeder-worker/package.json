@@ -5,8 +5,8 @@
   "scripts": {
     "build": "tsc --build",
     "check": "tsc --noEmit",
-    "dev": "dotenv -e .env.local tsx watch ./src/worker.ts",
-    "start": "dotenv -e .env.local node ./out/worker.js",
+    "dev": "dotenv -e .env tsx watch ./src/worker.ts",
+    "start": "dotenv -e .env node ./out/worker.js",
     "lint": "eslint ."
   },
   "exports": {
