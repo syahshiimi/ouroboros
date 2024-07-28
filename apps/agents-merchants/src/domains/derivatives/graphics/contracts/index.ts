@@ -1,6 +1,6 @@
-import { temperature } from "./derivatives/temperature.ts";
-import { humidity } from "./derivatives/humidity.ts";
-import { rainfall } from "./derivatives/rainfall.ts";
+import { temperature } from "../derivatives/temperature.ts";
+import { humidity } from "../derivatives/humidity.ts";
+import { rainfall } from "../derivatives/rainfall.ts";
 
 export const contractGraphics = {
   graphics: {

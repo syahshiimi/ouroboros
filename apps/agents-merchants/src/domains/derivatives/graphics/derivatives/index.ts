@@ -1,6 +1,6 @@
-import { rainfall } from "./derivatives/rainfall.ts";
-import { temperature } from "./derivatives/temperature.ts";
-import { humidity } from "./derivatives/humidity.ts";
+import { rainfall } from "./rainfall.ts";
+import { temperature } from "./temperature.ts";
+import { humidity } from "./humidity.ts";
 
 export const derivativeGraphics = {
   graphics: {
