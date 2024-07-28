@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { generator } from "../../../utils/generator.ts";
 import { seeder } from "../../../utils/seeder.ts";
+import { derivativeGraphics } from "../../derivatives/graphics/derivatives";
 
 export class Merchant {
   name: string;
@@ -78,7 +79,7 @@ export class Merchant {
       () => {
         const isPurchased = Math.random() > 0.5;
         Object.assign(derivative, { purchased: isPurchased });
-        // TODO: this console log can be asynchronous. Whetehr or not who buys it
+        // TODO: this console log can be asynchronous. Whether or not who buys it
         // shouldn't necessary be logged here as purchasing of a weather derivative
         // can happen at _any_ time.
         console.log(
@@ -94,18 +95,18 @@ export class Merchant {
   private visualizeDerivative(
     derivative: ReturnType<typeof this.produceDerivative>,
   ) {
-    const symbol = derivative.type === "Rainfall" ? "☔" : "🌡️";
-    // TODO: Create more graphical elements.
-    console.log(`
-      ${symbol.repeat(3)}
-      _____________________________
-     (                             )
-     (    ${derivative.type.toUpperCase()}         )
-     (   ${derivative.threshold}${derivative.type === "Rainfall" ? "mm" : "°C"} | $${derivative.price}      )
-     (    ${derivative.location}  )
-     (___________________)
-          PURCHASED
-    `);
+    console.log(this.getDerivativeVisuals(derivative));
     console.log("-".repeat(40));
+  }
+
+  private getDerivativeVisuals(
+    derivative: ReturnType<typeof this.produceDerivative>,
+  ) {
+    const topicGraphics =
+      derivativeGraphics.graphics[
+        derivative.type.toLowerCase() as ReturnType<typeof seeder>
+      ];
+    const topicSeedNumber = generator(0, 3);
+    return topicGraphics[topicSeedNumber];
   }
 }
