@@ -1,0 +1,23 @@
+{
+  "name": "@ouroboros/agents-merchants",
+  "module": "src/agent.ts",
+  "type": "module",
+  "scripts": {
+    "dev:agents": "bun run --watch src/agent.ts",
+    "dev:merchants": "bun run --watch src/merchant.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@ouroboros/eslint-config": "workspace:*",
+    "@ouroboros/typescript-config": "workspace:*",
+    "@types/bun": "latest",
+    "@vitest/coverage-v8": "^1.6.0",
+    "vitest": "^1.6.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
