@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { generator } from "../../../utils/generator.ts";
+import { seeder } from "../../../utils/seeder.ts";
 
 export class Merchant {
   name: string;
@@ -7,7 +8,6 @@ export class Merchant {
     this.name = name;
   }
 
-  // 1. Read from incoming weather streams
   readWeatherStream() {
     return this.getWeatherStream();
   }
@@ -52,11 +52,15 @@ export class Merchant {
     return "High";
   }
 
+  // TODO: This method only produces one derivative. However, as the underlying method 'deduceCalculations'
+  // returns 3 indexes, we might want to produce three derivatives instead...
   produceDerivative(calculations: ReturnType<typeof this.deduceCalculations>) {
+    const seedTopic = seeder();
+    const topic = seedTopic.charAt(0).toUpperCase() + seedTopic.slice(1);
     return {
       merchant: this.name,
-      type:
-        calculations.precipitationRisk === "High" ? "Rainfall" : "Temperature",
+      type: topic,
+      // calculations.precipitationRisk === "High" ? "Rainfall" : "Temperature",
       threshold: calculations.precipitationRisk === "High" ? 50 : 30,
       price: faker.finance.amount({ min: 100, max: 1000 }),
       location: faker.location.country(),
@@ -74,10 +78,14 @@ export class Merchant {
       () => {
         const isPurchased = Math.random() > 0.5;
         Object.assign(derivative, { purchased: isPurchased });
+        // TODO: this console log can be asynchronous. Whetehr or not who buys it
+        // shouldn't necessary be logged here as purchasing of a weather derivative
+        // can happen at _any_ time.
         console.log(
           "\n" + `Derivative ${isPurchased ? "purchased" : "not purchased"}`,
         );
-        isPurchased && this.visualizeDerivative(derivative);
+        !isPurchased && console.log("-".repeat(40));
+        if (isPurchased) this.visualizeDerivative(derivative);
       },
       generator(2000, 6000),
     );
