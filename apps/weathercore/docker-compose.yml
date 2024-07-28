@@ -10,8 +10,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_DB: ${DB_NAME} 
     ports:
-      # remap this to 5433 when running timescale locally as 5432 is used by temporal pg.
-      - 5433:5432
+      - 5432:5432
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U weathercore" ]
       interval: 20s
