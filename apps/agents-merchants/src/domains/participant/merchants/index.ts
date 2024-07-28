@@ -87,6 +87,7 @@ export class Merchant {
     derivative: ReturnType<typeof this.produceDerivative>,
   ) {
     const symbol = derivative.type === "Rainfall" ? "☔" : "🌡️";
+    // TODO: Create more graphical elements.
     console.log(`
       ${symbol.repeat(3)}
       _____________________________
