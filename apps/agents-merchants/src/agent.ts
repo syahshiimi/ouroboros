@@ -17,7 +17,9 @@ function agentEmulation() {
   const agentName = faker.company.name();
   const agent = new Agent(agentName);
 
+  console.log(`${agent.name} searching through the tradebook... \n`);
   const options = agent.lurkOptions();
+  console.log(`${agent.name} has chosen a derivative to interact. \n`);
   console.log(options.topic, options.derivatives);
 
   // const topic = seeder();
