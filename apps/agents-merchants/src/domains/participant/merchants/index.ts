@@ -61,7 +61,6 @@ export class Merchant {
     return {
       merchant: this.name,
       type: topic,
-      // calculations.precipitationRisk === "High" ? "Rainfall" : "Temperature",
       threshold: calculations.precipitationRisk === "High" ? 50 : 30,
       price: faker.finance.amount({ min: 100, max: 1000 }),
       location: faker.location.country(),

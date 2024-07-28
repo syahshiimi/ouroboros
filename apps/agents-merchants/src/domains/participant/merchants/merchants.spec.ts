@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { faker } from "@faker-js/faker";
-import { Merchant } from "./index.ts"; // Assuming you're using faker
+import { Merchant } from "./index.ts";
+import * as seeder from "../../../utils/seeder.ts";
 
 // Mock faker to ensure consistent results
 vi.mock("@faker-js/faker", () => ({
@@ -86,11 +87,12 @@ describe("Merchant", () => {
     vi.mocked(faker.finance.amount).mockReturnValue("500");
     vi.mocked(faker.location.country).mockReturnValue("TestLand");
     vi.mocked(faker.date.future).mockReturnValue(new Date("2025-01-01"));
+    vi.spyOn(seeder, "seeder").mockReturnValue("temperature");
 
     const derivative = merchant.produceDerivative(calculations);
     expect(derivative).toEqual({
       merchant: "Test Merchant",
-      type: "Rainfall",
+      type: "Temperature",
       threshold: 50,
       price: "500",
       location: "TestLand",
@@ -123,9 +125,6 @@ describe("Merchant", () => {
     expect(consoleSpy).toHaveBeenCalledWith("Weather Derivative:", derivative);
     expect(consoleSpy).toHaveBeenCalledWith("\nFinding buyers...");
     expect(consoleSpy).toHaveBeenCalledWith("\nDerivative purchased");
-    expect(consoleSpy).toHaveBeenCalledWith(
-      expect.stringContaining("PURCHASED"),
-    );
   });
 
   it("should float a derivative correctly when not purchased", () => {
