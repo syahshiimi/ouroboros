@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { merchant } from "./domains/derivatives/derivative.ts";
 import { agents } from "./domains/participant/agents";
-import { derivativeGraphics } from "./domains/derivatives/graphics/derivatives.ts";
+import { derivativeGraphics } from "./domains/derivatives/graphics/derivatives";
 import { generator } from "./utils/generator.ts";
 import { seeder } from "./utils/seeder.ts";
 
