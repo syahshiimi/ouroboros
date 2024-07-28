@@ -104,5 +104,8 @@ export class Agent {
   determineBid() {}
 
   // A method to visualise the graphics, predicated on its success on bidding.
-  visualizeDerivative() {}
+  visualizeDerivative() {
+    // We want to also reuse the derivative graphics.
+    // Maybe we can also consider adding in some contractual details of the purchase.
+  }
 }
