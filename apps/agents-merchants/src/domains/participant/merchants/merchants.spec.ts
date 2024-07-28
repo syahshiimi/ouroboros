@@ -64,7 +64,7 @@ describe("Merchant", () => {
         (weatherData.temperature - 68.0) * 1.2 +
         weatherData.humidity * 0.094);
 
-    const calculateHumidty =
+    const calculateHumidity =
       0.5 *
       (weatherData.humidity +
         61.0 +
@@ -74,7 +74,7 @@ describe("Merchant", () => {
     const calculations = merchant.deduceCalculations(weatherData);
     expect(calculations.precipitationRisk).toBe("Medium");
     expect(calculations.heatIndex).toBeCloseTo(calculateTemperature, 4);
-    expect(calculations.humidityIndex).toBeCloseTo(calculateHumidty, 4);
+    expect(calculations.humidityIndex).toBeCloseTo(calculateHumidity, 4);
   });
 
   it("should produce a derivative correctly", () => {
