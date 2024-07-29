@@ -1,5 +1,4 @@
-import { de, faker } from "@faker-js/faker";
-import { Merchant } from "../merchants";
+import { faker } from "@faker-js/faker";
 import { seeder } from "../../../utils/seeder.ts";
 import { generator } from "../../../utils/generator.ts";
 
@@ -11,8 +10,6 @@ export const agents = {
     console.log(`\n${name} has purchased the following weather derivative:`);
   },
 };
-
-// TODO: Refactor and use clases to create methods for the agent story.
 
 // 1. Agent lurks the public tradebook market to see options available. We can emulatoe through an optiona
 // trade options such as swaps, optoins, futures or forwards.
@@ -81,6 +78,8 @@ export class Agent {
     };
   }
 
+  // TODO: These futures have no risk. We can add in a strikeLevel + payout structure to determine a more dynamic risk price.
+  //  The riskier the option the higher the price, which is predicated upon an extreme weather event.
   private futuresGenerator() {
     return {
       price: faker.finance.amount({ min: 6, max: 250, dec: 3 }),
@@ -92,12 +91,72 @@ export class Agent {
     return faker.number.int({ min: 5000, max: 150000 });
   }
 
-  // A method to submit the bid for the option the agent is interested in.
-  // We may want to initialise a set of basic defaults ie budget to make things
-  // realistic.
-  submitBid() {
-    // Initialise budget
+  submitDerivativeBid(derivative: ReturnType<typeof this.lurkOptions>) {
     // Given the options it previously was interested in, submit a bid.
+    // The bidding process can begin as such
+    // 1. The buyer has a randomly allocated budget.
+    // 2. Given the risk appetite of the agent, it may buy a certain percentage of derivatives.
+    const { capital, riskAppetite } = this.agentTraits();
+
+    console.log(
+      `The agent has a risk appetite of ${riskAppetite} and a capital of ${capital}\n`,
+    );
+
+    // Agents submits the bid.
+    return this.agentBidding(riskAppetite, capital, derivative);
+  }
+
+  private agentBidding(
+    riskAppetite: number,
+    capital: string,
+    derivative: ReturnType<typeof this.lurkOptions>,
+  ) {
+    if (riskAppetite <= 0.2) {
+      // The agent has a low-risk appetite, it might only want to deploy 30-40% of their total capital (budget)
+      const budget = capital * faker.number.float({ min: 0.3, max: 0.4 });
+      const pricePerDerivative = derivative.derivatives.price;
+      const bidQuantity = budget / pricePerDerivative;
+      return {
+        budget,
+        bidQuantity,
+      };
+    } else if (riskAppetite > 0.2 && riskAppetite < 0.5) {
+      // Medium-low risk appetite, 40-50% of capital.
+      const budget = capital * faker.number.float({ min: 0.4, max: 0.5 });
+      const pricePerDerivative = derivative.derivatives.price;
+      const bidQuantity = budget / pricePerDerivative;
+      return {
+        budget,
+        bidQuantity,
+      };
+    } else if (riskAppetite > 0.5 && riskAppetite < 0.8) {
+      // Medium-high risk appetite, 50-60% of capital.
+      const budget = capital * faker.number.float({ min: 0.5, max: 0.6 });
+      const pricePerDerivative = derivative.derivatives.price;
+      const bidQuantity = budget / pricePerDerivative;
+      return {
+        budget,
+        bidQuantity,
+      };
+    } else {
+      // Highest risk, 70% capital and above.
+      const budget = capital * faker.number.float({ min: 0.7, max: 1 });
+      const pricePerDerivative = derivative.derivatives.price;
+      const bidQuantity = budget / pricePerDerivative;
+      return {
+        budget,
+        bidQuantity,
+      };
+    }
+  }
+
+  private agentTraits() {
+    const capital = faker.finance.amount({ min: 5000, max: 10000, dec: 4 });
+    const riskAppetite = faker.number.float({ min: 0, max: 1 });
+    return {
+      capital,
+      riskAppetite,
+    };
   }
 
   // A method to deduce if the bid is successful.
