@@ -15,25 +15,20 @@ function agentEmulation() {
 
   console.log(`${agent.name} searching through the tradebook... \n`);
   const options = agent.lurkOptions();
-  console.log(
-    `${agent.name} has chosen derivative ${options.derivativeType} to bid. \n`,
-  );
-  console.log(options.topic, options.derivatives);
 
+  console.log(
+    `${agent.name} has submitted a bid for ${options.topic} weather derivative ${options.derivativeType} at a cost of ${options.derivatives.price} USD per derivative.`,
+  );
   const bid = agent.submitDerivativeBid(options);
-  console.log(
-    `${agent.name} has submitted a bid for the topic of ${options.topic} with a 
-total qty of ${bid.bidQuantity} at ${options.derivatives.price} per derivative
-with a deployment capital of ${bid.budget}.`,
-  );
+  console.log("\n", bid);
 
-  agent.determineBid(bid);
+  agent.determineBid(bid, options, agentName);
 }
 
 const main = () => {
   setInterval(() => {
     agentEmulation();
-  }, 5000);
+  }, 15000);
 };
 
 main();

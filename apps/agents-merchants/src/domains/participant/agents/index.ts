@@ -1,32 +1,17 @@
-import { de, faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { seeder } from "../../../utils/seeder.ts";
 import { generator } from "../../../utils/generator.ts";
+import { derivativeGraphics } from "../../derivatives/graphics/derivatives";
 
 /**
- * Produces the market participant
+ * Produces the agent as a market participant.
  */
-export const agents = {
-  purchase: function (name: string) {
-    console.log(`\n${name} has purchased the following weather derivative:`);
-  },
-};
-
-// 1. Agent lurks the public tradebook market to see options available. We can emulatoe through an optiona
-// trade options such as swaps, optoins, futures or forwards.
-// 2. Given the option that it is interested, submit a bit for the weather derivative based on the topic of weather derivative
-// it would be most inclined to go for i.e. temperature or rainfall or humidity.
-// 3. The bid may or may not be successful, and the trader can buy the weather derivative
-// for a given price and at fractional levels as well.
-// 4. Upon successful purchase, we display the graphics.
 export class Agent {
   name: string;
   constructor(name: string) {
     this.name = name;
   }
 
-  // A method for the agent to lurk the market and find a weather derivative
-  // it would be interested in.
-  // It should return the topic + the derivative type it is interested in retrieving.
   lurkOptions() {
     const derivativesStream = this.getDerivativesStream();
     const topicSeed = seeder();
@@ -37,6 +22,9 @@ export class Agent {
       if (derivativeSeed === 2) return "futures";
       return "options";
     };
+    console.log(
+      `${this.name} has chosen derivative ${derivativeType()} to bid. \n`,
+    );
     return {
       derivatives: derivativesStream[topicSeed][derivativeType()],
       derivativeType: derivativeType(),
@@ -44,7 +32,6 @@ export class Agent {
     };
   }
 
-  // Produces the various derivatives that are available in the market.
   private getDerivativesStream() {
     return {
       temperature: {
@@ -91,16 +78,8 @@ export class Agent {
   private produceAvailableQuantity() {
     return faker.number.int({ min: 5000, max: 150000 });
   }
-
-  // Given the options it previously was interested in, submit a bid.
-  // The bidding process can begin as such
-  // 1. The buyer has a randomly allocated budget.
-  // 2. Given the risk appetite of the agent, it may buy a certain percentage of derivatives.
   submitDerivativeBid(derivative: ReturnType<typeof this.lurkOptions>) {
     const { capital, riskAppetite } = this.agentTraits();
-    console.log(
-      `The agent has a risk appetite of ${riskAppetite} and a capital of ${capital}\n`,
-    );
     return this.agentBidding(riskAppetite, capital, derivative);
   }
 
@@ -110,37 +89,38 @@ export class Agent {
     derivative: ReturnType<typeof this.lurkOptions>,
   ) {
     const pricePerDerivative = derivative.derivatives.price;
+    const derivativeTopic = derivative.topic;
     if (riskAppetite <= 0.2) {
-      // The agent has a low-risk appetite, it might only want to deploy 30-40% of their total capital (budget)
-      const budget = capital * faker.number.float({ min: 0.3, max: 0.4 });
-      const bidQuantity = budget / pricePerDerivative;
+      const bid = capital * faker.number.float({ min: 0.3, max: 0.4 });
+      const bidQuantity = bid / pricePerDerivative;
       return {
-        budget,
+        bid,
         bidQuantity,
+        derivativeTopic,
       };
     } else if (riskAppetite > 0.2 && riskAppetite < 0.5) {
-      // Medium-low risk appetite, 40-50% of capital.
-      const budget = capital * faker.number.float({ min: 0.4, max: 0.5 });
-      const bidQuantity = budget / pricePerDerivative;
+      const bid = capital * faker.number.float({ min: 0.4, max: 0.5 });
+      const bidQuantity = bid / pricePerDerivative;
       return {
-        budget,
+        bid,
         bidQuantity,
+        derivativeTopic,
       };
     } else if (riskAppetite > 0.5 && riskAppetite < 0.8) {
-      // Medium-high risk appetite, 50-60% of capital.
-      const budget = capital * faker.number.float({ min: 0.5, max: 0.6 });
-      const bidQuantity = budget / pricePerDerivative;
+      const bid = capital * faker.number.float({ min: 0.5, max: 0.6 });
+      const bidQuantity = bid / pricePerDerivative;
       return {
-        budget,
+        bid,
         bidQuantity,
+        derivativeTopic,
       };
     } else {
-      // Highest risk, 70% capital and above.
-      const budget = capital * faker.number.float({ min: 0.7, max: 1 });
-      const bidQuantity = budget / pricePerDerivative;
+      const bid = capital * faker.number.float({ min: 0.7, max: 1 });
+      const bidQuantity = bid / pricePerDerivative;
       return {
-        budget,
+        bid,
         bidQuantity,
+        derivativeTopic,
       };
     }
   }
@@ -164,41 +144,45 @@ export class Agent {
     };
   }
 
-  // A method to deduce if the bid is successful.
-  // The merchant, based on specific factors may
-  // 1. Proceed to sell for the entire quantity in the bid
-  // 2. Proceed to negotiate and sell at a higher price
-  // 3. Proceed to negotiate and sell a lower amount
-  determineBid(bid: ReturnType<typeof this.submitDerivativeBid>) {
-    // As the application is 'stateless', we pass the initial option object to get the
-    // floated derivative quantity.
+  determineBid(
+    bid: ReturnType<typeof this.submitDerivativeBid>,
+    options: ReturnType<typeof this.lurkOptions>,
+    agentName: string,
+  ) {
     const merchantPropensity = faker.number.float({
       min: 0.2,
       max: 1,
       fractionDigits: 2,
     });
+    const merchantName = faker.company.name();
     console.log(
-      `\nThe merchant has received a bid quantity of ${bid.bidQuantity}`,
+      `\n${merchantName} has received a bid for ${options.topic} weather derivative ${options.derivativeType} from ${agentName}.`,
     );
-
-    // We derive the merchants propensity to sell at the bid's requested qty based on the propensity value.
-    if (merchantPropensity < 0.8) {
+    if (merchantPropensity >= 0.22 && merchantPropensity < 0.8) {
       const sellingQty = merchantPropensity * bid.bidQuantity;
+      const totalSellingPrice = sellingQty * options.derivatives.price;
       console.log(
-        `\nThe merchant which has a propensity of ${merchantPropensity} is selling ${sellingQty} worth of derivatives`,
+        `\n${merchantName} has sold ${totalSellingPrice.toFixed(2)} USD worth of derivatives to ${agentName}.`,
       );
-      return sellingQty;
+    } else if (merchantPropensity <= 0.21) {
+      console.log(
+        `\n${merchantName} has rejected the bid of ${bid.bid.toFixed(2)} USD worth of derivatives from ${agentName}.`,
+      );
     } else {
       console.log(
-        `\nThe merchant which has a propensity of ${merchantPropensity} is selling ${bid.bidQuantity} worth of derivatives.`,
+        `\n${merchantName} has sold ${bid.bid.toFixed(2)} USD worth of derivatives to ${agentName}.`,
       );
-      return bid.bidQuantity;
     }
+
+    setTimeout(() => {
+      this.getDerivativeVisuals(options.topic);
+    }, 5000);
   }
 
-  // A method to visualise the graphics, predicated on its success on bidding.
-  visualizeDerivative() {
-    // We want to also reuse the derivative graphics.
-    // Maybe we can also consider adding in some contractual details of the purchase.
+  private getDerivativeVisuals(
+    topic: ReturnType<typeof this.lurkOptions>["topic"],
+  ) {
+    console.log(derivativeGraphics.graphics[topic][generator(0, 3)]);
+    console.log("-".repeat(40));
   }
 }
