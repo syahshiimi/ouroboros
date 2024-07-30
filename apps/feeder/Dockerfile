@@ -41,13 +41,8 @@ RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optio
 RUN rm -rf ./**/*/src
 
 # Final Image
-# FROM base as RUNNER
 FROM gcr.io/distroless/nodejs20-debian11
 WORKDIR /app
-
-# RUN addgroup --system --gid 1001 nodejs
-# RUN adduser --system --uid 1001 hono
-# USER hono
 
 ENV NODE_ENV=production
 
@@ -56,5 +51,4 @@ COPY --from=installer --chown=hono:nodejs /app/apps/feeder/out/index.cjs .
 ENV PORT 4000
 EXPOSE $PORT
 
-# ENTRYPOINT ["node", "index.cjs"]
 CMD ["./index.cjs"]
