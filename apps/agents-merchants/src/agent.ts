@@ -15,15 +15,19 @@ function agentEmulation() {
 
   console.log(`${agent.name} searching through the tradebook... \n`);
   const options = agent.lurkOptions();
-  console.log(`${agent.name} has chosen a derivative to interact. \n`);
+  console.log(
+    `${agent.name} has chosen derivative ${options.derivativeType} to bid. \n`,
+  );
   console.log(options.topic, options.derivatives);
 
   const bid = agent.submitDerivativeBid(options);
   console.log(
-    `The agent, ${agent.name} submits a bid for the topic of ${options.topic} with a 
-    total qty of ${bid.bidQuantity} at ${options.derivatives.price} per derivative
-    with a deployment capital of ${bid.budget}.`,
+    `${agent.name} has submitted a bid for the topic of ${options.topic} with a 
+total qty of ${bid.bidQuantity} at ${options.derivatives.price} per derivative
+with a deployment capital of ${bid.budget}.`,
   );
+
+  agent.determineBid(bid);
 }
 
 const main = () => {
