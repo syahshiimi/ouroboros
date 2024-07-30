@@ -2,18 +2,20 @@ import { faker } from "@faker-js/faker";
 import { seeder } from "../../../utils/seeder.ts";
 import { generator } from "../../../utils/generator.ts";
 import { derivativeGraphics } from "../../derivatives/graphics/derivatives";
+import { DerivativeStream } from "../../derivatives/stream.ts";
 
 /**
  * Produces the agent as a market participant.
  */
 export class Agent {
   name: string;
+  derivativeStream = new DerivativeStream();
   constructor(name: string) {
     this.name = name;
   }
 
   lurkOptions() {
-    const derivativesStream = this.getDerivativesStream();
+    const derivativesStream = this.derivativeStream.produceDerivativeStream();
     const topicSeed = seeder();
     const derivativeSeed = generator(0, 2);
     const derivativeType = () => {
@@ -31,53 +33,6 @@ export class Agent {
       topic: topicSeed,
     };
   }
-
-  private getDerivativesStream() {
-    return {
-      temperature: {
-        options: this.optionsGenerator(),
-        swaps: this.swapsGenerator(),
-        futures: this.futuresGenerator(),
-      },
-      rainfall: {
-        options: this.optionsGenerator(),
-        swaps: this.swapsGenerator(),
-        futures: this.futuresGenerator(),
-      },
-      humidity: {
-        options: this.optionsGenerator(),
-        swaps: this.swapsGenerator(),
-        futures: this.futuresGenerator(),
-      },
-    };
-  }
-
-  private optionsGenerator() {
-    return {
-      price: Number(faker.finance.amount({ min: 7, max: 125, dec: 3 })),
-      quantity: this.produceAvailableQuantity(),
-    };
-  }
-
-  private swapsGenerator() {
-    return {
-      price: Number(faker.finance.amount({ min: 5, max: 100, dec: 3 })),
-      quantity: this.produceAvailableQuantity(),
-    };
-  }
-
-  // TODO: These futures have no risk. We can add in a strikeLevel + payout structure to determine a more dynamic risk price.
-  //  The riskier the option the higher the price, which is predicated upon an extreme weather event.
-  private futuresGenerator() {
-    return {
-      price: Number(faker.finance.amount({ min: 6, max: 250, dec: 2 })),
-      quantity: this.produceAvailableQuantity(),
-    };
-  }
-
-  private produceAvailableQuantity() {
-    return faker.number.int({ min: 5000, max: 150000 });
-  }
   submitDerivativeBid(derivative: ReturnType<typeof this.lurkOptions>) {
     const { capital, riskAppetite } = this.agentTraits();
     return this.agentBidding(riskAppetite, capital, derivative);
@@ -89,40 +44,27 @@ export class Agent {
     derivative: ReturnType<typeof this.lurkOptions>,
   ) {
     const pricePerDerivative = derivative.derivatives.price;
-    const derivativeTopic = derivative.topic;
+    let bid: number;
+
     if (riskAppetite <= 0.2) {
-      const bid = capital * faker.number.float({ min: 0.3, max: 0.4 });
-      const bidQuantity = bid / pricePerDerivative;
-      return {
-        bid,
-        bidQuantity,
-        derivativeTopic,
-      };
+      bid = this.calculateBid(capital, 0.3, 0.4);
     } else if (riskAppetite > 0.2 && riskAppetite < 0.5) {
-      const bid = capital * faker.number.float({ min: 0.4, max: 0.5 });
-      const bidQuantity = bid / pricePerDerivative;
-      return {
-        bid,
-        bidQuantity,
-        derivativeTopic,
-      };
+      bid = this.calculateBid(capital, 0.4, 0.5);
     } else if (riskAppetite > 0.5 && riskAppetite < 0.8) {
-      const bid = capital * faker.number.float({ min: 0.5, max: 0.6 });
-      const bidQuantity = bid / pricePerDerivative;
-      return {
-        bid,
-        bidQuantity,
-        derivativeTopic,
-      };
+      bid = this.calculateBid(capital, 0.5, 0.6);
     } else {
-      const bid = capital * faker.number.float({ min: 0.7, max: 1 });
-      const bidQuantity = bid / pricePerDerivative;
-      return {
-        bid,
-        bidQuantity,
-        derivativeTopic,
-      };
+      bid = this.calculateBid(capital, 0.7, 1);
     }
+    const bidQuantity = bid / pricePerDerivative;
+    return { bid, bidQuantity, derivative };
+  }
+
+  private calculateBid(
+    capital: number,
+    minFactor: number,
+    maxFactor: number,
+  ): number {
+    return capital * faker.number.float({ min: minFactor, max: maxFactor });
   }
 
   private agentTraits() {
