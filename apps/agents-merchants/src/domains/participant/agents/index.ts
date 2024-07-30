@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { seeder } from "../../../utils/seeder.ts";
 import { generator } from "../../../utils/generator.ts";
-import { derivativeGraphics } from "../../derivatives/graphics/derivatives";
+import { derivativeGraphics } from "../../derivatives/graphics";
 import { DerivativeStream } from "../../derivatives/stream.ts";
 
 /**

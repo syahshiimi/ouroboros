@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { generator } from "../../../utils/generator.ts";
 import { seeder } from "../../../utils/seeder.ts";
-import { derivativeGraphics } from "../../derivatives/graphics/derivatives";
+import { derivativeGraphics } from "../../derivatives/graphics";
 
 export class Merchant {
   name: string;
