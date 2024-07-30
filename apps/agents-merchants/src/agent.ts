@@ -1,9 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { merchant } from "./domains/derivatives/derivative.ts";
-import { Agent, agents } from "./domains/participant/agents";
-import { derivativeGraphics } from "./domains/derivatives/graphics/derivatives";
-import { generator } from "./utils/generator.ts";
-import { seeder } from "./utils/seeder.ts";
+import { Agent } from "./domains/participant/agents";
 
 /**
  * The agent (market participant) emulation service responsible for
@@ -19,29 +15,20 @@ function agentEmulation() {
 
   console.log(`${agent.name} searching through the tradebook... \n`);
   const options = agent.lurkOptions();
-  console.log(`${agent.name} has chosen a derivative to interact. \n`);
-  console.log(options.topic, options.derivatives);
 
-  // const topic = seeder();
-  // const derivative = merchant.create(topic).result;
-  //
-  // agents.purchase(agentName);
-  // merchant.generateContract(derivative);
-  //
-  // // This is a representation of the actual derivative asset class.
-  // // Agents: Visual representation of a _successful_ derivative transaction by agents (Market participants)
-  // setTimeout(
-  //   () => {
-  //     console.log(derivativeGraphics.getVisuals(generator(0, 3), topic));
-  //   },
-  //   generator(500, 2000),
-  // );
+  console.log(
+    `${agent.name} has submitted a bid for ${options.topic} weather derivative ${options.derivativeType} at a cost of ${options.derivatives.price} USD per derivative.`,
+  );
+  const bid = agent.submitDerivativeBid(options);
+  console.log("\n", bid);
+
+  agent.determineBid(bid, options, agentName);
 }
 
 const main = () => {
   setInterval(() => {
     agentEmulation();
-  }, 5000);
+  }, 15000);
 };
 
 main();

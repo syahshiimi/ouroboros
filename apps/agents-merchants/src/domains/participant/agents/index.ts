@@ -1,111 +1,130 @@
-import { de, faker } from "@faker-js/faker";
-import { Merchant } from "../merchants";
+import { faker } from "@faker-js/faker";
 import { seeder } from "../../../utils/seeder.ts";
 import { generator } from "../../../utils/generator.ts";
+import { derivativeGraphics } from "../../derivatives/graphics";
+import { DerivativeStream } from "../../derivatives/stream.ts";
 
 /**
- * Produces the market participant
+ * Produces the agent as a market participant.
  */
-export const agents = {
-  purchase: function (name: string) {
-    console.log(`\n${name} has purchased the following weather derivative:`);
-  },
-};
-
-// TODO: Refactor and use clases to create methods for the agent story.
-
-// 1. Agent lurks the public tradebook market to see options available. We can emulatoe through an optiona
-// trade options such as swaps, optoins, futures or forwards.
-// 2. Given the option that it is interested, submit a bit for the weather derivative based on the topic of weather derivative
-// it would be most inclined to go for i.e. temperature or rainfall or humidity.
-// 3. The bid may or may not be successful, and the trader can buy the weather derivative
-// for a given price and at fractional levels as well.
-// 4. Upon successful purchase, we display the graphics.
 export class Agent {
   name: string;
+  derivativeStream = new DerivativeStream();
   constructor(name: string) {
     this.name = name;
   }
 
-  // A method for the agent to lurk the market and find a weather derivative
-  // it would be interested in.
-  // It should return the topic + the derivative type it is interested in retrieving.
   lurkOptions() {
-    const derivativesStream = this.getDerivativesStream();
+    const derivativesStream = this.derivativeStream.produceDerivativeStream();
     const topicSeed = seeder();
     const derivativeSeed = generator(0, 2);
     const derivativeType = () => {
-      if (derivativeSeed === 0) return "option";
+      if (derivativeSeed === 0) return "options";
       if (derivativeSeed === 1) return "swaps";
       if (derivativeSeed === 2) return "futures";
-      return "option";
+      return "options";
     };
+    console.log(
+      `${this.name} has chosen derivative ${derivativeType()} to bid. \n`,
+    );
     return {
       derivatives: derivativesStream[topicSeed][derivativeType()],
+      derivativeType: derivativeType(),
       topic: topicSeed,
     };
   }
+  submitDerivativeBid(derivative: ReturnType<typeof this.lurkOptions>) {
+    const { capital, riskAppetite } = this.agentTraits();
+    return this.agentBidding(riskAppetite, capital, derivative);
+  }
 
-  // Produces the various derivatives that are available in the market.
-  private getDerivativesStream() {
+  private agentBidding(
+    riskAppetite: number,
+    capital: number,
+    derivative: ReturnType<typeof this.lurkOptions>,
+  ) {
+    const pricePerDerivative = derivative.derivatives.price;
+    let bid: number;
+
+    if (riskAppetite <= 0.2) {
+      bid = this.calculateBid(capital, 0.3, 0.4);
+    } else if (riskAppetite > 0.2 && riskAppetite < 0.5) {
+      bid = this.calculateBid(capital, 0.4, 0.5);
+    } else if (riskAppetite > 0.5 && riskAppetite < 0.8) {
+      bid = this.calculateBid(capital, 0.5, 0.6);
+    } else {
+      bid = this.calculateBid(capital, 0.7, 1);
+    }
+    const bidQuantity = bid / pricePerDerivative;
+    return { bid, bidQuantity, derivative };
+  }
+
+  private calculateBid(
+    capital: number,
+    minFactor: number,
+    maxFactor: number,
+  ): number {
+    return capital * faker.number.float({ min: minFactor, max: maxFactor });
+  }
+
+  private agentTraits() {
+    const capital = Number(
+      faker.finance.amount({
+        min: 5000,
+        max: 10000,
+        dec: 2,
+      }),
+    );
+    const riskAppetite = faker.number.float({
+      min: 0,
+      max: 1,
+      fractionDigits: 2,
+    });
     return {
-      temperature: {
-        option: this.optionsGenerator(),
-        swaps: this.swapsGenerator(),
-        futures: this.futuresGenerator(),
-      },
-      rainfall: {
-        option: this.optionsGenerator(),
-        swaps: this.swapsGenerator(),
-        futures: this.futuresGenerator(),
-      },
-      humidity: {
-        option: this.optionsGenerator(),
-        swaps: this.swapsGenerator(),
-        futures: this.futuresGenerator(),
-      },
+      capital,
+      riskAppetite,
     };
   }
 
-  private optionsGenerator() {
-    return {
-      price: faker.finance.amount({ min: 7, max: 125, dec: 3 }),
-      quantity: this.produceAvailableQuantity(),
-    };
+  determineBid(
+    bid: ReturnType<typeof this.submitDerivativeBid>,
+    options: ReturnType<typeof this.lurkOptions>,
+    agentName: string,
+  ) {
+    const merchantPropensity = faker.number.float({
+      min: 0.2,
+      max: 1,
+      fractionDigits: 2,
+    });
+    const merchantName = faker.company.name();
+    console.log(
+      `\n${merchantName} has received a bid for ${options.topic} weather derivative ${options.derivativeType} from ${agentName}.`,
+    );
+    if (merchantPropensity >= 0.22 && merchantPropensity < 0.8) {
+      const sellingQty = merchantPropensity * bid.bidQuantity;
+      const totalSellingPrice = sellingQty * options.derivatives.price;
+      console.log(
+        `\n${merchantName} has sold ${totalSellingPrice.toFixed(2)} USD worth of derivatives to ${agentName}.`,
+      );
+    } else if (merchantPropensity <= 0.21) {
+      console.log(
+        `\n${merchantName} has rejected the bid of ${bid.bid.toFixed(2)} USD worth of derivatives from ${agentName}.`,
+      );
+    } else {
+      console.log(
+        `\n${merchantName} has sold ${bid.bid.toFixed(2)} USD worth of derivatives to ${agentName}.`,
+      );
+    }
+
+    setTimeout(() => {
+      this.getDerivativeVisuals(options.topic);
+    }, 5000);
   }
 
-  private swapsGenerator() {
-    return {
-      price: faker.finance.amount({ min: 5, max: 100, dec: 3 }),
-      quantity: this.produceAvailableQuantity(),
-    };
-  }
-
-  private futuresGenerator() {
-    return {
-      price: faker.finance.amount({ min: 6, max: 250, dec: 3 }),
-      quantity: this.produceAvailableQuantity(),
-    };
-  }
-
-  private produceAvailableQuantity() {
-    return faker.number.int({ min: 5000, max: 150000 });
-  }
-
-  // A method to submit the bid for the option the agent is interested in.
-  // We may want to initialise a set of basic defaults ie budget to make things
-  // realistic.
-  submitBid() {
-    // Initialise budget
-    // Given the options it previously was interested in, submit a bid.
-  }
-
-  // A method to deduce if the bid is successful.
-  determineBid() {}
-
-  // A method to visualise the graphics, predicated on its success on bidding.
-  visualizeDerivative() {
-    // We want to also reuse the derivative graphics.
-    // Maybe we can also consider adding in some contractual details of the purchase.
+  private getDerivativeVisuals(
+    topic: ReturnType<typeof this.lurkOptions>["topic"],
+  ) {
+    console.log(derivativeGraphics.graphics[topic][generator(0, 3)]);
+    console.log("-".repeat(40));
   }
 }
