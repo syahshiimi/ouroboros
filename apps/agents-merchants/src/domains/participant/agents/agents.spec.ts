@@ -35,13 +35,13 @@ describe("Agent", () => {
     } satisfies ReturnType<typeof agent.lurkOptions>;
 
     // Mock agentTraits
-    vi.spyOn(agent as string, "agentTraits").mockReturnValue({
+    vi.spyOn(agent as never, "agentTraits").mockReturnValue({
       capital: 1000,
       riskAppetite: 0.5,
     });
 
     // Mock calculateBid
-    vi.spyOn(agent, "calculateBid").mockReturnValue(500);
+    vi.spyOn(agent as never, "calculateBid").mockReturnValue(500);
 
     const result = agent.submitDerivativeBid(mockDerivative);
 
@@ -55,7 +55,19 @@ describe("Agent", () => {
   });
 
   it("determineBid logs correct messages based on merchant propensity", () => {
-    const mockBid = { bid: 1000, bidQuantity: 10, derivative: {} };
+    const mockBid = {
+      bid: 1000,
+      bidQuantity: 10,
+      derivative: {
+        derivatives: {
+          price: 1000,
+          quantity: 1000,
+        },
+        derivativeType: "options",
+        topic: "rainfall",
+      },
+    } satisfies ReturnType<typeof agent.submitDerivativeBid>;
+
     const mockOptions = {
       topic: "temperature" as "temperature" | "rainfall" | "humidity",
       derivativeType: "options" as "options" | "swaps" | "futures",
