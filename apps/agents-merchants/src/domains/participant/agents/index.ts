@@ -121,10 +121,12 @@ export class Agent {
     }, 5000);
   }
 
-  private getDerivativeVisuals(
-    topic: ReturnType<typeof this.lurkOptions>["topic"],
-  ) {
-    console.log(derivativeGraphics.graphics[topic][generator(0, 3)]);
+  private getDerivativeVisuals(topic: string) {
+    console.log(
+      derivativeGraphics.graphics[topic as ReturnType<typeof seeder>][
+        generator(0, 3)
+      ],
+    );
     console.log("-".repeat(40));
   }
 }
