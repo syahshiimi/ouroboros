@@ -37,12 +37,12 @@ build-agents:
 	docker build --platform linux/amd64,linux/arm64 \
 		-f apps/agents-merchants/Dockerfile \
 		-t syahshiimi/ouroboros-agents:${GIT_BRANCH} \
-		--build-arg MARKET_PARTICIPANT=agent \
+		--build-arg MARKET_PARTICIPANT=agents \
 		--push .
 
 build-merchants:
 	docker build --platform linux/amd64,linux/arm64 \
-		-f apps/agents-merchant/Dockerfile \
-		-t syahshiimi/ouroboros-merchant:${GIT_BRANCH} \
-		--build-arg MARKET_PARTICIPANT=merchant \
+		-f apps/agents-merchants/Dockerfile \
+		-t syahshiimi/ouroboros-merchants:${GIT_BRANCH} \
+		--build-arg MARKET_PARTICIPANT=merchants \
 		--push .
