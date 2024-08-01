@@ -1,16 +1,16 @@
 {
   "name": "@ouroboros/agents-merchants",
-  "module": "src/agent.ts",
+  "module": "src/agents.ts",
   "type": "module",
   "scripts": {
-    "dev:agents": "bun run --watch src/agent.ts",
+    "dev:agents": "bun run --watch src/agents.ts",
     "dev:merchants": "bun run --watch src/merchants.ts",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint .",
-    "build:agents": "bun build --entrypoints src/agent.ts --outdir ./out --target node --splitting",
+    "build:agents": "bun build --entrypoints src/agents.ts --outdir ./out --target node --splitting",
     "build:merchants": "bun build --entrypoints src/merchants.ts --outdir ./out --target node --splitting",
-    "build": "bun build --entrypoints src/merchants.ts src/agent.ts --outdir ./out --target node"
+    "build": "bun build --entrypoints src/merchants.ts src/agents.ts --outdir ./out --target node"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",

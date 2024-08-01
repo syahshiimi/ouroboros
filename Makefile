@@ -33,14 +33,14 @@ build-feeder-worker:
 		-t syahshiimi/ouroboros-feeder-worker:${GIT_BRANCH} \
 		--push .
 
-build-agent:
+build-agents:
 	docker build --platform linux/amd64,linux/arm64 \
 		-f apps/agents-merchants/Dockerfile \
 		-t syahshiimi/ouroboros-agents:${GIT_BRANCH} \
 		--build-arg MARKET_PARTICIPANT=agent \
 		--push .
 
-build-merchant:
+build-merchants:
 	docker build --platform linux/amd64,linux/arm64 \
 		-f apps/agents-merchant/Dockerfile \
 		-t syahshiimi/ouroboros-merchant:${GIT_BRANCH} \
