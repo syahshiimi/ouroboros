@@ -47,7 +47,7 @@ RUN turbo build --filter=@ouroboros/agents-merchants
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 
 # Final iamge.
-FROM oven/bun:distroless as runner
+FROM oven/bun:slim as runner
 WORKDIR /app
 ARG MARKET_PARTICIPANT
 
@@ -56,5 +56,6 @@ COPY --from=installer --chown=bun:bun /app/apps/agents-merchants/out/${MARKET_PA
 COPY --from=installer --chown=bun:bun /app/apps/agents-merchants/package.json package.json
 
 ENV NODE_ENV=production
+ENV MARKET_PARTICIPANT=MARKET_PARTICIPANT
 
-ENTRYPOINT [ "./${MARKET_PARTICIPANT}.js" ]
+CMD [ "sh", "-c", "bun run ./${MARKET_PARTICIPANT}.js" ]
