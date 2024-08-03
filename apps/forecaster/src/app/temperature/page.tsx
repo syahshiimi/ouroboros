@@ -1,17 +1,16 @@
 "use client";
 
 import SG from "../../../public/sg_2.svg";
-import { HumidityText } from "../../../public/text/humidity.text";
-import { useTimerHook } from "@/hooks/useTimerHook";
+import { getTemperatureText } from "@/utils/topics/getTemperature";
+import DateComponent from "@/components/date";
 
 export default function Home() {
-  const date = useTimerHook();
-
+  // TODO: Fetch the temperature data by creating the /api route.
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
       <section className={`flex flex-col gap-4 z-20`}>
         <h1 className={`text-h2 text-white`}>Temperature Forecast</h1>
-        <h2 className={`text-body text-white`}>{date}</h2>
+        <DateComponent />
       </section>
       <section
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
@@ -28,7 +27,7 @@ export default function Home() {
       </section>
       <section className={`w-full z-20`}>
         <h2 className={`text-menu-t text-center pb-4 text-green-200`}>
-          {HumidityText[2]}
+          {getTemperatureText(27)}
         </h2>
       </section>
     </main>
