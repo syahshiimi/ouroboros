@@ -23,7 +23,7 @@ export default function Home() {
       <section
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
-        <Status input={averageTemperature} />
+        <Status input={averageTemperature} type={"temperature"} />
       </section>
       <section className={`w-full z-20`}>
         <h2 className={`text-menu-t text-center pb-4 text-green-200`}>
