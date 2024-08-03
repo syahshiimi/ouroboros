@@ -29,11 +29,13 @@ export default function Humidity() {
       <section
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
+        {/*TODO: Fetch new data every 5 minutes*/}
         <Status input={averageHumidity}></Status>
       </section>
       <section className={`w-full z-20`}>
         {/*TODO: Make the text a marquee.*/}
         <h2 className={`text-menu-t text-center pb-4 text-white`}>
+          {/*TODO: Refresh the text visual every 5 minutes.*/}
           {getHumidityText(averageHumidity)}
         </h2>
       </section>
