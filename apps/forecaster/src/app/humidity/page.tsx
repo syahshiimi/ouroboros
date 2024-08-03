@@ -1,10 +1,10 @@
 "use client";
 
-import SG from "../../../public/sg_2.svg";
 import { useDataHook } from "@/hooks/useDataHook";
 import { getHumidityText } from "@/utils/topics/getHumidity";
 import DateComponent from "@/components/date";
 import { Status } from "@/components/status";
+import { reducer } from "@/utils/reducer";
 
 export default function Humidity() {
   const { data, isLoading, isError } = useDataHook("humidity");
@@ -13,12 +13,7 @@ export default function Humidity() {
   if (isError) return <p>Error fetching data</p>;
 
   const readings = data.data.items[0].readings;
-  const sum = readings.reduce(
-    (acc: number, curr: { value: number }) => acc + curr.value,
-    0,
-  );
-  const length = readings.length;
-  const averageHumidity = Math.round(sum / length);
+  const averageHumidity = reducer(readings);
 
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
