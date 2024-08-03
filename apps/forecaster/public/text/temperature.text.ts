@@ -1,0 +1,17 @@
+export const TemperatureText = [
+  "The heat lingers like karma, inescapable and ever-present.",
+  "Cool breezes whisper of monsoons past, a fleeting memory in the urban jungle.",
+  "Warmth envelops the city like a sarong, sometimes comforting, often suffocating.",
+  "In this heat, even the Merlion questions the nature of its eternal water-spewing existence.",
+  "The chill of the air-con and the warmth outside - a daily koan for the modern Singaporean.",
+  "Temperature fluctuates like the tides of the Singapore Strait, constant only in its inconstancy.",
+  "Hot or cold, we all swim in the same soup of humidity and contemplation.",
+  "The durian ripens in the heat, much like our thoughts in the crucible of discomfort.",
+  "Cool mornings give false hope, like the promise of a seat on the MRT during rush hour.",
+  "In this weather, even the Buddha might reconsider the middle path for an air-conditioned one.",
+  "The contrast of hot streets and cold malls - a metaphor for the duality of Singaporean life.",
+  "Warm rains fall, washing away certainties, leaving only questions and damp laundry.",
+  "Neither hot nor cold, but a perpetual lukewarm - the temperature of limbo, the state of being 'kiasu'.",
+  "The heat rises from the pavement like incense smoke, carrying our prayers for coolness to indifferent skies.",
+  "In the ebb and flow of temperature, we find the rhythm of life in this concrete island.",
+];
