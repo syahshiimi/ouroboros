@@ -1,6 +1,5 @@
 "use client";
 
-import SG from "../../../public/sg_2.svg";
 import { getTemperatureText } from "@/utils/topics/getTemperature";
 import DateComponent from "@/components/date";
 import { useDataHook } from "@/hooks/useDataHook";
