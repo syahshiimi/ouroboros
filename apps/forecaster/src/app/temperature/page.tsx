@@ -5,14 +5,17 @@ import DateComponent from "@/components/date";
 import { useDataHook } from "@/hooks/useDataHook";
 import { reducer } from "@/utils/reducer";
 import { Status } from "@/components/status";
+import { getCurrentDate } from "@/utils/date";
 
 export default function Home() {
-  const { data, isLoading, isError } = useDataHook("temperature");
+  const date = getCurrentDate();
+  const { data, isLoading, isError } = useDataHook("temperature", date);
 
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
   const averageTemperature = reducer(data.data.data.readings[0].data);
+
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
       <section className={`flex flex-col gap-4 z-20`}>

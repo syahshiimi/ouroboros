@@ -5,14 +5,16 @@ import { getHumidityText } from "@/utils/topics/getHumidity";
 import DateComponent from "@/components/date";
 import { Status } from "@/components/status";
 import { reducer } from "@/utils/reducer";
+import { getCurrentDate } from "@/utils/date";
 
 export default function Humidity() {
-  const { data, isLoading, isError } = useDataHook("humidity");
+  const date = getCurrentDate();
+  const { data, isLoading, isError } = useDataHook("humidity", date);
 
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
-  const readings = data.data.items[0].readings;
+  const readings = data.data.data.readings[0].data;
   const averageHumidity = reducer(readings);
 
   return (

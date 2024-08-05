@@ -9,9 +9,10 @@ import { useDataHook } from "@/hooks/useDataHook";
 import { reducer } from "@/utils/reducer";
 import { getRainfall } from "@/utils/topics/getRainfall";
 import { Status } from "@/components/status";
+import { getCurrentDate } from "@/utils/date";
 
 export default function Rainfall() {
-  const date = new Date().toISOString().split("T")[0] ?? "2024-03-04";
+  const date = getCurrentDate();
   const { data, isLoading, isError } = useDataHook("rainfall", date);
 
   if (isLoading) return <p>Retrieving new details</p>;
