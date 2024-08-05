@@ -1,7 +1,13 @@
-export async function GET() {
-  const url =
-    "https://api.data.gov.sg/v1/environment/relative-humidity?date_time=2024-07-20T12%3A12%3A12";
+import { NextRequest } from "next/server";
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const query = searchParams.get("date");
+
+  const url = `https://api-open.data.gov.sg/v2/real-time/api/relative-humidity?date=${query}`;
   const options = { method: "GET", headers: { accept: "*/*" } };
+
+  console.log("__humidity_route_handler", url);
 
   try {
     const response = await fetch(url, options);

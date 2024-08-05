@@ -1,7 +1,13 @@
-export async function GET() {
-  const url =
-    "https://api-open.data.gov.sg/v2/real-time/api/air-temperature?date=2024-07-06T23%3A59%3A00";
+import { NextRequest } from "next/server";
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const query = searchParams.get("date");
+
+  const url = `https://api-open.data.gov.sg/v2/real-time/api/air-temperature?date=${query}`;
   const options = { method: "GET", headers: { accept: "*/*" } };
+
+  console.log("__temperature_route_handler", url);
 
   try {
     const response = await fetch(url, options);
