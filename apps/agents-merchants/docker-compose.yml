@@ -1,13 +1,13 @@
 services:
   agents:
     container_name: agents
-    image: syahshiimi/agents-merchants:feat-create-agents-merchants-dockerfile
+    image: syahshiimi/agents-merchants:main
     restart: unless-stopped
     environment:
       MARKET_PARTICIPANT: agents
   merchants:
     container_name: merchants
-    image: syahshiimi/ouroboros-merchants:feat-create-agents-merchants-dockerfile
+    image: syahshiimi/ouroboros-merchants:main
     restart: unless-stopped
     environment:
       MARKET_PARTICIPANT: merchants

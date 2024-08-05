@@ -4,5 +4,5 @@ export const reducer = (data: any[]) => {
     0,
   );
   const length = data.length;
-  return Math.round(sum / length);
+  return sum / length;
 };
