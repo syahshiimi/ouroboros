@@ -11,12 +11,15 @@ import { getRainfall } from "@/utils/topics/getRainfall";
 import { Status } from "@/components/status";
 
 export default function Rainfall() {
-  const { data, isLoading, isError } = useDataHook("rainfall");
+  const date = new Date().toISOString().split("T")[0] ?? "2024-03-04";
+  const { data, isLoading, isError } = useDataHook("rainfall", date);
 
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
   const averageRainfall = reducer(data.data.data.readings[0].data);
+  console.log(averageRainfall);
+
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
       <section className={`flex flex-col gap-4 z-20`}>
