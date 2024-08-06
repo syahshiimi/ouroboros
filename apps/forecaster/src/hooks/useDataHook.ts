@@ -6,7 +6,7 @@ export function useDataHook(topic: string, param: string) {
     `/api/${topic}`,
     (url) => fetcher({ url: url, dateParam: param }),
     {
-      refreshInterval: 300000,
+      refreshInterval: 600000,
     },
   );
 
