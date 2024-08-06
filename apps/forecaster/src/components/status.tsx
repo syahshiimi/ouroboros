@@ -1,6 +1,12 @@
 import SG from "../../public/sg_2.svg";
 
-export const Status = ({ input, type }: { input: number; type: string }) => {
+export const Status = ({
+  input,
+  type,
+}: {
+  input: number;
+  type: "temperature" | "rainfall" | "humidity";
+}) => {
   const TextType = () => {
     return type === "temperature" ? "C" : type === "humidity" ? "%" : "mm";
   };
