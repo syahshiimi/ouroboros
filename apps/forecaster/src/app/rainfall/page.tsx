@@ -18,8 +18,9 @@ export default function Rainfall() {
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
-  const averageRainfall = reducer(data.data.data.readings[0].data);
-  console.log(averageRainfall);
+  const averageRainfall = parseFloat(
+    reducer(data.data.data.readings[0].data).toFixed(1),
+  );
 
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
