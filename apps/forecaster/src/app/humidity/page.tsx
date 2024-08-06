@@ -15,7 +15,7 @@ export default function Humidity() {
   if (isError) return <p>Error fetching data</p>;
 
   const readings = data.data.data.readings[0].data;
-  const averageHumidity = reducer(readings);
+  const averageHumidity = parseFloat(reducer(readings).toFixed(1));
 
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">

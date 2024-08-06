@@ -7,14 +7,16 @@ import { reducer } from "@/utils/reducer";
 import { Status } from "@/components/status";
 import { getCurrentDate } from "@/utils/date";
 
-export default function Home() {
+export default function Temperature() {
   const date = getCurrentDate();
   const { data, isLoading, isError } = useDataHook("temperature", date);
 
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
-  const averageTemperature = reducer(data.data.data.readings[0].data);
+  const averageTemperature = parseFloat(
+    reducer(data.data.data.readings[0].data).toFixed(1),
+  );
 
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
