@@ -18,10 +18,8 @@ function merchantEmulation() {
   merchant.floatDerivative(derivative);
 }
 
-const main = () => {
+(async () => {
   setInterval(() => {
     merchantEmulation();
   }, 15000);
-};
-
-main();
+})();

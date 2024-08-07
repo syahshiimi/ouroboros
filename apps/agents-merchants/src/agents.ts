@@ -25,10 +25,8 @@ function agentEmulation() {
   agent.determineBid(bid, options, agentName);
 }
 
-const main = () => {
+(async () => {
   setInterval(() => {
     agentEmulation();
   }, 15000);
-};
-
-main();
+})();
