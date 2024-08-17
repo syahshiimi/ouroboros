@@ -6,6 +6,7 @@ import { useDataHook } from "@/hooks/useDataHook";
 import { reducer } from "@/utils/reducer";
 import { Status } from "@/components/status";
 import { getCurrentDate } from "@/utils/date";
+import { MarqueeText } from "@/components/marquee";
 
 export default function Temperature() {
   const date = getCurrentDate();
@@ -27,13 +28,12 @@ export default function Temperature() {
       <section
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
-        <Status input={averageTemperature} type={"temperature"} />
+        <Status input={averageTemperature} type={"temperature"} color={"red"} />
       </section>
-      <section className={`w-full z-20`}>
-        <h2 className={`text-menu-t text-center pb-4 text-green-200`}>
-          {getTemperatureText(averageTemperature)}
-        </h2>
-      </section>
+      <MarqueeText
+        weather={getTemperatureText(averageTemperature)}
+        marqueeBackground={"blue"}
+      />
     </main>
   );
 }

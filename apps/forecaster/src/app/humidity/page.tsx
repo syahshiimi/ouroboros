@@ -6,6 +6,7 @@ import DateComponent from "@/components/date";
 import { Status } from "@/components/status";
 import { reducer } from "@/utils/reducer";
 import { getCurrentDate } from "@/utils/date";
+import { MarqueeText } from "@/components/marquee";
 
 export default function Humidity() {
   const date = getCurrentDate();
@@ -27,15 +28,12 @@ export default function Humidity() {
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
         {/*TODO: Fetch new data every 5 minutes*/}
-        <Status input={averageHumidity} type={"humidity"}></Status>
+        <Status input={averageHumidity} type={"humidity"} color={"violet"} />
       </section>
-      <section className={`w-full z-20`}>
-        {/*TODO: Make the text a marquee.*/}
-        <h2 className={`text-menu-t text-center pb-4 text-white`}>
-          {/*TODO: Refresh the text visual every 5 minutes.*/}
-          {getHumidityText(averageHumidity)}
-        </h2>
-      </section>
+      <MarqueeText
+        weather={getHumidityText(averageHumidity)}
+        marqueeBackground={"green"}
+      />
     </main>
   );
 }

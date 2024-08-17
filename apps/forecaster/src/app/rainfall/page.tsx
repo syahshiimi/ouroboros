@@ -10,6 +10,7 @@ import { reducer } from "@/utils/reducer";
 import { getRainfall } from "@/utils/topics/getRainfall";
 import { Status } from "@/components/status";
 import { getCurrentDate } from "@/utils/date";
+import { MarqueeText } from "@/components/marquee";
 
 export default function Rainfall() {
   const date = getCurrentDate();
@@ -31,13 +32,12 @@ export default function Rainfall() {
       <section
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
-        <Status input={averageRainfall} type={"rainfall"} />
+        <Status input={averageRainfall} type={"rainfall"} color={"blue"} />
       </section>
-      <section className={`w-full z-20`}>
-        <h2 className={`text-menu-t text-center pb-4 text-green-200`}>
-          {getRainfall(averageRainfall)}
-        </h2>
-      </section>
+      <MarqueeText
+        weather={getRainfall(averageRainfall)}
+        marqueeBackground={"violet"}
+      />
     </main>
   );
 }
