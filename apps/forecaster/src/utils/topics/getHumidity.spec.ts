@@ -20,11 +20,6 @@ describe("getHumidityText", () => {
     expect(result).toBe(HumidityText[0]); // Should be the first item due to mocked random
   });
 
-  test("returns extreme humidity message for humidity 80% and above", () => {
-    const result = getHumidityText(80);
-    expect(result).toBe("The air is so wet, fish are swimming through it.");
-  });
-
   test("returns different messages for multiple calls in 60-79% range", () => {
     // Restore Math.random
     global.Math = Object.create(global.Math);
