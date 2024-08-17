@@ -10,10 +10,23 @@ const TextType = ({ type }: Pick<Status, "type">) => {
   return type === "temperature" ? "C" : type === "humidity" ? "%" : "mm";
 };
 
+const setSGBackground = (color: Status["color"]) => {
+  switch (color) {
+    case "violet":
+      return "bg-violet-800";
+    case "blue":
+      return "bg-blue-800";
+    case "green":
+      return "bg-green-800";
+    case "red":
+      return "bg-red-800";
+  }
+};
+
 export const Status = ({ input, type, color }: Status) => {
   return (
     <div className={`h-fit w-fit relative`}>
-      <SG className={`bg-${color}-800 min-h-[69rem]`} />
+      <SG className={`${setSGBackground(color)} min-h-[69rem]`} />
       <p className={`absolute bottom-[51%] left-[12%] text-nowrap`}>
         {input}
         <TextType type={type} />
