@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  mode: "JIT",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -30,11 +31,24 @@ const config: Config = {
       "minor-t": ["12px", { lineHeight: "16.8px" }],
       "minor-m": ["10px", { lineHeight: "14px" }],
     },
-
     fontFamily: {
       MODE: "var(--font-MODE)",
     },
     extend: {
+      animation: {
+        marquee: "marquee 15s linear infinite",
+        marquee2: "marquee2 15s linear infinite",
+      },
+      keyframes: {
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        marquee2: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
