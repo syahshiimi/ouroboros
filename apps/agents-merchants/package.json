@@ -3,7 +3,8 @@
   "module": "src/agents.ts",
   "type": "module",
   "scripts": {
-    "dev:agents": "bun run --watch src/agents.ts",
+    "dev:agents-graphics": "AGENT_LOGGING=false ENABLE_GFX=true bun run --watch src/agents.ts",
+    "dev:agents-details": "AGENT_LOGGING=true ENABLE_GFX=false bun run --watch src/agents.ts",
     "dev:merchants": "bun run --watch src/merchants.ts",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
