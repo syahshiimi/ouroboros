@@ -1,10 +1,20 @@
 services:
-  agents:
-    container_name: agents
-    image: syahshiimi/agents-merchants:main
+  agents-details:
+    container_name: agents-details
+    image: syahshiimi/ouroboros-agents:main
     restart: unless-stopped
     environment:
       MARKET_PARTICIPANT: agents
+      AGENT_LOGGING: true
+      ENABLE_GFX: false
+  agents-graphics:
+    container_name: agents-graphics
+    image: syahshiimi/ouroboros-agents:feat-create-separate-details-graphics-agent
+    restart: unless-stopped
+    environment:
+      MARKET_PARTICIPANT: agents
+      AGENT_LOGGING: false
+      ENABLE_GFX: true
   merchants:
     container_name: merchants
     image: syahshiimi/ouroboros-merchants:main
