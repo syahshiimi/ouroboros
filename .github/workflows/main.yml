@@ -74,8 +74,10 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
+          file: apps/agents-merchants/Dockerfile
           push: true
           tags: syahshiimi/ouroboros-agents:latest
+          build-args: MARKET_PARTICIPANT=agents
 
       - name: Build and push @ouroboros/merchants
         uses: docker/build-push-action@v6
