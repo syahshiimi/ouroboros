@@ -12,17 +12,21 @@ import { Agent } from "./domains/participant/agents";
 function agentEmulation() {
   const agentName = faker.company.name();
   const agent = new Agent(agentName);
+  const isLogging = process.env["AGENT_LOGGING"] === "true";
+  const enableGfx = process.env["ENABLE_GFX"] === "true";
 
-  console.log(`${agent.name} searching through the tradebook... \n`);
-  const options = agent.lurkOptions();
+  isLogging &&
+    console.log(`${agent.name} searching through the trade book... \n`);
+  const options = agent.lurkOptions(isLogging);
 
-  console.log(
-    `${agent.name} has submitted a bid for ${options.topic} weather derivative ${options.derivativeType} at a cost of ${options.derivatives.price} USD per derivative.`,
-  );
+  enableGfx &&
+    console.log(
+      `${agent.name} has submitted a bid for ${options.topic} weather derivative ${options.derivativeType} at a cost of ${options.derivatives.price} USD per derivative.`,
+    );
   const bid = agent.submitDerivativeBid(options);
-  console.log("\n", bid);
+  isLogging && console.log("\n", bid);
 
-  agent.determineBid(bid, options, agentName);
+  agent.determineBid(bid, options, agentName, isLogging, enableGfx);
 }
 
 (async () => {

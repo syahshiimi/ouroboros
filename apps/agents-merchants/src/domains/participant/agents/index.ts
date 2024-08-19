@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { en, faker } from "@faker-js/faker";
 import { seeder } from "../../../utils/seeder.ts";
 import { generator } from "../../../utils/generator.ts";
 import { derivativeGraphics } from "../../derivatives/graphics";
@@ -14,7 +14,11 @@ export class Agent {
     this.name = name;
   }
 
-  lurkOptions() {
+  private logger(text: string, enableLog: boolean) {
+    enableLog ? console.log(text) : null;
+  }
+
+  lurkOptions(enableLog: boolean) {
     const derivativesStream = this.derivativeStream.produceDerivativeStream();
     const topicSeed = seeder();
     const derivativeSeed = generator(0, 2);
@@ -24,8 +28,9 @@ export class Agent {
       if (derivativeSeed === 2) return "futures";
       return "options";
     };
-    console.log(
+    this.logger(
       `${this.name} has chosen derivative ${derivativeType()} to bid. \n`,
+      enableLog,
     );
     return {
       derivatives: derivativesStream[topicSeed][derivativeType()],
@@ -90,6 +95,8 @@ export class Agent {
     bid: ReturnType<typeof this.submitDerivativeBid>,
     options: ReturnType<typeof this.lurkOptions>,
     agentName: string,
+    enableLogging: boolean,
+    enableGfx: boolean,
   ) {
     const merchantPropensity = faker.number.float({
       min: 0.2,
@@ -97,28 +104,33 @@ export class Agent {
       fractionDigits: 2,
     });
     const merchantName = faker.company.name();
-    console.log(
+    this.logger(
       `\n${merchantName} has received a bid for ${options.topic} weather derivative ${options.derivativeType} from ${agentName}.`,
+      enableLogging,
     );
     if (merchantPropensity >= 0.22 && merchantPropensity < 0.8) {
       const sellingQty = merchantPropensity * bid.bidQuantity;
       const totalSellingPrice = sellingQty * options.derivatives.price;
-      console.log(
+      this.logger(
         `\n${merchantName} has sold ${totalSellingPrice.toFixed(2)} USD worth of derivatives to ${agentName}.`,
+        enableLogging,
       );
     } else if (merchantPropensity <= 0.21) {
-      console.log(
+      this.logger(
         `\n${merchantName} has rejected the bid of ${bid.bid.toFixed(2)} USD worth of derivatives from ${agentName}.`,
+        enableLogging,
       );
     } else {
-      console.log(
+      this.logger(
         `\n${merchantName} has sold ${bid.bid.toFixed(2)} USD worth of derivatives to ${agentName}.`,
+        enableLogging,
       );
     }
 
-    setTimeout(() => {
-      this.getDerivativeVisuals(options.topic);
-    }, 5000);
+    enableGfx &&
+      setTimeout(() => {
+        this.getDerivativeVisuals(options.topic);
+      }, 5000);
   }
 
   private getDerivativeVisuals(topic: string) {
