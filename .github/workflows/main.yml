@@ -9,6 +9,7 @@ on:
 
 jobs:
   if_merged:
+    name: Build and Test (Main)
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
