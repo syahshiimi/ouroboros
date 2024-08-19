@@ -61,11 +61,19 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Extract and transform branch name
+        shell: bash
+        run: |
+            branch="${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+            transformed_branch=$(echo "$branch" | sed 's/[^a-zA-Z0-9._-]/-/g')
+            echo "branch=$transformed_branch" >> $GITHUB_OUTPUT
+        id: extract_branch
+
       - name: Build and push @ouroboros/agents
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
           file: apps/agents-merchants/Dockerfile
           push: true
-          tags: syahshiimi/ouroboros-agents:featuretestingonly
+          tags: syahshiimi/ouroboros-agents:${{ steps.extract_branch.outputs.branch }}
           build-args: MARKET_PARTICIPANT=agents
