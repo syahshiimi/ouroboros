@@ -1,6 +1,9 @@
 name: Merged
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
     types:
       - closed
@@ -73,4 +76,4 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKERHUB_TOKEN }}/ourobos-agents:latest
+          tags: syahshiimi/ouroboros-agents:latest
