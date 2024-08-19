@@ -10,9 +10,8 @@ on:
 jobs:
   if_merged:
     name: Build and Test (Main)
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-20.04
+    timeout-minutes: 15
     steps:
       - name: Docker meta
         id: meta
