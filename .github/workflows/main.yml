@@ -69,7 +69,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           file: apps/agents-merchants/Dockerfile
-          push: push
+          push: true
           tags: syahshiimi/ouroboros-${{ matrix.app }}:${{ steps.extract_branch.outputs.branch }}
           build-args: MARKET_PARTICIPANT=${{ matrix.app }}
 
@@ -105,6 +105,6 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           file: apps/${{ matrix.app }}/Dockerfile
-          push: push
+          push: true
           tags: syahshiimi/ouroboros-${{ matrix.app }}:${{ steps.extract_branch.outputs.branch }}
           build-args: MARKET_PARTICIPANT=${{ matrix.app }}
