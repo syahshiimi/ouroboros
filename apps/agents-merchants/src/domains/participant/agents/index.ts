@@ -1,4 +1,4 @@
-import { en, faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { seeder } from "../../../utils/seeder.ts";
 import { generator } from "../../../utils/generator.ts";
 import { derivativeGraphics } from "../../derivatives/graphics";
