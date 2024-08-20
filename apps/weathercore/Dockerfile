@@ -18,14 +18,14 @@ RUN pnpm install turbo --global
 RUN pnpm config set store-dir ~/.pnpm-store
 
 # Prune projects.
-FROM base as builder
+FROM base AS builder
 RUN apt-get update
 WORKDIR /app
 COPY . .
 RUN turbo prune @ouroboros/weathercore --docker
 
 # Prepare the build step.
-FROM base as installer
+FROM base AS installer
 RUN apt-get update
 WORKDIR /app
 
@@ -49,7 +49,7 @@ RUN turbo build --filter=@ouroboros/weathercore
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 
 # Final iamge.
-FROM oven/bun:distroless as runner
+FROM oven/bun:distroless AS runner
 WORKDIR /app
 
 # Copy relevant build artifacts only.
