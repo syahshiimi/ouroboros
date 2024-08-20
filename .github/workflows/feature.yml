@@ -52,8 +52,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        agents-merchants: [agents, merchants]
-        app: [feeder, feeder-worker, weathercore]
+        app: [agents, merchants, feeder, feeder-worker, weathercore]
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -78,19 +77,11 @@ jobs:
           echo "branch=$transformed_branch" >> $GITHUB_OUTPUT
         id: extract_branch
 
-      - name: Build @ouroboros/${{ matrix.agents-merchants}}
-        uses: docker/build-push-action@v6
-        with:
-          platforms: linux/amd64,linux/arm64
-          file: apps/agents-merchants/Dockerfile
-          push: false
-          tags: syahshiimi/ouroboros-${{ matrix.agents-merchants }}:${{ steps.extract_branch.outputs.branch }}
-          build-args: MARKET_PARTICIPANT=${{ matrix.agents-merchants }}
-
-      - name: Build @ouroboros/${{ matrix.app }}
+      - name: Build @ouroboros/${{ matrix.app}}
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
           file: apps/${{ matrix.app }}/Dockerfile
           push: false
           tags: syahshiimi/ouroboros-${{ matrix.app }}:${{ steps.extract_branch.outputs.branch }}
+          build-args: MARKET_PARTICIPANT=${{ matrix.app }}
