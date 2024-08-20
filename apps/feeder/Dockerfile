@@ -48,7 +48,7 @@ ENV NODE_ENV=production
 
 COPY --from=installer --chown=hono:nodejs /app/apps/feeder/out/index.cjs .
 
-ENV PORT 4000
+ENV PORT=4000
 EXPOSE $PORT
 
 CMD ["./index.cjs"]

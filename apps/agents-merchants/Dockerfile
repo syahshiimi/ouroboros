@@ -16,14 +16,14 @@ RUN pnpm install turbo --global
 RUN pnpm config set store-dir ~/.pnpm-store
 
 # Prune projects.
-FROM base as builder
+FROM base AS builder
 RUN apt-get update
 WORKDIR /app
 COPY . .
 RUN turbo prune @ouroboros/agents-merchants --docker
 
 # Prepare the build step.
-FROM base as installer
+FROM base AS installer
 RUN apt-get update
 WORKDIR /app
 
@@ -47,7 +47,7 @@ RUN turbo build --filter=@ouroboros/agents-merchants
 RUN --mount=type=cache,id=pnpm,target=~/.pnpm-store pnpm prune --prod --no-optional
 
 # Final iamge.
-FROM oven/bun:slim as runner
+FROM oven/bun:slim AS runner
 WORKDIR /app
 ARG MARKET_PARTICIPANT
 

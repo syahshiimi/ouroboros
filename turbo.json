@@ -22,7 +22,7 @@
       "dependsOn": [
         "^lint"
       ],
-      "env": ["R2_*", "DB_*", "GRAPHQL_*", "TEMPORAL_*", "NODE_ENV"]
+      "env": ["R2_*", "DB_*", "GRAPHQL_*", "TEMPORAL_*", "NODE_ENV", "AGENT_LOGGING", "ENABLE_GFX"]
     },
     "test": {
       "cache": false,
