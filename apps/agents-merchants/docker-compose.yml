@@ -9,7 +9,7 @@ services:
       ENABLE_GFX: false
   agents-graphics:
     container_name: agents-graphics
-    image: syahshiimi/ouroboros-agents:feat-create-separate-details-graphics-agent
+    image: syahshiimi/ouroboros-agents:main
     restart: unless-stopped
     environment:
       MARKET_PARTICIPANT: agents
