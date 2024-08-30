@@ -44,3 +44,46 @@ export const createRepositoryConnection = <T extends PgTable>(args: {
 export function exitDbConnection() {
   return createDbConnection().end();
 }
+
+class PostgresService {
+  connectionNumber: number
+  connectionString: string
+
+  constructor(connectionNumber: number,  connectionString: string) {
+    this.connectionString = connectionString
+    this.connectionNumber = connectionNumber
+  }
+
+  createPostgresConnection() {
+    return postgres(
+      this.connectionString,
+      { 
+        max: this.connectionNumber
+      }
+    )
+  }
+}
+
+export class DatabaseService<T> {
+  schema: T
+  constructor(schema: T) {
+    this.schema = schema;
+  }
+
+  dbConnectionString = `postgresql://${DB_USER!}:${DB_PASSWORD!}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+  postgresService = new PostgresService(5, dbConnectionString)
+
+  createConection() {
+    return drizzle(this
+      .postgresService
+      .createPostgresConnection()
+      ,{ schema: { schema: this.schema }})
+  }
+
+  exitConnection() {
+    this
+      .postgresService
+      .createPostgresConnection()
+      .end()
+  }
+}

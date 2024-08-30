@@ -7,6 +7,10 @@
       "types": "./out/src/index.d.ts",
       "default": "./out/src/index.js"
     },
+    "./service": {
+      "types": "./out/src/service.d.ts",
+      "defualt": "./out/src/service.js"
+    },
     "./repository": {
       "types": "./out/src/repository.d.ts",
       "default": "./out/src/repository.js"
