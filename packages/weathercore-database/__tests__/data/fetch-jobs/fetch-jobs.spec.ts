@@ -7,12 +7,12 @@ import postgres from "postgres";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { sampleFetchJob } from "../../sample/samples.js";
-import { FetchJobsRepository } from "../../../src/data-access/repositories/fetch-jobs/fetch-jobs-repository.js";
+import { FetchService } from "../../../src/data-access/service/fetch-jobs/fetch-jobs-service.js"
 
-describe.skip("upsert fetch jobs table", async () => {
+describe("upsert fetch jobs table", async () => {
   let container: StartedPostgreSqlContainer;
   let client: postgres.Sql;
-  let fetchJobsService: Awaited<ReturnType<typeof FetchJobsRepository>>;
+  let fetchJobsService: typeof FetchService;
 
   beforeAll(async () => {
     container = await new PostgreSqlContainer().start();
@@ -32,16 +32,16 @@ describe.skip("upsert fetch jobs table", async () => {
     });
 
     // Instantiate the service here.
-    fetchJobsService = await FetchJobsRepository(container.getConnectionUri());
+    fetchJobsService = FetchService;
   });
 
   afterAll(async () => {
-    await fetchJobsService.deleteFetchJobsTask();
+    await fetchJobsService.deleteFetchJobsRecords()
     await container.stop();
   });
 
   test("should insert fetch jobs task", async () => {
-    const addFetchJobs = await fetchJobsService.upsertFetchJobsTask([
+    const addFetchJobs = await fetchJobsService.addOrUpdateFetchJobs([
       sampleFetchJob,
     ]);
 
@@ -49,13 +49,13 @@ describe.skip("upsert fetch jobs table", async () => {
   });
 
   test("should find fetch job by id", async () => {
-    const addFetchJobs = await fetchJobsService.upsertFetchJobsTask([
+    const addFetchJobs = await fetchJobsService.addOrUpdateFetchJobs([
       sampleFetchJob,
     ]);
     expect(addFetchJobs.length).toBe(1);
 
     if (addFetchJobs[0]?.id) {
-      const fetchJob = await fetchJobsService.findFetchJobsTaskById(
+      const fetchJob = await fetchJobsService.findFetchJobsById(
         addFetchJobs[0].id!,
       );
       expect(fetchJob).not.toBeNaN();
@@ -64,13 +64,13 @@ describe.skip("upsert fetch jobs table", async () => {
   });
 
   test("should find fetch job by topic", async () => {
-    const addFetchJobs = await fetchJobsService.upsertFetchJobsTask([
+    const addFetchJobs = await fetchJobsService.addOrUpdateFetchJobs([
       sampleFetchJob,
     ]);
     expect(addFetchJobs.length).toBe(1);
 
     if (addFetchJobs[0]?.topic && sampleFetchJob.topic) {
-      const fetchJobs = await fetchJobsService.findFetchJobsTasksByTopic(
+      const fetchJobs = await fetchJobsService.findFetchJobsByTopic(
         addFetchJobs[0].topic,
       );
       expect(fetchJobs).not.toBeNaN();
