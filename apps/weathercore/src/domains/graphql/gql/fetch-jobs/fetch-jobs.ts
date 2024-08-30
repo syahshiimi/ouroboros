@@ -1,10 +1,10 @@
 import { builder } from "../builder.ts";
 import { InsertFetchJobsType, SelectFetchJobsType } from "../types.ts";
 import { topicsEnum } from "../enums.ts";
-import { FetchJobsRepository } from "@ouroboros/weathercore-database/repository";
 import type { SelectFetchJobs } from "@ouroboros/weathercore-database";
+import { FetchService } from "@ouroboros/weathercore-database/service";
 
-const fetchService = await FetchJobsRepository();
+const fetchService = FetchService
 
 const FetchJobsInput = builder.inputType("FetchJobsInput", {
   fields: (t) => ({
@@ -69,7 +69,7 @@ builder.queryField("findFetchJobsTaskById", (t) =>
       id: t.arg.string({ required: true }),
     },
     resolve: async (_, args) => {
-      return await fetchService.findFetchJobsTaskById(args.id);
+      return await fetchService.findFetchJobsById(args.id);
     },
   }),
 );
@@ -82,7 +82,7 @@ builder.queryField("findFetchJobsByTopic", (t) =>
       topic: t.arg({ type: topicsEnum, required: true }),
     },
     resolve: async (_, args) => {
-      return await fetchService.findFetchJobsTasksByTopic(
+      return await fetchService.findFetchJobsByTopic(
         args.topic as SelectFetchJobs["topic"],
       );
     },
@@ -97,7 +97,7 @@ builder.mutationField("upsertFetchJobsTask", (t) =>
       input: t.arg({ type: [FetchJobsInput], required: true }),
     },
     resolve: async (_, args) => {
-      return await fetchService.upsertFetchJobsTask([...args.input]);
+      return await fetchService.addOrUpdateFetchJobs([...args.input] as any);
     },
   }),
 );
