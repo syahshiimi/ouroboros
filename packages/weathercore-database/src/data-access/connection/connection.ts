@@ -1,4 +1,4 @@
-import postgres from "postgres";
+import postgres, { ConnectionParameters } from "postgres";
 import { PgTable } from "drizzle-orm/pg-core";
 import { drizzle, type PostgresJsDatabase } from "drizzle-orm/postgres-js";
 
@@ -45,45 +45,22 @@ export function exitDbConnection() {
   return createDbConnection().end();
 }
 
-class PostgresService {
-  connectionNumber: number
-  connectionString: string
+export class PostgresDatabase<T> {
+  private pool: postgres.Sql<{}>
 
-  constructor(connectionNumber: number,  connectionString: string) {
-    this.connectionString = connectionString
-    this.connectionNumber = connectionNumber
+  constructor(private schema: T) {
+    this.pool = postgres(dbConnectionString, { max: 5})
   }
 
-  createPostgresConnection() {
-    return postgres(
-      this.connectionString,
-      { 
-        max: this.connectionNumber
-      }
-    )
-  }
-}
-
-export class DatabaseService<T> {
-  schema: T
-  constructor(schema: T) {
-    this.schema = schema;
+  async connection()  {
+    return drizzle(this.pool, { schema: { schema: this.schema}})
   }
 
-  dbConnectionString = `postgresql://${DB_USER!}:${DB_PASSWORD!}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-  postgresService = new PostgresService(5, dbConnectionString)
-
-  createConection() {
-    return drizzle(this
-      .postgresService
-      .createPostgresConnection()
-      ,{ schema: { schema: this.schema }})
+  async createDbConnection() {
+    return drizzle(this.pool, { schema: { schema: this.schema}}).query
   }
 
-  exitConnection() {
-    this
-      .postgresService
-      .createPostgresConnection()
-      .end()
+  async discconect(): Promise<void> {
+    await this.pool.end();
   }
 }
