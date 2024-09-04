@@ -1,10 +1,11 @@
-import { NextRequest } from "next/server";
+import { getCurrentDate } from "@/utils/date";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get("date");
+  const date = getCurrentDate();
+  console.log("__temperature_route_date", date);
 
-  const url = `https://api-open.data.gov.sg/v2/real-time/api/air-temperature?date=${query}`;
+  const url = `https://api-open.data.gov.sg/v2/real-time/api/air-temperature?date=${date}`;
   const options = { method: "GET", headers: { accept: "*/*" } };
 
   console.log("__temperature_route_handler", url);
@@ -12,7 +13,7 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
-    return Response.json({ data });
+    return NextResponse.json({ data });
   } catch (error) {
     console.error(error);
   }

@@ -7,7 +7,7 @@ interface Status {
 }
 
 const TextType = ({ type }: Pick<Status, "type">) => {
-  return type === "temperature" ? "C" : type === "humidity" ? "%" : "mm";
+  return type === "temperature" ? <>C</> : type === "humidity" ? <>%</> : <>mm</>;
 };
 
 const setSGBackground = (color: Status["color"]) => {

@@ -1,12 +1,28 @@
+import { useEffect, useState } from "react";
+
 interface MarqueeText {
-  weather: string | undefined;
+  average: number,
+  averageCallback: (average: number) => string | undefined;
   marqueeBackground?: "orange" | "blue" | "green" | "violet";
 }
 
 export const MarqueeText = ({
-  weather,
+  average,
+  averageCallback,
   marqueeBackground = "orange",
 }: MarqueeText) => {
+
+  const [text, setText] =  useState(() => averageCallback(average))
+
+  useEffect(() => {
+    const texter = setInterval(() => {
+      const newText = averageCallback(average);
+      setText(newText);
+
+    }, 60000)
+    return () => clearInterval(texter);
+  })
+
   const setMarqueeBackground = () => {
     switch (marqueeBackground) {
       case "violet":
@@ -26,12 +42,12 @@ export const MarqueeText = ({
       <h2
         className={`w-full text-center text-white whitespace-nowrap animate-marquee`}
       >
-        {weather}
+        {text}
       </h2>
       <h2
         className={`w-full absolute text-center text-white whitespace-nowrap animate-marquee2`}
       >
-        {weather}
+        {text}
       </h2>
     </section>
   );
