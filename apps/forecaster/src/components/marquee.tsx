@@ -1,4 +1,3 @@
-import { getHumidityText } from "@/utils/topics/getHumidity";
 import { useEffect, useState } from "react";
 
 interface MarqueeText {
