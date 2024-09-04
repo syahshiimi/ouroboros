@@ -27,7 +27,6 @@ export default function Humidity() {
       <section
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
-        {/*TODO: Fetch new data every 5 minutes*/}
         <Status input={averageHumidity} type={"humidity"} color={"violet"} />
       </section>
       <MarqueeText

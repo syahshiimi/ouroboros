@@ -21,15 +21,15 @@ export const MarqueeText = ({
   };
   return (
     <section
-      className={`w-full z-20 ${setMarqueeBackground()} py-8 fixed left-0 bottom-8 flex overflow-x-hidden`}
+      className={`w-full z-20 ${setMarqueeBackground()} pt-4 pb-6 fixed left-0 bottom-8 flex overflow-x-hidden opacity-80 text-h2-m`}
     >
       <h2
-        className={`w-full text-h2-t text-center text-white whitespace-nowrap animate-marquee`}
+        className={`w-full text-center text-white whitespace-nowrap animate-marquee`}
       >
         {weather}
       </h2>
       <h2
-        className={`w-full absolute text-h2-t text-center text-white whitespace-nowrap animate-marquee2`}
+        className={`w-full absolute text-center text-white whitespace-nowrap animate-marquee2`}
       >
         {weather}
       </h2>
