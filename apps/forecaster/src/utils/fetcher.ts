@@ -1,11 +1,9 @@
 export const fetcher = async ({
   url,
-  dateParam,
 }: {
   url: string;
-  dateParam: string;
 }) => {
-  const response = await fetch(`${url}?date=${dateParam}`);
+  const response = await fetch(`${url}`);
   if (!response.ok) {
     throw new Error("An error occurred while fetching the data.");
   }

@@ -1,20 +1,14 @@
 "use client";
 
-import SG from "../../../public/sg_2.svg";
-import { HumidityText } from "../../../public/text/humidity.text";
-import { useTimerHook } from "@/hooks/useTimerHook";
 import DateComponent from "@/components/date";
-import { getTemperatureText } from "@/utils/topics/getTemperature";
 import { useDataHook } from "@/hooks/useDataHook";
 import { reducer } from "@/utils/reducer";
 import { getRainfall } from "@/utils/topics/getRainfall";
 import { Status } from "@/components/status";
-import { getCurrentDate } from "@/utils/date";
 import { MarqueeText } from "@/components/marquee";
 
 export default function Rainfall() {
-  const date = getCurrentDate();
-  const { data, isLoading, isError } = useDataHook("rainfall", date);
+  const { data, isLoading, isError } = useDataHook("rainfall");
 
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;

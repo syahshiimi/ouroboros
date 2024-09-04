@@ -5,12 +5,10 @@ import DateComponent from "@/components/date";
 import { useDataHook } from "@/hooks/useDataHook";
 import { reducer } from "@/utils/reducer";
 import { Status } from "@/components/status";
-import { getCurrentDate } from "@/utils/date";
 import { MarqueeText } from "@/components/marquee";
 
 export default function Temperature() {
-  const date = getCurrentDate();
-  const { data, isLoading, isError } = useDataHook("temperature", date);
+  const { data, isLoading, isError } = useDataHook("temperature");
 
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;

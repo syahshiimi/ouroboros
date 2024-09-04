@@ -1,12 +1,13 @@
 import useSWR from "swr";
 import { fetcher } from "@/utils/fetcher";
 
-export function useDataHook(topic: string, param: string) {
+export function useDataHook(topic: string) {
   const { data, error, isLoading } = useSWR(
     `/api/${topic}`,
-    (url) => fetcher({ url: url, dateParam: param }),
+    (url) => fetcher({ url: url  }),
     {
-      refreshInterval: 600000,
+      refreshInterval: 10000,
+      revalidateOnFocus: false,
     },
   );
 
