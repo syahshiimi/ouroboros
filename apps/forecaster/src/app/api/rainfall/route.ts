@@ -1,5 +1,5 @@
 import { getCurrentDate } from "@/utils/date";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const date = getCurrentDate();
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
-    return Response.json({ data });
+    return NextResponse.json({ data });
   } catch (error) {
     console.error(error);
   }
