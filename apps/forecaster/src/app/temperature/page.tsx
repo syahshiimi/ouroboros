@@ -29,7 +29,8 @@ export default function Temperature() {
         <Status input={averageTemperature} type={"temperature"} color={"red"} />
       </section>
       <MarqueeText
-        weather={getTemperatureText(averageTemperature)}
+        average={averageTemperature}
+        averageCallback={() => getTemperatureText(averageTemperature)}
         marqueeBackground={"blue"}
       />
     </main>

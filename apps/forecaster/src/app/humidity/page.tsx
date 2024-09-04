@@ -28,7 +28,8 @@ export default function Humidity() {
         <Status input={averageHumidity} type={"humidity"} color={"violet"} />
       </section>
       <MarqueeText
-        weather={getHumidityText(averageHumidity)}
+        average={averageHumidity}
+        averageCallback={() => getHumidityText(averageHumidity)}
         marqueeBackground={"green"}
       />
     </main>

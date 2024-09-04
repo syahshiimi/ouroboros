@@ -5,6 +5,7 @@ import { useDataHook } from "@/hooks/useDataHook";
 import { reducer } from "@/utils/reducer";
 import { getRainfall } from "@/utils/topics/getRainfall";
 import { Status } from "@/components/status";
+import { getCurrentDate } from "@/utils/date";
 import { MarqueeText } from "@/components/marquee";
 
 export default function Rainfall() {
@@ -29,7 +30,8 @@ export default function Rainfall() {
         <Status input={averageRainfall} type={"rainfall"} color={"blue"} />
       </section>
       <MarqueeText
-        weather={getRainfall(averageRainfall)}
+        average={averageRainfall}
+        averageCallback={() => getRainfall(averageRainfall)}
         marqueeBackground={"violet"}
       />
     </main>
