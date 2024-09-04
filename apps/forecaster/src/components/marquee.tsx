@@ -20,7 +20,7 @@ export const MarqueeText = ({
       const newText = averageCallback(average);
       setText(newText);
 
-    }, 1000)
+    }, 60000)
     return () => clearInterval(texter);
   })
 
