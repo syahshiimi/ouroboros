@@ -11,34 +11,34 @@
 AUTO_SETUP_LOCALE=C.UTF-8
 
 # Keyboard layout e.g.: "gb" / "us" / "de" / "fr"
-AUTO_SETUP_KEYBOARD_LAYOUT=gb
+AUTO_SETUP_KEYBOARD_LAYOUT=us
 
 # Time zone e.g.: "Europe/London" / "America/New_York" | Full list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-AUTO_SETUP_TIMEZONE=Europe/London
+AUTO_SETUP_TIMEZONE=Asia/Singapore
 
 ##### Network options #####
 # Enable Ethernet or WiFi adapter: 1=enable | 0=disable
 # - If both Ethernet and WiFi are enabled, WiFi will take priority and Ethernet will be disabled.
 # - If using WiFi, please edit dietpi-wifi.txt to pre-enter credentials.
 AUTO_SETUP_NET_ETHERNET_ENABLED=1
-AUTO_SETUP_NET_WIFI_ENABLED=0
+AUTO_SETUP_NET_WIFI_ENABLED=1
 
 # WiFi country code: 2 capital letter value (e.g. GB US DE JP): https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 # - NB: This choice may be overridden if the WiFi access point sends a country code.
-AUTO_SETUP_NET_WIFI_COUNTRY_CODE=GB
+AUTO_SETUP_NET_WIFI_COUNTRY_CODE=SG
 
 # Enter your static network details below, if applicable.
-AUTO_SETUP_NET_USESTATIC=0
-AUTO_SETUP_NET_STATIC_IP=192.168.0.100
+AUTO_SETUP_NET_USESTATIC=1
+AUTO_SETUP_NET_STATIC_IP=192.168.1.90
 AUTO_SETUP_NET_STATIC_MASK=255.255.255.0
-AUTO_SETUP_NET_STATIC_GATEWAY=192.168.0.1
-AUTO_SETUP_NET_STATIC_DNS=9.9.9.9 149.112.112.112
+AUTO_SETUP_NET_STATIC_GATEWAY=192.168.1.1
+AUTO_SETUP_NET_STATIC_DNS=192.168.1.4
 
 # Set to "1" to convert DHCP leased network settings into static settings automatically on first boot.
 AUTO_SETUP_DHCP_TO_STATIC=0
 
 # Hostname
-AUTO_SETUP_NET_HOSTNAME=DietPi
+AUTO_SETUP_NET_HOSTNAME=ouroboros0
 
 # Force Ethernet speeds: 0=automatic speed | 10 = 10 Mbit/s | 100 = 100 Mbit/s etc.
 # - Use this when your Ethernet adapter has an unstable 1 Gbit/s link.
@@ -130,14 +130,17 @@ AUTO_SETUP_GLOBAL_PASSWORD=dietpi
 # - Add as many entries as you wish, one each line.
 # - DietPi will automatically install all dependencies, like ALSA/X11 for desktops etc.
 # - E.g. the following (without the leading "#") will install the LXDE desktop automatically on first boot:
-#AUTO_SETUP_INSTALL_SOFTWARE_ID=23
+#LXDE
+AUTO_SETUP_INSTALL_SOFTWARE_ID=23
+#vim
+AUTO_STEP_INSTALL_SOFTWARE_ID=20
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
 #------------------------------------------------------------------------------------------------------
 # DietPi-Survey: 1=opt in | 0=opt out | -1=ask on first call
 # - https://dietpi.com/docs/dietpi_tools/#miscellaneous (see tab 'DietPi Survey')
-SURVEY_OPTED_IN=-1
+SURVEY_OPTED_IN=-0
 
 #------------------------------------------------------------------------------------------------------
 ##### DietPi-Config settings #####
@@ -205,7 +208,7 @@ CONFIG_CHECK_APT_UPDATES=1
 CONFIG_NTP_MODE=2
 
 # Serial Console: Set to 0 if you do not require serial console.
-CONFIG_SERIAL_CONSOLE_ENABLE=1
+CONFIG_SERIAL_CONSOLE_ENABLE=0
 
 # Sound card
 CONFIG_SOUNDCARD=none
@@ -215,7 +218,7 @@ CONFIG_SOUNDCARD=none
 CONFIG_LCDPANEL=none
 
 # IPv6
-CONFIG_ENABLE_IPV6=1
+CONFIG_ENABLE_IPV6=0
 
 # APT mirrors which are applied to /etc/apt/sources.list | Values here will also be applied during 1st run setup
 # - Raspbian: https://www.raspbian.org/RaspbianMirrors
@@ -274,7 +277,7 @@ SOFTWARE_WIFI_HOTSPOT_5G_CHANNEL=36
 
 # X.org
 # - DPI 96(default) 120(+25%) 144(+50%) 168(+75%) 192(+100%)
-SOFTWARE_XORG_DPI=96
+SOFTWARE_XORG_DPI=192
 
 # Chromium
 SOFTWARE_CHROMIUM_RES_X=1280
