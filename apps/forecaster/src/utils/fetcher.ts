@@ -4,7 +4,7 @@ export const fetcher = async ({url}: {url: string;}) => {
       revalidate: 0
     }
   };
-  const response = await fetch(`${url}`, { cache: 'no-store', ...options });
+  const response = await fetch(`${url}`, options);
   if (!response.ok) {
     throw new Error("An error occurred while fetching the data.");
   }
