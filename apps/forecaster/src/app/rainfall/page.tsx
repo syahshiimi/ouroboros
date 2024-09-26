@@ -5,8 +5,8 @@ import { useDataHook } from "@/hooks/useDataHook";
 import { reducer } from "@/utils/reducer";
 import { getRainfall } from "@/utils/topics/getRainfall";
 import { Status } from "@/components/status";
-import { getCurrentDate } from "@/utils/date";
 import { MarqueeText } from "@/components/marquee";
+import { Timestamp } from "@/components/timestamp";
 
 export default function Rainfall() {
   const { data, isLoading, isError } = useDataHook("rainfall");
@@ -14,12 +14,15 @@ export default function Rainfall() {
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
+
+  const readingTimestamp = data.data.data.readings[0].timestamp;
   const averageRainfall = parseFloat(
     reducer(data.data.data.readings[0].data).toFixed(1),
   );
 
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
+      <Timestamp readingTime={readingTimestamp}/>
       <section className={`flex flex-col gap-4 z-20`}>
         <h1 className={`text-h2 text-white`}>Rainfall Forecast</h1>
         <DateComponent />

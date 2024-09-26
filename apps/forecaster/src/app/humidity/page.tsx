@@ -6,6 +6,7 @@ import DateComponent from "@/components/date";
 import { Status } from "@/components/status";
 import { reducer } from "@/utils/reducer";
 import { MarqueeText } from "@/components/marquee";
+import { Timestamp } from "@/components/timestamp";
 
 export default function Humidity() {
   const { data, isLoading, isError } = useDataHook("humidity");
@@ -19,9 +20,7 @@ export default function Humidity() {
 
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
-      <p className="text-[12px] text-white">
-      Reading timestamp: {readingTimestamp}
-      </p>
+      <Timestamp readingTime={readingTimestamp}/>
       <section className={`flex flex-col gap-4 z-20`}>
         <h1 className={`text-h2 text-white`}>Humidity Forecast</h1>
         <DateComponent />
