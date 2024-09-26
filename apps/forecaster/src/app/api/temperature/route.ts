@@ -18,4 +18,6 @@ export async function GET(request: NextRequest) {
     console.error(error);
   }
 }
-export const dynamic = 'force-dynamic';
+
+// Don't use vercel caching...
+export const fetchCache = 'force-no-store';

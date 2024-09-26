@@ -20,6 +20,3 @@ export async function GET(request: NextRequest) {
 }
 // Don't use vercel caching...
 export const fetchCache = 'force-no-store';
-
-// export const dynamic = 'force-dynamic';
-// export const revalidate = false
