@@ -8,7 +8,6 @@ export function useDataHook(topic: string) {
     {
       // Revalidates on the user interface level...
       refreshInterval: 300000,
-      revalidateOnFocus: false,
     },
   );
 
