@@ -1,8 +1,8 @@
 export const fetcher = async ({url}: {url: string;}) => {
   const opts = {
-    // next: {
-    //   revalidate: 300
-    // }
+    next: {
+      revalidate: 0
+    },
     cache: 'no-store',
   };
 
