@@ -7,7 +7,7 @@ export function useDataHook(topic: string) {
     (url) => fetcher({ url: url  }),
     {
       // Revalidates on the user interface level...
-      refreshInterval: 5000,
+      refreshInterval: 300000,
       revalidateOnFocus: false,
     },
   );
