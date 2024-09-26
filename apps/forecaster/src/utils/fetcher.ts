@@ -1,7 +1,7 @@
 export const fetcher = async ({url}: {url: string;}) => {
   const options = {
     next: {
-      revalidate: 0
+      revalidate: 300
     }
   };
   const response = await fetch(`${url}`, options);
