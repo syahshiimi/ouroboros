@@ -18,3 +18,6 @@ export async function GET(request: NextRequest) {
     console.error(error);
   }
 }
+
+// Don't use vercel caching...
+export const fetchCache = 'force-no-store';
