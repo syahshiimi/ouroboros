@@ -3,6 +3,7 @@
 # A simple command that can be ran on the pi4 devices for `agents-merchants` in an automated way. 
 
 run_commands() {
+  cd agents-merchants || return
   docker compose up
   # keep the terminal open
   exec bash
@@ -23,4 +24,3 @@ WINDOW_ID=$(xdotool search --pid $! --class "mate-terminal" | tail -n1)
 # Activate the window and send F11 to toggle full-screen
 xdotool windowactivate $WINDOW_ID
 xdotool key F11
-
