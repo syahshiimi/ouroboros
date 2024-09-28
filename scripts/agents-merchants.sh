@@ -3,7 +3,6 @@
 # A simple command that can be ran on the pi4 devices for `agents-merchants` in an automated way. 
 
 run_commands() {
-  cd agents-merchants || return
   docker compose up
   # keep the terminal open
   exec bash
