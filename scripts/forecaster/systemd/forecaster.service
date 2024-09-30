@@ -1,0 +1,11 @@
+[Unit]
+Description=Chromium kiosk
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/bin/bash /home/ouroboros/respin.sh
+Restart=on-abort
+Type=forking
+
+[Install]
+WantedBy=xsession.target
