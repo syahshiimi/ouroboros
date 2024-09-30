@@ -26,7 +26,7 @@ const setSGBackground = (color: Status["color"]) => {
 export const Status = ({ input, type, color }: Status) => {
   return (
     <div className={`h-fit w-fit relative text-h2`}>
-      <SG className={`${setSGBackground(color)} min-h-[58rem]`} />
+      <SG className={`${setSGBackground(color)} min-h-[53.8rem]`} />
       <p className={`absolute bottom-[51%] left-[12%] text-nowrap text-h2-m`}>
         {input}
         <TextType type={type} />
