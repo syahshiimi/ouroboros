@@ -7,6 +7,7 @@ import { getRainfall } from "@/utils/topics/getRainfall";
 import { Status } from "@/components/status";
 import { MarqueeText } from "@/components/marquee";
 import { Timestamp } from "@/components/timestamp";
+import { TitleHeader } from "@/components/title";
 
 export default function Rainfall() {
   const { data, isLoading, isError } = useDataHook("rainfall");
@@ -23,8 +24,10 @@ export default function Rainfall() {
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
       <Timestamp readingTime={readingTimestamp}/>
-      <section className={`flex flex-col gap-4 z-20`}>
-        <h1 className={`text-h2 text-white`}>Rainfall Forecast</h1>
+      <section className={`flex flex-col gap-0 z-20`}>
+        <TitleHeader>
+        Rainfall Forecast
+        </TitleHeader>
         <DateComponent />
       </section>
       <section
