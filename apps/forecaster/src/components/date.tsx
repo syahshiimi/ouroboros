@@ -6,7 +6,7 @@ export default function DateComponent() {
   const date = useTimerHook();
   return (
     <>
-      <h2 className={`text-minor-t text-white pt-2`}>{date}</h2>;
+      <h2 className={`text-minor text-white pt-2`}>{date}</h2>;
     </>
   );
 }

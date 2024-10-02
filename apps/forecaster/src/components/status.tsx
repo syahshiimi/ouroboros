@@ -26,24 +26,24 @@ const setSGBackground = (color: Status["color"]) => {
 export const Status = ({ input, type, color }: Status) => {
   return (
     <div className={`h-fit w-fit relative text-h2`}>
-      <SG className={`${setSGBackground(color)} min-h-[53.8rem]`} />
-      <p className={`absolute bottom-[51%] left-[12%] text-nowrap text-h2-m`}>
+      <SG className={`${setSGBackground(color)} min-h-[55rem]`} />
+      <p className={`absolute bottom-[51%] left-[12%] text-nowrap text-menu`}>
         {input}
         <TextType type={type} />
       </p>
-      <p className={`absolute right-[15%] bottom-[52%] text-nowrap text-h2-m`}>
+      <p className={`absolute right-[15%] bottom-[52%] text-nowrap text-menu`}>
         {input}
         <TextType type={type} />
       </p>
-      <p className={`absolute right-[52%] bottom-[39%] text-nowrap text-h2-m`}>
+      <p className={`absolute right-[52%] bottom-[39%] text-nowrap text-menu`}>
         {input}
         <TextType type={type} />
       </p>
-      <p className={`absolute right-[58%] bottom-[80%] text-nowrap text-h2-m`}>
+      <p className={`absolute right-[58%] bottom-[80%] text-nowrap text-menu`}>
         {input}
         <TextType type={type} />
       </p>
-      <p className={`absolute right-[52%] bottom-[60%] text-nowrap text-h2-m`}>
+      <p className={`absolute right-[52%] bottom-[60%] text-nowrap text-menu`}>
         {input}
         <TextType type={type} />
       </p>
