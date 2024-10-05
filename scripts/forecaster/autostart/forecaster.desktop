@@ -1,0 +1,6 @@
+# A desktop entry file to be placed in .config/autostart/
+# that ensures the correct bash script gets auto-executeed at startup.
+[Desktop Entry]
+Type=Application
+Name=Chromium Kiosk Forecaster
+Exec=/bin/bash /home/ouroboros/respin.sh
