@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Ensures crontab can spin up the chromium instance.
-export DISPLAY:=0
+export DISPLAY=:0
 
 sleep 10
 
