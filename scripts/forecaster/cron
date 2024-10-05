@@ -1,0 +1,6 @@
+# Copy paste this into the bottom of the  /etc/crontab file.
+
+# Kill chromium at 10:00PM Daily.
+00 22   * * *   ouroboros /bin/bash /home/ouroboros/kill-chromium.sh
+# Start Chromium Kiosk at 8:00AM Daily.
+00 8    * * *   ouroboros /bin/bash /home/ouroboros/respin.sh > /home/ouroboros/respin.log
