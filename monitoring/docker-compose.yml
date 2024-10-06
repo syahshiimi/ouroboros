@@ -2,7 +2,7 @@ version: "3"
 
 services:
   node-exporter:
-    container_name: ouroboros-node-exporterimage
+    container_name: ouroboros-node-exporter
     image: prom/node-exporter:latest
     restart: always
     ports:
