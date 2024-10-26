@@ -7,27 +7,34 @@ Acting as the source of truth, these data points can be used to drive specific b
 
 ## Run locally
 
-1. First we need to spin up the temporal containers through Docker.
-
-```bash
-docker compose up --build
-```
-
-2. Then, we spin up the HonoJS application which is the REST API interface.
-```bash
-pnpm dev --filter=@ouroboros/feeder
-```
-
-3. Finally, spin up the Temporal Worker.
-```bash
-cd apps/feeder
-pnpm start:worker
-```
-
-## Running a workflow.
+### Running a workflow.
 All workflows are instantiated through the REST API, defined through the HonoJS route handlers. These handlers are defined in `/src/routes/handlers`.  
 
 In `src/routes/handlers/workflow.ts` we define a handler that starts a workflow client binding to a specific workflow via the callback function. Ideally each route handler should be handling a singular workflow though at the moment, we only have a generic `/workflow` route for the `feederFlow` defined in `/src/routes/domains/temporal/workflow/` directory.
+
+### Running via Docker
+This is very useful if the intention is to execute the workflow and see its interaction and orchestration in a temporal environment consisting of the temporal service database, admin tools, ui etc. It is the highly recommended way to test things.
+
+In the Makefile there are two commands pointing to two `docker-compose` YAML.
+
+1. `docker-compose.feeder.yml` spins up the necessary `feeder-worker` service and the HonoJS REST API `feeder-api` which is effectively what the `feeder` dir is for.
+2. `docker-compose.temporal.yml` spins up the necessary temporal services.
+
+#### Steps.
+1. Spin up the Temporal services
+```bash
+make start-temporal
+```
+
+2. Spin up the temporal worker
+```sh
+make start-worker
+```
+
+3. (Optional) Start both the `feeder-api` service and the `feeder-worker`
+```bash
+make start-feeder
+```
 
 ## Temporal Worker vs NodeJS Application.
 
