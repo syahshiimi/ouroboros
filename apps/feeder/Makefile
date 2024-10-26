@@ -4,6 +4,9 @@ start-temporal:
 start-feeder:
 	docker compose -f docker-compose.feeder.yml up --build
 
+start-worker:
+	docker compose -f docker-compose.feeder.yml up feeder-worker
+
 stop:
 	docker compose -f docker-compose.temporal.yml -f docker-compose.feeder.yml down
 
