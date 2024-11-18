@@ -8,6 +8,8 @@ import { Status } from "@/components/status";
 import { MarqueeText } from "@/components/marquee";
 import { Timestamp } from "@/components/timestamp";
 import { TitleHeader } from "@/components/title";
+import { useEffect, useState } from "react";
+import { time } from "console";
 
 export default function Temperature() {
   const { data, isLoading, isError } = useDataHook("temperature");
@@ -15,28 +17,45 @@ export default function Temperature() {
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
-  const readingTimestamp = data.data.data.readings[0].timestamp;
-  const averageTemperature = parseFloat(
-    reducer(data.data.data.readings[0].data).toFixed(1),
-  );
+
+  const readingTimestamp = () => {
+    if (!data.data) {
+      const date = new Date
+      console.log(date.getTime())
+      return date.getTime().toString()
+    } else {
+      return data.data.data.readings[0].timestamp;
+    }
+  }
+
+  const averageTemperature = () => {
+    if (!data.data.data) {
+      // return the code instead
+      return data.code
+    } else {
+      return parseFloat(
+        reducer(data.data.data.readings[0].data).toFixed(1),
+      )
+    }
+  };
 
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
-      <Timestamp readingTime={readingTimestamp}/>
+      <Timestamp readingTime={readingTimestamp()} />
       <section className={`flex flex-col gap-0 z-20`}>
         <TitleHeader>
-        Temperature Forecast
+          Temperature Forecast
         </TitleHeader>
         <DateComponent />
       </section>
       <section
         className={`flex-grow flex text-menu-t items-center justify-center text-white z-[-99`}
       >
-        <Status input={averageTemperature} type={"temperature"} color={"red"} />
+        <Status input={averageTemperature()} type={"temperature"} color={"red"} />
       </section>
       <MarqueeText
-        average={averageTemperature}
-        averageCallback={() => getTemperatureText(averageTemperature)}
+        average={averageTemperature()}
+        averageCallback={() => getTemperatureText(averageTemperature())}
         marqueeBackground={"blue"}
       />
     </main>
