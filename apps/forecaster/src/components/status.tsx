@@ -23,30 +23,36 @@ const setSGBackground = (color: Status["color"]) => {
   }
 };
 
+
 export const Status = ({ input, type, color }: Status) => {
+  const itsHot = () => {
+    if (input != 0) {
+      return "It's probably Hot"
+    } else {
+      <>
+        {input}
+        <TextType type={type} />
+      </>
+    }
+  }
   return (
     <div className={`h-fit w-fit relative text-h2`}>
       <SG className={`${setSGBackground(color)} min-h-[53.8rem]`} />
-      <p className={`absolute bottom-[51%] left-[12%] text-nowrap text-h2-m`}>
-        {input}
-        <TextType type={type} />
+      <p className={`absolute bottom-[51%] ${input != 0 ? 'left-[2%]' : 'left-[12%]'} text-nowrap ${input != 99 ? 'text-menu' : 'text-h2-m'}`}>
+        {itsHot()}
       </p>
-      <p className={`absolute right-[15%] bottom-[52%] text-nowrap text-h2-m`}>
-        {input}
-        <TextType type={type} />
+      <p className={`absolute bottom-[52%] ${input != 0 ? 'right-[8%]' : 'right-[15%]'} text-nowrap ${input != 0 ? 'text-menu' : 'text-h2-m'}`}>
+        {itsHot()}
       </p>
-      <p className={`absolute right-[52%] bottom-[39%] text-nowrap text-h2-m`}>
-        {input}
-        <TextType type={type} />
+      <p className={`absolute ${input != 0 ? 'right-[39%]' : 'right-[52%]'} bottom-[39%] text-nowrap ${input != 0 ? 'text-menu' : 'text-h2-m'}`}>
+        {itsHot()}
       </p>
-      <p className={`absolute right-[58%] bottom-[80%] text-nowrap text-h2-m`}>
-        {input}
-        <TextType type={type} />
+      <p className={`absolute ${input != 0 ? 'right-[42%]' : 'right-[58%]'} bottom-[80%] text-nowrap ${input != 0 ? 'text-menu' : 'text-h2-m'}`}>
+        {itsHot()}
       </p>
-      <p className={`absolute right-[52%] bottom-[60%] text-nowrap text-h2-m`}>
-        {input}
-        <TextType type={type} />
+      <p className={`absolute ${input != 0 ? 'right-[38%]' : 'right-[52%]'} bottom-[60%] text-nowrap ${input != 0 ? 'text-menu' : 'text-h2-m'}`}>
+        {itsHot()}
       </p>
-    </div>
+    </div >
   );
 };
