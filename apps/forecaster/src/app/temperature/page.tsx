@@ -18,17 +18,6 @@ export default function Temperature() {
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
-
-  const readingTimestamp = () => {
-    if (!data.data) {
-      const date = new Date
-      console.log(date.getTime())
-      return date.getTime().toString()
-    } else {
-      return data.data.data.readings[0].timestamp;
-    }
-  }
-
   const averageTemperature = () => {
     if (!data.data.data) {
       // return a ridiculous number
@@ -39,8 +28,6 @@ export default function Temperature() {
       )
     }
   };
-  console.log(averageTemperature())
-
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
       {!data.data ? null :
