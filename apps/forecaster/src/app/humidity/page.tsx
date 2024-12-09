@@ -15,7 +15,6 @@ export default function Humidity() {
   if (isLoading) return <p>Retrieving new details</p>;
   if (isError) return <p>Error fetching data</p>;
 
-  const readings = data.data.data.readings[0].data;
   const averageHumidity = () => {
     if (!data.data.data) {
       // return a ridiculous number
@@ -26,9 +25,12 @@ export default function Humidity() {
       )
     }
   };
+
+  const readingTimeNotAv = !data.data || !data.data.data
+
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
-      {!data.data ? null :
+      {readingTimeNotAv ? null :
         <Timestamp readingTime={data.data.data.readings[0].timestamp} />
       }
       <section className={`flex flex-col gap-0 z-20`}>
