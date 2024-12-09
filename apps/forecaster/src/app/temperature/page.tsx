@@ -8,9 +8,6 @@ import { Status } from "@/components/status";
 import { MarqueeText } from "@/components/marquee";
 import { Timestamp } from "@/components/timestamp";
 import { TitleHeader } from "@/components/title";
-import { useEffect, useState } from "react";
-import { time } from "console";
-import { allowedNodeEnvironmentFlags } from "process";
 
 export default function Temperature() {
   const { data, isLoading, isError } = useDataHook("temperature");
@@ -28,9 +25,11 @@ export default function Temperature() {
       )
     }
   };
+  const readingTimeNotAv = !data.data || !data.data.data
+
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
-      {!data.data ? null :
+      {readingTimeNotAv ? null :
         <Timestamp readingTime={data.data.data.readings[0].timestamp} />
       }
       <section className={`flex flex-col gap-0 z-20`}>

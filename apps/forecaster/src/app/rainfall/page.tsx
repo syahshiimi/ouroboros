@@ -26,9 +26,11 @@ export default function Rainfall() {
     }
   };
 
+  const readingTimeNotAv = !data.data || !data.data.data
+
   return (
     <main className="bg-black max-w-screen min-h-screen px-4 py-8 flex flex-col">
-      {!data.data ? null :
+      {readingTimeNotAv ? null :
         <Timestamp readingTime={data.data.data.readings[0].timestamp} />
       }
       <section className={`flex flex-col gap-0 z-20`}>
